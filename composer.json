@@ -1,0 +1,56 @@
+{
+	"name": "matraux/jsonorm",
+	"description": "A PHP 8.4+ library for converting JSON data to typed entities and back, with support for lazy-loading collections.",
+	"keywords": ["JSON ORM", "JSON", "ORM", "MATRAUX"],
+	"type": "library",
+	"version": "1.1.0",
+	"authors": [
+		{
+			"name": "Daniel Žůrek",
+			"email": "info@danielzurek.cz",
+			"homepage": "https://www.matraux.com"
+		}
+	],
+	"require": {
+		"php": "^8.4",
+		"nette/utils": "*"
+	},
+	"require-dev": {
+		"nette/tester": "^2.5",
+		"phpstan/phpstan": "*",
+		"tracy/tracy": "^2.10",
+		"contributte/qa": "^0.3.2",
+		"nette/neon": "^3.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"Matraux\\JsonORM\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Matraux\\JsonORMTest\\": "tests"
+		}
+	},
+	"support": {
+		"issues": "https://github.com/matraux/jsonorm/issues",
+		"source": "https://github.com/matraux/jsonorm"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"scripts": {
+		"codesniffer": "\"vendor/bin/phpcs\" --standard=\"ruleset.xml\" --ansi",
+		"codefixer": "\"vendor/bin/phpcbf\" --standard=\"ruleset.xml\" --ansi",
+		"stan": "vendor/bin/phpstan analyse --configuration \"phpstan.neon\" --ansi",
+		"test": "vendor/bin/tester -s -p php --colors 1 -C tests/"
+	},
+	"scripts-descriptions": {
+		"codesniffer": "Run PHP Codesniffer. Usage: \"composer codesniffer {path to folder or file}\"",
+		"codefixer": "Run PHP Codefixer. Usage: \"composer codefixer {path to folder or file}\"",
+		"stan": "Run PHP Stan. Usage \"composer stan {path to folder or file}\"",
+		"test": "Run PHP application tests"
+	}
+}
