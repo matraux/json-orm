@@ -1,9 +1,10 @@
 {
 	"name": "matraux/jsonorm",
 	"description": "A PHP 8.4+ library for converting JSON data to typed entities and back, with support for lazy-loading collections.",
-	"keywords": ["JSON ORM", "JSON", "ORM", "MATRAUX"],
+	"keywords": ["JSON ORM", "jsonorm", "MATRAUX"],
 	"type": "library",
 	"version": "1.1.0",
+	"license": "MIT",
 	"authors": [
 		{
 			"name": "Daniel Žůrek",
