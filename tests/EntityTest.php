@@ -6,8 +6,6 @@ use Matraux\JsonORM\Json\Reader;
 use Matraux\JsonORMTest\Bootstrap;
 use Matraux\JsonORMTest\Collection\GeneralCollection;
 use Matraux\JsonORMTest\Entity\Enum\GeneralResult;
-use Nette\Utils\FileSystem;
-use Nette\Utils\Json;
 use Tester\Assert;
 use Tester\TestCase;
 

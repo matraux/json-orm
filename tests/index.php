@@ -14,7 +14,7 @@ $reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
 $generalCollection = GeneralCollection::create($reader);
 foreach ($generalCollection as $generalEntity) {
 	bdump($generalEntity);
-	bdump(isset($generalEntity->items) ? iterator_to_array($generalEntity->items) : 'žádné itemy'  );
+	bdump(isset($generalEntity->items) ? iterator_to_array($generalEntity->items) : 'žádné itemy');
 }
 
 dump('Exit dumper');

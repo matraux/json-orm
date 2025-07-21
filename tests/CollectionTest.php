@@ -2,12 +2,12 @@
 
 namespace Matraux\JsonORMTest\Collection;
 
-use Tester\Assert;
-use Tester\TestCase;
 use Matraux\JsonORM\Json\Reader;
 use Matraux\JsonORMTest\Bootstrap;
-use Matraux\JsonORMTest\Entity\StatusEntity;
 use Matraux\JsonORMTest\Entity\GeneralEntity;
+use Matraux\JsonORMTest\Entity\StatusEntity;
+use Tester\Assert;
+use Tester\TestCase;
 
 require_once __DIR__ . '/Bootstrap.php';
 
