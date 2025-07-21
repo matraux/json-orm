@@ -1,0 +1,4 @@
+vendor
+temp
+phpstan.editor.neon
+tracy.editor.neon
