@@ -2,17 +2,17 @@
 
 namespace Matraux\JsonORM\Collection;
 
-use Countable;
-use Stringable;
 use ArrayAccess;
-use Traversable;
-use JsonSerializable;
-use RuntimeException;
+use Countable;
 use IteratorAggregate;
-use OutOfRangeException;
-use UnexpectedValueException;
-use Matraux\JsonORM\Json\Reader;
+use JsonSerializable;
 use Matraux\JsonORM\Entity\Entity;
+use Matraux\JsonORM\Json\Reader;
+use OutOfRangeException;
+use RuntimeException;
+use Stringable;
+use Traversable;
+use UnexpectedValueException;
 
 /**
  * @template TEntity of Entity
@@ -33,19 +33,6 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	{
 		/** @var static<TEntity> */
 		return new static($reader);
-	}
-
-	public function getIterator(): Traversable
-	{
-		if($this->reader) {
-			foreach($this->reader as $key => $data) {
-				yield (int) $key => $this->getEntity($this->reader->withKey($key));
-			}
-		} else {
-			foreach ($this->entities as $key => $entity) {
-				yield $key => $entity;
-			}
-		}
 	}
 
 	final public function count(): int
@@ -116,6 +103,19 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 		$this->validateWriting();
 
 		return $this->entities;
+	}
+
+	public function getIterator(): Traversable
+	{
+		if ($this->reader) {
+			foreach ($this->reader as $key => $data) {
+				yield (int) $key => $this->getEntity($this->reader->withKey($key));
+			}
+		} else {
+			foreach ($this->entities as $key => $entity) {
+				yield $key => $entity;
+			}
+		}
 	}
 
 	/**

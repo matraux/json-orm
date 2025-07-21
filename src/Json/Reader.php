@@ -2,15 +2,15 @@
 
 namespace Matraux\JsonORM\Json;
 
-use Throwable;
 use ArrayAccess;
-use Traversable;
 use Countable;
-use Nette\Utils\Json;
-use RuntimeException;
 use IteratorAggregate;
-use OutOfRangeException;
 use Nette\Utils\FileSystem;
+use Nette\Utils\Json;
+use OutOfRangeException;
+use RuntimeException;
+use Throwable;
+use Traversable;
 use UnexpectedValueException;
 
 /**
@@ -35,6 +35,23 @@ final class Reader implements ArrayAccess, IteratorAggregate, Countable
 		}
 	}
 
+	/**
+	 * @throws RuntimeException If file does not exists
+	 */
+	public static function fromFile(string $file): static
+	{
+		if (!is_file($file)) {
+			throw new RuntimeException(sprintf('No such file "%s".', $file));
+		}
+
+		return self::fromJson(FileSystem::read($file));
+	}
+
+	public static function fromJson(?string $json = null): static
+	{
+		return new static($json);
+	}
+
 	public function count(): int
 	{
 		return count($this->data);
@@ -42,14 +59,14 @@ final class Reader implements ArrayAccess, IteratorAggregate, Countable
 
 	public function getIterator(): Traversable
 	{
-		foreach($this->data as $key => $value) {
+		foreach ($this->data as $key => $value) {
 			yield $key => $value;
 		}
 	}
 
 	public function offsetExists(mixed $offset): bool
 	{
-		if(!is_int($offset) && !is_string($offset)) {
+		if (!is_int($offset) && !is_string($offset)) {
 			throw new UnexpectedValueException(sprintf('Expected offset type "int|string", "%s" given.', gettype($offset)));
 		}
 
@@ -75,26 +92,9 @@ final class Reader implements ArrayAccess, IteratorAggregate, Countable
 		throw new RuntimeException('Reader is readonly');
 	}
 
-	/**
-	 * @throws RuntimeException If file does not exists
-	 */
-	public static function fromFile(string $file): static
-	{
-		if (!is_file($file)) {
-			throw new RuntimeException(sprintf('No such file "%s".', $file));
-		}
-
-		return static::fromJson(FileSystem::read($file));
-	}
-
-	public static function fromJson(?string $json = null): static
-	{
-		return new static($json);
-	}
-
 	public function withKey(string|int $key): static
 	{
-		if(!array_key_exists($key, $this->data)) {
+		if (!array_key_exists($key, $this->data)) {
 			throw new UnexpectedValueException(sprintf('Key "%s" not found.', $key));
 		} elseif (!is_array($this->data[$key])) {
 			throw new UnexpectedValueException(sprintf('Missing nested data at key "%s".', $key));

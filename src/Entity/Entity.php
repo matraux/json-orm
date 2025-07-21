@@ -3,10 +3,10 @@
 namespace Matraux\JsonORM\Entity;
 
 use BackedEnum;
-use Matraux\JsonORM\Collection\Collection;
-use Matraux\JsonORM\Json\Reader;
-use Matraux\JsonORM\Json\Property;
 use JsonSerializable;
+use Matraux\JsonORM\Collection\Collection;
+use Matraux\JsonORM\Json\Property;
+use Matraux\JsonORM\Json\Reader;
 use Nette\Utils\Type;
 use ReflectionAttribute;
 use ReflectionObject;
