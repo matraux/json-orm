@@ -2,7 +2,7 @@
 
 namespace Matraux\JsonORMTest\Entity\Enum;
 
-enum GeneralResult: string
+enum CommonResult: string
 {
 
 	case Ok = 'success';

@@ -4,8 +4,8 @@ namespace Matraux\JsonORMTest\Entity;
 
 use Matraux\JsonORM\Json\Reader;
 use Matraux\JsonORMTest\Bootstrap;
-use Matraux\JsonORMTest\Collection\GeneralCollection;
-use Matraux\JsonORMTest\Entity\Enum\GeneralResult;
+use Matraux\JsonORMTest\Collection\CommonCollection;
+use Matraux\JsonORMTest\Entity\Enum\CommonResult;
 use Tester\Assert;
 use Tester\TestCase;
 
@@ -27,7 +27,7 @@ final class EntityTest extends TestCase
 		$generalEntity = $generalCollection[1];
 		Assert::equal('Second', $generalEntity->name);
 		Assert::equal('offline', $generalEntity->status?->value);
-		Assert::equal(GeneralResult::Fail, $generalEntity->result);
+		Assert::equal(CommonResult::Fail, $generalEntity->result);
 		Assert::equal('First of items', $generalEntity->items[0]->name);
 		Assert::equal('Second of items', $generalEntity->items[1]->name);
 		Assert::equal('First icon', $generalEntity->items[1]->images[0]->icon);
@@ -36,7 +36,7 @@ final class EntityTest extends TestCase
 
 	public function testJsonserializeEntity(): void
 	{
-		$generalEntity = GeneralEntity::create();
+		$generalEntity = CommonEntity::create();
 		$generalEntity->name = 'First';
 		$statusEntity = $generalEntity->status = StatusEntity::create();
 		$statusEntity->value = 'online';
@@ -46,7 +46,7 @@ final class EntityTest extends TestCase
 
 	public function testStringableEntity(): void
 	{
-		$generalEntity = GeneralEntity::create();
+		$generalEntity = CommonEntity::create();
 		$generalEntity->name = 'First';
 		$statusEntity = $generalEntity->status = StatusEntity::create();
 		$statusEntity->value = 'online';
@@ -54,11 +54,11 @@ final class EntityTest extends TestCase
 		Assert::equal('{"NAME":"First","STATUS":{"VALUE":"online"}}', (string) $generalEntity);
 	}
 
-	private static function createGeneralCollection(): GeneralCollection
+	private static function createGeneralCollection(): CommonCollection
 	{
 		$reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
 
-		return GeneralCollection::create($reader);
+		return CommonCollection::create($reader);
 	}
 
 }

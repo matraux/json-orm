@@ -5,9 +5,9 @@ namespace Matraux\JsonORMTest\Entity;
 use Matraux\JsonORM\Entity\Entity;
 use Matraux\JsonORM\Json\Property;
 use Matraux\JsonORMTest\Collection\ItemCollection;
-use Matraux\JsonORMTest\Entity\Enum\GeneralResult;
+use Matraux\JsonORMTest\Entity\Enum\CommonResult;
 
-final class GeneralEntity extends Entity
+final class CommonEntity extends Entity
 {
 
 	#[Property('NAME')]
@@ -20,6 +20,6 @@ final class GeneralEntity extends Entity
 	public ItemCollection $items;
 
 	#[Property('RESULT')]
-	public GeneralResult $result;
+	public CommonResult $result;
 
 }

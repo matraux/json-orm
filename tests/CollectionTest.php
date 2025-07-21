@@ -4,7 +4,7 @@ namespace Matraux\JsonORMTest\Collection;
 
 use Matraux\JsonORM\Json\Reader;
 use Matraux\JsonORMTest\Bootstrap;
-use Matraux\JsonORMTest\Entity\GeneralEntity;
+use Matraux\JsonORMTest\Entity\CommonEntity;
 use Matraux\JsonORMTest\Entity\StatusEntity;
 use Tester\Assert;
 use Tester\TestCase;
@@ -23,20 +23,20 @@ final class CollectionTest extends TestCase
 	{
 		$generalCollection = self::createGeneralCollection();
 		foreach ($generalCollection as $generalEntity) {
-			Assert::type(GeneralEntity::class, $generalEntity);
+			Assert::type(CommonEntity::class, $generalEntity);
 		}
 
 		foreach ($generalCollection as $generalEntity) {
-			Assert::type(GeneralEntity::class, $generalEntity);
+			Assert::type(CommonEntity::class, $generalEntity);
 		}
 	}
 
 	public function testArrayGetCollection(): void
 	{
 		$generalCollection = self::createGeneralCollection();
-		Assert::type(GeneralEntity::class, $generalCollection[0]);
-		Assert::type(GeneralEntity::class, $generalCollection[1]);
-		Assert::type(GeneralEntity::class, $generalCollection[2]);
+		Assert::type(CommonEntity::class, $generalCollection[0]);
+		Assert::type(CommonEntity::class, $generalCollection[1]);
+		Assert::type(CommonEntity::class, $generalCollection[2]);
 	}
 
 	public function testCountableCollection(): void
@@ -48,25 +48,25 @@ final class CollectionTest extends TestCase
 	public function testArraySetCollection(): void
 	{
 		Assert::noError(function (): void {
-			$generalCollection = GeneralCollection::create();
-			$generalCollection[1] = GeneralEntity::create();
-			$generalCollection[2] = GeneralEntity::create();
-			$generalCollection[3] = GeneralEntity::create();
+			$generalCollection = CommonCollection::create();
+			$generalCollection[1] = CommonEntity::create();
+			$generalCollection[2] = CommonEntity::create();
+			$generalCollection[3] = CommonEntity::create();
 		});
 	}
 
 	public function testArrayUnsetCollection(): void
 	{
 		Assert::noError(function (): void {
-			$generalCollection = GeneralCollection::create();
-			$generalCollection[1] = GeneralEntity::create();
+			$generalCollection = CommonCollection::create();
+			$generalCollection[1] = CommonEntity::create();
 			unset($generalCollection[1]);
 		});
 	}
 
 	public function testJsonserializeColection(): void
 	{
-		$generalCollection = GeneralCollection::create();
+		$generalCollection = CommonCollection::create();
 
 		$generalEntity = $generalCollection->createEntity();
 		$generalEntity->name = 'First';
@@ -83,7 +83,7 @@ final class CollectionTest extends TestCase
 
 	public function testStringableCollection(): void
 	{
-		$generalCollection = GeneralCollection::create();
+		$generalCollection = CommonCollection::create();
 
 		$generalEntity = $generalCollection->createEntity();
 		$generalEntity->name = 'First';
@@ -98,11 +98,11 @@ final class CollectionTest extends TestCase
 		Assert::equal('[{"NAME":"First","STATUS":{"VALUE":"online"}},{"NAME":"Second","STATUS":{"VALUE":"offline"}}]', (string) $generalCollection);
 	}
 
-	private static function createGeneralCollection(): GeneralCollection
+	private static function createGeneralCollection(): CommonCollection
 	{
 		$reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
 
-		return GeneralCollection::create($reader);
+		return CommonCollection::create($reader);
 	}
 
 }
