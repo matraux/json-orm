@@ -29,7 +29,6 @@ final class CommonEntity extends Entity
 ## Collection
 ```php
 use Matraux\JsonORM\Collection\Collection;
-use Matraux\JsonORM\Json\Reader;
 use Matraux\JsonORMTest\Entity\CommonEntity;
 
 /**
@@ -38,9 +37,9 @@ use Matraux\JsonORMTest\Entity\CommonEntity;
 final class CommonCollection extends Collection
 {
 
-	protected function getEntity(?Reader $reader = null): CommonEntity
+	protected static function getEntityClass(): string
 	{
-		return CommonEntity::create($reader);
+		return CommonEntity::class;
 	}
 
 }
