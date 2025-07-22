@@ -7,9 +7,11 @@ use Countable;
 use IteratorAggregate;
 use JsonSerializable;
 use Matraux\JsonORM\Entity\Entity;
+use Matraux\JsonORM\Exception\ReadonlyAccessException;
 use Matraux\JsonORM\Json\Reader;
+use Nette\Utils\Json;
+use Nette\Utils\JsonException;
 use OutOfRangeException;
-use RuntimeException;
 use Stringable;
 use Traversable;
 use UnexpectedValueException;
@@ -58,17 +60,17 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 			throw new OutOfRangeException(sprintf('Offset "%s" is out of range.', $offset));
 		}
 
-		return $this->reader ? $this->getEntity($this->reader->withKey($offset)) : $this->entities[$offset];
+		return $this->reader ? static::getEntityClass()::fromReader($this->reader->withKey($offset)) : $this->entities[$offset];
 	}
 
 	final public function offsetSet(mixed $offset, mixed $value): void
 	{
-		$this->validateWriting();
+		$this->assertWritable();
 
 		if (!is_int($offset)) {
 			throw new UnexpectedValueException(sprintf('Expected offset type "%s", "%s" type given.', 'int', gettype($offset)));
-		} elseif (!$value instanceof Entity || $value::class !== $this->getEntity()::class) {
-			throw new UnexpectedValueException(sprintf('Expected value type "%s", "%s" type given.', $this->getEntity()::class, gettype($value)));
+		} elseif (!$value instanceof Entity || $value::class !== static::getEntityClass()) {
+			throw new UnexpectedValueException(sprintf('Expected value type "%s", "%s" type given.', static::getEntityClass(), gettype($value)));
 		}
 
 		$this->entities[$offset] = $value;
@@ -76,7 +78,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 
 	final public function offsetUnset(mixed $offset): void
 	{
-		$this->validateWriting();
+		$this->assertWritable();
 
 		if (!$this->offsetExists($offset)) {
 			throw new OutOfRangeException(sprintf('Offset "%s" is out of range.', $offset));
@@ -90,9 +92,9 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	 */
 	final public function createEntity(): Entity
 	{
-		$this->validateWriting();
+		$this->assertWritable();
 
-		return $this->entities[] = $this->getEntity();
+		return $this->entities[] = static::getEntityClass()::create();
 	}
 
 	/**
@@ -100,16 +102,14 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	 */
 	final public function jsonSerialize(): array
 	{
-		$this->validateWriting();
-
-		return $this->entities;
+		return iterator_to_array($this);
 	}
 
 	public function getIterator(): Traversable
 	{
 		if ($this->reader) {
 			foreach ($this->reader as $key => $data) {
-				yield (int) $key => $this->getEntity($this->reader->withKey($key));
+				yield (int) $key => static::getEntityClass()::fromReader($this->reader->withKey($key));
 			}
 		} else {
 			foreach ($this->entities as $key => $entity) {
@@ -119,20 +119,23 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	}
 
 	/**
-	 * @return TEntity
+	 * @return class-string<TEntity>
 	 */
-	abstract protected function getEntity(?Reader $reader = null): Entity;
+	abstract protected static function getEntityClass(): string;
 
-	final protected function validateWriting(): void
+	final protected function assertWritable(): void
 	{
 		if ($this->reader) {
-			throw new RuntimeException(sprintf('"%s" is in read only state, because using "%s".', static::class, Reader::class));
+			throw new ReadonlyAccessException('Collection is readonly.');
 		}
 	}
 
+	/**
+	 * @throws JsonException
+	 */
 	final public function __toString(): string
 	{
-		return json_encode($this) ?: throw new RuntimeException(sprintf('Unable JSON serialize "%s".', static::class));
+		return Json::encode($this);
 	}
 
 }
