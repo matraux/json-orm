@@ -41,7 +41,7 @@ composer require matraux/jsonorm
 |----|---|---
 | 1.1.0 | PHP 8.3 | Initial commit
 | 1.2.0 | PHP 8.4 | Performance optimization
-| 1.2.1 | PHP 8.4 | Performance optimization
+| 1.3.0 | PHP 8.4 | Performance optimization
 
 <br>
 
