@@ -19,8 +19,10 @@ Bootstrap::tester();
 final class CollectionTest extends TestCase
 {
 
-	public function testIterableCollection(): void
+	public function testCollectionIterable(): void
 	{
+		Bootstrap::purgeTemp(__FUNCTION__);
+
 		$generalCollection = self::createGeneralCollection();
 		foreach ($generalCollection as $generalEntity) {
 			Assert::type(CommonEntity::class, $generalEntity);
@@ -31,22 +33,28 @@ final class CollectionTest extends TestCase
 		}
 	}
 
-	public function testArrayGetCollection(): void
+	public function testCollectionArrayGet(): void
 	{
+		Bootstrap::purgeTemp(__FUNCTION__);
+
 		$generalCollection = self::createGeneralCollection();
 		Assert::type(CommonEntity::class, $generalCollection[0]);
 		Assert::type(CommonEntity::class, $generalCollection[1]);
 		Assert::type(CommonEntity::class, $generalCollection[2]);
 	}
 
-	public function testCountableCollection(): void
+	public function testCollectionCountable(): void
 	{
+		Bootstrap::purgeTemp(__FUNCTION__);
+
 		$generalCollection = self::createGeneralCollection();
 		Assert::count(3, $generalCollection);
 	}
 
-	public function testArraySetCollection(): void
+	public function testCollectionArraySet(): void
 	{
+		Bootstrap::purgeTemp(__FUNCTION__);
+
 		Assert::noError(function (): void {
 			$generalCollection = CommonCollection::create();
 			$generalCollection[1] = CommonEntity::create();
@@ -55,8 +63,10 @@ final class CollectionTest extends TestCase
 		});
 	}
 
-	public function testArrayUnsetCollection(): void
+	public function testCollectionArrayUnset(): void
 	{
+		Bootstrap::purgeTemp(__FUNCTION__);
+
 		Assert::noError(function (): void {
 			$generalCollection = CommonCollection::create();
 			$generalCollection[1] = CommonEntity::create();
@@ -66,6 +76,8 @@ final class CollectionTest extends TestCase
 
 	public function testJsonserializeColection(): void
 	{
+		Bootstrap::purgeTemp(__FUNCTION__);
+
 		$generalCollection = CommonCollection::create();
 
 		$generalEntity = $generalCollection->createEntity();
@@ -81,8 +93,10 @@ final class CollectionTest extends TestCase
 		Assert::equal('[{"NAME":"First","STATUS":{"VALUE":"online"}},{"NAME":"Second","STATUS":{"VALUE":"offline"}}]', json_encode($generalCollection));
 	}
 
-	public function testStringableCollection(): void
+	public function testCollectionStringable(): void
 	{
+		Bootstrap::purgeTemp(__FUNCTION__);
+
 		$generalCollection = CommonCollection::create();
 
 		$generalEntity = $generalCollection->createEntity();

@@ -3,7 +3,6 @@
 namespace Matraux\JsonORMTest\Collection;
 
 use Matraux\JsonORM\Collection\Collection;
-use Matraux\JsonORM\Json\Reader;
 use Matraux\JsonORMTest\Entity\ItemEntity;
 
 /**
@@ -12,9 +11,9 @@ use Matraux\JsonORMTest\Entity\ItemEntity;
 final class ItemCollection extends Collection
 {
 
-	protected function getEntity(?Reader $reader = null): ItemEntity
+	protected static function getEntityClass(): string
 	{
-		return ItemEntity::create($reader);
+		return ItemEntity::class;
 	}
 
 }

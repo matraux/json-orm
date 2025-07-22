@@ -2,6 +2,7 @@
 
 namespace Matraux\JsonORMTest\Collection;
 
+use Matraux\JsonORM\Exception\ReadonlyAccessException;
 use Matraux\JsonORM\Json\Reader;
 use Matraux\JsonORMTest\Bootstrap;
 use Nette\Utils\FileSystem;
@@ -18,30 +19,61 @@ Bootstrap::tester();
 final class ReaderTest extends TestCase
 {
 
-	public function testDataFromFile(): void
+	public function testReaderFromFile(): void
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$data = Reader::fromFile(Bootstrap::Assets . 'general.json');
+		$reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
 
-		Assert::matchFile(Bootstrap::Assets . 'general.json', (string) json_encode($data->data));
+		Assert::matchFile(Bootstrap::Assets . 'general.json', (string) $reader);
 	}
 
-	public function testDataCreate(): void
+	public function testReaderFromString(): void
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$data = Reader::fromJson(FileSystem::read(Bootstrap::Assets . 'general.json'));
+		$reader = Reader::fromString(FileSystem::read(Bootstrap::Assets . 'general.json'));
 
-		Assert::matchFile(Bootstrap::Assets . 'general.json', (string) json_encode($data->data));
+		Assert::matchFile(Bootstrap::Assets . 'general.json', (string) $reader);
 	}
 
-	public function testDataWithIndex(): void
+	public function testReaderArrayAccess(): void
 	{
-		$data = Reader::fromFile(Bootstrap::Assets . 'general.json');
-		Assert::equal('First', $data->withKey(0)->data['NAME']);
-		Assert::equal('Second', $data->withKey(1)->data['NAME']);
-		Assert::equal('Third', $data->withKey(2)->data['NAME']);
+		Bootstrap::purgeTemp(__FUNCTION__);
+
+		$reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
+
+		Assert::equal('First', $reader->withKey(0)['NAME']);
+		Assert::equal('Second', $reader->withKey(1)['NAME']);
+		Assert::equal('Third', $reader->withKey(2)['NAME']);
+
+		Assert::exception(function () use ($reader): void {
+			$reader['test'] = 'test';
+		}, ReadonlyAccessException::class);
+
+		Assert::exception(function () use ($reader): void {
+			unset($reader[0]);
+		}, ReadonlyAccessException::class);
+	}
+
+	public function testReaderIterator(): void
+	{
+		Bootstrap::purgeTemp(__FUNCTION__);
+
+		$reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
+
+		foreach ($reader as $data) {
+			Assert::type('array', $data);
+		}
+	}
+
+	public function testReaderCount(): void
+	{
+		Bootstrap::purgeTemp(__FUNCTION__);
+
+		$reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
+
+		Assert::equal(count($reader), 3);
 	}
 
 }

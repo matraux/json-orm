@@ -36,6 +36,8 @@ final class EntityTest extends TestCase
 
 	public function testJsonserializeEntity(): void
 	{
+		Bootstrap::purgeTemp(__FUNCTION__);
+
 		$generalEntity = CommonEntity::create();
 		$generalEntity->name = 'First';
 		$statusEntity = $generalEntity->status = StatusEntity::create();
@@ -46,6 +48,8 @@ final class EntityTest extends TestCase
 
 	public function testStringableEntity(): void
 	{
+		Bootstrap::purgeTemp(__FUNCTION__);
+
 		$generalEntity = CommonEntity::create();
 		$generalEntity->name = 'First';
 		$statusEntity = $generalEntity->status = StatusEntity::create();
