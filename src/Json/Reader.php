@@ -5,11 +5,13 @@ namespace Matraux\JsonORM\Json;
 use ArrayAccess;
 use Countable;
 use IteratorAggregate;
+use Matraux\JsonORM\Exception\ReadonlyAccessException;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Json;
+use Nette\Utils\JsonException;
 use OutOfRangeException;
 use RuntimeException;
-use Throwable;
+use Stringable;
 use Traversable;
 use UnexpectedValueException;
 
@@ -17,26 +19,31 @@ use UnexpectedValueException;
  * @implements ArrayAccess<int|string,mixed>
  * @implements IteratorAggregate<int|string,mixed>
  */
-final class Reader implements ArrayAccess, IteratorAggregate, Countable
+final class Reader implements ArrayAccess, IteratorAggregate, Countable, Stringable
 {
 
-	/** @var array<mixed> */
-	public array $data;
+	/** @var int<0,max> */
+	protected int $countCache;
 
 	/**
-	 * @throws UnexpectedValueException If JSON data can not be parsed
+	 * @param array<mixed> $data
 	 */
-	protected function __construct(?string $json = null)
+	protected function __construct(protected array $data)
 	{
-		try {
-			$this->data = (array) Json::decode($json ?? '[]', true);
-		} catch (Throwable $th) {
-			throw new UnexpectedValueException('Failed to parse JSON data.', $th->getCode(), $th);
-		}
 	}
 
 	/**
-	 * @throws RuntimeException If file does not exists
+	 * @throws JsonException
+	 */
+	public static function fromString(?string $json = null): static
+	{
+		$data = (array) Json::decode($json ?? '[]', true);
+
+		return new static($data);
+	}
+
+	/**
+	 * @throws RuntimeException
 	 */
 	public static function fromFile(string $file): static
 	{
@@ -44,17 +51,12 @@ final class Reader implements ArrayAccess, IteratorAggregate, Countable
 			throw new RuntimeException(sprintf('No such file "%s".', $file));
 		}
 
-		return self::fromJson(FileSystem::read($file));
-	}
-
-	public static function fromJson(?string $json = null): static
-	{
-		return new static($json);
+		return self::fromString(FileSystem::read($file));
 	}
 
 	public function count(): int
 	{
-		return count($this->data);
+		return $this->countCache ??= count($this->data);
 	}
 
 	public function getIterator(): Traversable
@@ -64,6 +66,9 @@ final class Reader implements ArrayAccess, IteratorAggregate, Countable
 		}
 	}
 
+	/**
+	 * @throws UnexpectedValueException
+	 */
 	public function offsetExists(mixed $offset): bool
 	{
 		if (!is_int($offset) && !is_string($offset)) {
@@ -73,6 +78,9 @@ final class Reader implements ArrayAccess, IteratorAggregate, Countable
 		return array_key_exists($offset, $this->data);
 	}
 
+	/**
+	 * @throws OutOfRangeException
+	 */
 	public function offsetGet(mixed $offset): mixed
 	{
 		if (!$this->offsetExists($offset)) {
@@ -82,28 +90,42 @@ final class Reader implements ArrayAccess, IteratorAggregate, Countable
 		return $this->data[$offset];
 	}
 
+	/**
+	 * @throws ReadonlyAccessException
+	 */
 	public function offsetSet(mixed $offset, mixed $value): void
 	{
-		throw new RuntimeException('Reader is readonly');
+		throw new ReadonlyAccessException('Reader is readonly');
 	}
 
+	/**
+	 * @throws ReadonlyAccessException
+	 */
 	public function offsetUnset(mixed $offset): void
 	{
-		throw new RuntimeException('Reader is readonly');
+		throw new ReadonlyAccessException('Reader is readonly');
 	}
 
+	/**
+	 * @throws UnexpectedValueException
+	 */
 	public function withKey(string|int $key): static
 	{
 		if (!array_key_exists($key, $this->data)) {
-			throw new UnexpectedValueException(sprintf('Key "%s" not found.', $key));
+			throw new UnexpectedValueException(sprintf('Missing required key "%s".', $key));
 		} elseif (!is_array($this->data[$key])) {
 			throw new UnexpectedValueException(sprintf('Missing nested data at key "%s".', $key));
 		}
 
-		$object = new static();
-		$object->data = &$this->data[$key];
+		return new static($this->data[$key]);
+	}
 
-		return $object;
+	/**
+	 * @throws JsonException
+	 */
+	public function __toString(): string
+	{
+		return Json::encode($this->data);
 	}
 
 }
