@@ -5,13 +5,12 @@ namespace Matraux\JsonORM\Entity;
 use BackedEnum;
 use JsonSerializable;
 use Matraux\JsonORM\Collection\Collection;
-use Matraux\JsonORM\Json\Property;
-use Matraux\JsonORM\Json\Reader;
+use Matraux\JsonORM\Json\JsonProperty;
+use Matraux\JsonORM\Json\JsonReader;
+use Matraux\JsonORM\Metadata\PropertyMetadataFactory;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
-use Nette\Utils\Type;
 use ReflectionAttribute;
-use ReflectionClass;
 use ReflectionObject;
 use ReflectionProperty;
 use Stringable;
@@ -28,30 +27,23 @@ abstract class Entity implements Stringable, JsonSerializable
 		return new static();
 	}
 
-	final public static function fromReader(Reader $reader): static
+	final public static function fromReader(JsonReader $reader): static
 	{
 		$object = static::create();
 
-		$properties = new ReflectionClass(static::class)->getProperties();
+		$properties = PropertyMetadataFactory::create(static::class);
 		foreach ($properties as $property) {
-			$propertyName = self::getProperty($property)->name ?? $property->getName();
+			if ($reader->offsetExists($property->name)) {
+				$value = $reader[$property->name];
 
-			if ($reader->offsetExists($propertyName)) {
-				if (!$type = Type::fromReflection($property)) {
-					continue;
-				}
-
-				$value = $reader[$propertyName];
-				$className = $type->isClass() && $type->isSimple() ? $type->getSingleName() : null;
-
-				if ($className) {
+				if ($className = $property->className) {
 					if (is_array($value) && is_subclass_of($className, self::class)) {
 						/** @var class-string<Entity> $className */
-						$entity = $className::fromReader($reader->withKey($propertyName));
+						$entity = $className::fromReader($reader->withKey($property->name));
 						$property->setValue($object, $entity);
 					} elseif (is_array($value) && is_subclass_of($className, Collection::class)) {
 						/** @var class-string<Collection<Entity>> $className */
-						$collection = $className::create($reader->withKey($propertyName));
+						$collection = $className::create($reader->withKey($property->name));
 						$property->setValue($object, $collection);
 					} elseif ((is_string($value) || is_int($value)) && is_subclass_of($className, BackedEnum::class)) {
 						/** @var class-string<BackedEnum> $className */
@@ -86,9 +78,9 @@ abstract class Entity implements Stringable, JsonSerializable
 		return $data;
 	}
 
-	final protected static function getProperty(ReflectionProperty|ReflectionObject $property): ?Property
+	final protected static function getProperty(ReflectionProperty|ReflectionObject $property): ?JsonProperty
 	{
-		$attributes = $property->getAttributes(Property::class, ReflectionAttribute::IS_INSTANCEOF);
+		$attributes = $property->getAttributes(JsonProperty::class, ReflectionAttribute::IS_INSTANCEOF);
 
 		return array_shift($attributes)?->newInstance();
 	}
