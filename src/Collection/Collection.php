@@ -8,7 +8,7 @@ use IteratorAggregate;
 use JsonSerializable;
 use Matraux\JsonORM\Entity\Entity;
 use Matraux\JsonORM\Exception\ReadonlyAccessException;
-use Matraux\JsonORM\Json\Reader;
+use Matraux\JsonORM\Json\JsonReader;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
 use OutOfRangeException;
@@ -27,11 +27,11 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	/** @var array<int,TEntity> */
 	final protected array $entities = [];
 
-	final protected function __construct(protected ?Reader $reader = null)
+	final protected function __construct(protected ?JsonReader $reader = null)
 	{
 	}
 
-	final public static function create(?Reader $reader = null): static
+	final public static function create(?JsonReader $reader = null): static
 	{
 		/** @var static<TEntity> */
 		return new static($reader);

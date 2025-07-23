@@ -19,7 +19,7 @@ use UnexpectedValueException;
  * @implements ArrayAccess<int|string,mixed>
  * @implements IteratorAggregate<int|string,mixed>
  */
-final class Reader implements ArrayAccess, IteratorAggregate, Countable, Stringable
+final class JsonReader implements ArrayAccess, IteratorAggregate, Countable, Stringable
 {
 
 	/** @var int<0,max> */
