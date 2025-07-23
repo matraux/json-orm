@@ -102,7 +102,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	 */
 	final public function jsonSerialize(): array
 	{
-		return iterator_to_array($this);
+		return array_values(iterator_to_array($this));
 	}
 
 	public function getIterator(): Traversable
