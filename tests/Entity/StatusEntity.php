@@ -3,12 +3,12 @@
 namespace Matraux\JsonORMTest\Entity;
 
 use Matraux\JsonORM\Entity\Entity;
-use Matraux\JsonORM\Json\Property;
+use Matraux\JsonORM\Json\JsonProperty;
 
 final class StatusEntity extends Entity
 {
 
-	#[Property('VALUE')]
+	#[JsonProperty('VALUE')]
 	public ?string $value = null;
 
 }

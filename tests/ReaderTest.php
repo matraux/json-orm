@@ -3,7 +3,7 @@
 namespace Matraux\JsonORMTest\Collection;
 
 use Matraux\JsonORM\Exception\ReadonlyAccessException;
-use Matraux\JsonORM\Json\Reader;
+use Matraux\JsonORM\Json\JsonReader;
 use Matraux\JsonORMTest\Bootstrap;
 use Nette\Utils\FileSystem;
 use Tester\Assert;
@@ -23,7 +23,7 @@ final class ReaderTest extends TestCase
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
+		$reader = JsonReader::fromFile(Bootstrap::Assets . 'general.json');
 
 		Assert::matchFile(Bootstrap::Assets . 'general.json', (string) $reader);
 	}
@@ -32,7 +32,7 @@ final class ReaderTest extends TestCase
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$reader = Reader::fromString(FileSystem::read(Bootstrap::Assets . 'general.json'));
+		$reader = JsonReader::fromString(FileSystem::read(Bootstrap::Assets . 'general.json'));
 
 		Assert::matchFile(Bootstrap::Assets . 'general.json', (string) $reader);
 	}
@@ -41,7 +41,7 @@ final class ReaderTest extends TestCase
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
+		$reader = JsonReader::fromFile(Bootstrap::Assets . 'general.json');
 
 		Assert::equal('First', $reader->withKey(0)['NAME']);
 		Assert::equal('Second', $reader->withKey(1)['NAME']);
@@ -60,7 +60,7 @@ final class ReaderTest extends TestCase
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
+		$reader = JsonReader::fromFile(Bootstrap::Assets . 'general.json');
 
 		foreach ($reader as $data) {
 			Assert::type('array', $data);
@@ -71,7 +71,7 @@ final class ReaderTest extends TestCase
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
+		$reader = JsonReader::fromFile(Bootstrap::Assets . 'general.json');
 
 		Assert::equal(count($reader), 3);
 	}

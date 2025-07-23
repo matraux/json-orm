@@ -2,7 +2,7 @@
 
 namespace Matraux\JsonORMTest\Collection;
 
-use Matraux\JsonORM\Json\Reader;
+use Matraux\JsonORM\Json\JsonReader;
 use Matraux\JsonORMTest\Bootstrap;
 use Matraux\JsonORMTest\Entity\CommonEntity;
 use Matraux\JsonORMTest\Entity\StatusEntity;
@@ -114,7 +114,7 @@ final class CollectionTest extends TestCase
 
 	private static function createGeneralCollection(): CommonCollection
 	{
-		$reader = Reader::fromFile(Bootstrap::Assets . 'general.json');
+		$reader = JsonReader::fromFile(Bootstrap::Assets . 'general.json');
 
 		return CommonCollection::create($reader);
 	}

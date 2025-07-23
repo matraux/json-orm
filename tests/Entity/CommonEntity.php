@@ -3,23 +3,23 @@
 namespace Matraux\JsonORMTest\Entity;
 
 use Matraux\JsonORM\Entity\Entity;
-use Matraux\JsonORM\Json\Property;
+use Matraux\JsonORM\Json\JsonProperty;
 use Matraux\JsonORMTest\Collection\ItemCollection;
 use Matraux\JsonORMTest\Entity\Enum\CommonResult;
 
 final class CommonEntity extends Entity
 {
 
-	#[Property('NAME')]
+	#[JsonProperty('NAME')]
 	public ?string $name = null;
 
-	#[Property('STATUS')]
+	#[JsonProperty('STATUS')]
 	public ?StatusEntity $status = null;
 
-	#[Property('ITEMS')]
+	#[JsonProperty('ITEMS')]
 	public ItemCollection $items;
 
-	#[Property('RESULT')]
+	#[JsonProperty('RESULT')]
 	public CommonResult $result;
 
 }
