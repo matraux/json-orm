@@ -5,7 +5,7 @@ namespace Matraux\JsonORM\Json;
 use Attribute;
 
 #[Attribute]
-final class Property
+final class JsonProperty
 {
 
 	public function __construct(public readonly string $name)
