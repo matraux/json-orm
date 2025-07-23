@@ -47,8 +47,9 @@ abstract class Entity implements Stringable, JsonSerializable
 						$property->setValue($object, $collection);
 					} elseif ((is_string($value) || is_int($value)) && is_subclass_of($className, BackedEnum::class)) {
 						/** @var class-string<BackedEnum> $className */
-						$enum = $className::tryFrom($value);
-						$property->setValue($object, $enum);
+						if ($enum = $className::tryFrom($value)) {
+							$property->setValue($object, $enum);
+						}
 					}
 				} elseif (is_scalar($value) || $value === null) {
 					$property->setValue($object, $value);
