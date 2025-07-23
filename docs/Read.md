@@ -61,7 +61,7 @@
 	$reader = JsonReader::fromFile('path to JSON file'); // Access data from file
 	$reader = JsonReader::fromJson('JSON string'); // Access data from string
 
-	$entity = GeneralEntity::create($reader);
+	$entity = GeneralEntity::fromReader($reader);
 
 	echo $entity->id; // Print "1"
 

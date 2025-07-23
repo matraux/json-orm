@@ -22,7 +22,7 @@ Useful for structured JSON APIs, configuration parsing, and object-based manipul
 - Object-oriented JSON mapping
 - Conversion from JSON to typed entities and back
 - Lazy-loading collections for efficient memory usage
-- Read-only entity pattern with immutable data access
+- Entity objects are mutable and can be freely modified after creation
 - Strict type support with automatic casting
 - Native support for nested structures and arrays
 - Easy integration with configuration or API responses
