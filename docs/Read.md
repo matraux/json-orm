@@ -21,10 +21,10 @@
 
 ## Reading by collection
 ```php
-	use Matraux\JsonORM\Json\Reader;
+	use Matraux\JsonORM\Json\JsonReader;
 
-	$reader = Reader::fromFile('path to JSON file'); // Access data from file
-	$reader = Reader::fromJson('JSON string'); // Access data from string
+	$reader = JsonReader::fromFile('path to JSON file'); // Access data from file
+	$reader = JsonReader::fromJson('JSON string'); // Access data from string
 
 	$collection = GeneralCollection::create($reader); // Create collection
 
@@ -56,10 +56,10 @@
 
 ## Reading by entity
 ```php
-	use Matraux\JsonORM\Json\Reader;
+	use Matraux\JsonORM\Json\JsonReader;
 
-	$reader = Reader::fromFile('path to JSON file'); // Access data from file
-	$reader = Reader::fromJson('JSON string'); // Access data from string
+	$reader = JsonReader::fromFile('path to JSON file'); // Access data from file
+	$reader = JsonReader::fromJson('JSON string'); // Access data from string
 
 	$entity = GeneralEntity::create($reader);
 

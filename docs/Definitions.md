@@ -5,22 +5,22 @@
 ## Entity
 ```php
 use Matraux\JsonORM\Entity\Entity;
-use Matraux\JsonORM\Json\Property;
+use Matraux\JsonORM\Json\JsonProperty;
 
 final class CommonEntity extends Entity
 {
 
 	// Entity will try assign value from Data with key "NAME" to property $name
-	#[Property('NAME')]
+	#[JsonProperty('NAME')]
 	public ?string $name = null;
 
-	#[Property('STATUS')]
+	#[JsonProperty('STATUS')]
 	public ?StatusEntity $status = null;
 
-	#[Property('ITEMS')]
+	#[JsonProperty('ITEMS')]
 	public ItemCollection $items;
 
-	#[Property('RESULT')]
+	#[JsonProperty('RESULT')]
 	public CommonResult $result; // BackedEnum
 
 }

@@ -1,13 +1,13 @@
 # MATRAUX JSON ORM
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/matraux/jsonorm.svg?logo=packagist&logoColor=white)](https://packagist.org/packages/matraux/jsonorm)
-[![Last release](https://img.shields.io/github/v/release/matraux/jsonorm?display_name=tag&logo=github&logoColor=white)](https://github.com/matraux/jsonorm/releases)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/matraux/json-orm.svg?logo=packagist&logoColor=white)](https://packagist.org/packages/matraux/json-orm)
+[![Last release](https://img.shields.io/github/v/release/matraux/json-orm?display_name=tag&logo=github&logoColor=white)](https://github.com/matraux/json-orm/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?logo=open-source-initiative&logoColor=white)](LICENSE)
 [![PHP](https://img.shields.io/badge/PHP-8.4+-blue.svg?logo=php&logoColor=white)](https://php.net)
 [![Security Policy](https://img.shields.io/badge/Security-Policy-blue?logo=bitwarden&logoColor=white)](./.github/SECURITY.md)
 [![Contributing](https://img.shields.io/badge/Contributing-Disabled-lightgrey?logo=github&logoColor=white)](CONTRIBUTING.md)
-[![QA Status](https://img.shields.io/github/actions/workflow/status/matraux/jsonorm/qa.yml?label=Quality+Assurance&logo=checkmarx&logoColor=white)](https://github.com/matraux/jsonorm/actions/workflows/qa.yml)
-[![Issues](https://img.shields.io/github/issues/matraux/jsonorm?logo=github&logoColor=white)](https://github.com/matraux/jsonorm/issues)
-[![Last Commit](https://img.shields.io/github/last-commit/matraux/jsonorm?logo=git&logoColor=white)](https://github.com/matraux/jsonorm/commits)
+[![QA Status](https://img.shields.io/github/actions/workflow/status/matraux/json-orm/qa.yml?label=Quality+Assurance&logo=checkmarx&logoColor=white)](https://github.com/matraux/json-orm/actions/workflows/qa.yml)
+[![Issues](https://img.shields.io/github/issues/matraux/json-orm?logo=github&logoColor=white)](https://github.com/matraux/json-orm/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/matraux/json-orm?logo=git&logoColor=white)](https://github.com/matraux/json-orm/commits)
 
 <br>
 
@@ -31,7 +31,7 @@ Useful for structured JSON APIs, configuration parsing, and object-based manipul
 
 ## Installation
 ```bash
-composer require matraux/jsonorm
+composer require matraux/json-orm
 ```
 
 <br>
@@ -39,9 +39,10 @@ composer require matraux/jsonorm
 ## Requirements
 | version | PHP | Note
 |----|---|---
-| 1.1.0 | PHP 8.3 | Initial commit
-| 1.2.0 | PHP 8.4 | Performance optimization
-| 1.3.0 | PHP 8.4 | Performance optimization
+| 1.1.0 | 8.3+ | Initial commit
+| 1.2.0 | 8.4+ | Performance optimization
+| 1.3.0 | 8.4+ | Performance optimization
+| 1.4.0 | 8.4+ | 50%+ performance boost via metadata caching
 
 <br>
 
@@ -50,10 +51,10 @@ See [Definitions](./docs/Definitions.md)  for how to define your own entities an
 
 See [Read](./docs/Read.md) for full reading examples.
 ```php
-use Matraux\JsonORM\Json\Reader;
+use Matraux\JsonORM\Json\JsonReader;
 
 // Load data from JSON string or file
-$reader = Reader::fromJson('[{"CUSTOM_ID":1,"name":"First"}]');
+$reader = JsonReader::fromJson('[{"CUSTOM_ID":1,"name":"First"}]');
 
 // Create typed collection from JSON
 $collection = CommonCollection::create($reader);
@@ -82,4 +83,4 @@ See [Development](./docs/Development.md) for debug, test instructions, static an
 <br>
 
 ## Support
-For bug reports and feature requests, please use the [issue tracker](https://github.com/matraux/jsonorm/issues).
+For bug reports and feature requests, please use the [issue tracker](https://github.com/matraux/json-orm/issues).
