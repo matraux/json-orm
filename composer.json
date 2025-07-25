@@ -17,7 +17,7 @@
 	},
 	"require-dev": {
 		"nette/tester": "^2.5",
-		"phpstan/phpstan": "*",
+		"phpstan/phpstan": "^2.1",
 		"tracy/tracy": "^2.10",
 		"contributte/qa": "^0.3.2",
 		"nette/neon": "^3.4"
