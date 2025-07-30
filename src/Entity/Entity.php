@@ -27,35 +27,41 @@ abstract class Entity implements Stringable, JsonSerializable
 
 	final public static function fromReader(JsonReader $reader): static
 	{
-		$object = static::create();
+		$entity = static::create();
 
 		$properties = PropertyMetadataFactory::create(static::class);
 		foreach ($properties as $property) {
-			if ($reader->offsetExists($property->index)) {
+			if (isset($reader[$property->index])) {
 				$value = $reader[$property->index];
 
 				if ($type = $property->type) {
 					if (is_array($value) && is_subclass_of($type, self::class)) {
 						/** @var class-string<Entity> $type */
-						$entity = $type::fromReader($reader->withKey($property->index));
-						$object->{$property->name} = $entity;
+						$entity->{$property->name} = $type::fromReader($reader->withKey($property->index));
+
+						continue;
 					} elseif (is_array($value) && is_subclass_of($type, Collection::class)) {
 						/** @var class-string<Collection<Entity>> $type */
-						$collection = $type::create($reader->withKey($property->index));
-						$object->{$property->name} = $collection;
+						$entity->{$property->name} = $type::create($reader->withKey($property->index));
+
+						continue;
 					} elseif ((is_string($value) || is_int($value)) && is_subclass_of($type, BackedEnum::class)) {
 						/** @var class-string<BackedEnum> $type */
 						if ($enum = $type::tryFrom($value)) {
-							$object->{$property->name} = $enum;
+							$entity->{$property->name} = $enum;
 						}
+
+						continue;
 					}
-				} elseif (is_scalar($value) || $value === null) {
-					$object->{$property->name} = $value;
+
+					settype($value, $type);
 				}
+
+				$entity->{$property->name} = $value;
 			}
 		}
 
-		return $object;
+		return $entity;
 	}
 
 	/**
