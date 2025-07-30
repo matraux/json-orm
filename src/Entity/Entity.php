@@ -5,13 +5,11 @@ namespace Matraux\JsonORM\Entity;
 use BackedEnum;
 use JsonSerializable;
 use Matraux\JsonORM\Collection\Collection;
-use Matraux\JsonORM\Json\JsonProperty;
 use Matraux\JsonORM\Json\JsonReader;
 use Matraux\JsonORM\Metadata\PropertyMetadataFactory;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
-use ReflectionAttribute;
-use ReflectionObject;
+use ReflectionException;
 use ReflectionProperty;
 use Stringable;
 
@@ -33,26 +31,26 @@ abstract class Entity implements Stringable, JsonSerializable
 
 		$properties = PropertyMetadataFactory::create(static::class);
 		foreach ($properties as $property) {
-			if ($reader->offsetExists($property->name)) {
-				$value = $reader[$property->name];
+			if ($reader->offsetExists($property->index)) {
+				$value = $reader[$property->index];
 
 				if ($className = $property->className) {
 					if (is_array($value) && is_subclass_of($className, self::class)) {
 						/** @var class-string<Entity> $className */
-						$entity = $className::fromReader($reader->withKey($property->name));
-						$property->setValue($object, $entity);
+						$entity = $className::fromReader($reader->withKey($property->index));
+						$object->{$property->name} = $entity;
 					} elseif (is_array($value) && is_subclass_of($className, Collection::class)) {
 						/** @var class-string<Collection<Entity>> $className */
-						$collection = $className::create($reader->withKey($property->name));
-						$property->setValue($object, $collection);
+						$collection = $className::create($reader->withKey($property->index));
+						$object->{$property->name} = $collection;
 					} elseif ((is_string($value) || is_int($value)) && is_subclass_of($className, BackedEnum::class)) {
 						/** @var class-string<BackedEnum> $className */
 						if ($enum = $className::tryFrom($value)) {
-							$property->setValue($object, $enum);
+							$object->{$property->name} = $enum;
 						}
 					}
 				} elseif (is_scalar($value) || $value === null) {
-					$property->setValue($object, $value);
+					$object->{$property->name} = $value;
 				}
 			}
 		}
@@ -62,28 +60,21 @@ abstract class Entity implements Stringable, JsonSerializable
 
 	/**
 	 * @return array<mixed>
+	 * @throws ReflectionException
 	 */
 	final public function jsonSerialize(): array
 	{
 		$data = [];
-		$properties = new ReflectionObject($this)->getProperties(ReflectionProperty::IS_PUBLIC);
+		$properties = PropertyMetadataFactory::create(static::class);
 		foreach ($properties as $property) {
-			if (!$property->isInitialized($this)) {
+			if (!new ReflectionProperty(static::class, $property->name)->isInitialized($this)) {
 				continue;
 			}
 
-			$name = self::getProperty($property)->name ?? $property->getName();
-			$data[$name] = $property->getValue($this);
+			$data[$property->index] = $this->{$property->name};
 		}
 
 		return $data;
-	}
-
-	final protected static function getProperty(ReflectionProperty|ReflectionObject $property): ?JsonProperty
-	{
-		$attributes = $property->getAttributes(JsonProperty::class, ReflectionAttribute::IS_INSTANCEOF);
-
-		return array_shift($attributes)?->newInstance();
 	}
 
 	/**
