@@ -14,7 +14,7 @@ final readonly class PropertyMetadata
 
 	public string $index;
 
-	public ?string $className;
+	public ?string $type;
 
 	protected function __construct(protected readonly ReflectionProperty $reflection)
 	{
@@ -24,7 +24,7 @@ final readonly class PropertyMetadata
 		$this->index = array_shift($attributes)?->newInstance()->name ?? $this->reflection->name;
 
 		$type = Type::fromReflection($this->reflection);
-		$this->className = $type?->isClass() ? $type->getSingleName() : null;
+		$this->type = $type?->isClass() ? $type->getSingleName() : null;
 	}
 
 	public static function create(ReflectionProperty $reflection): static

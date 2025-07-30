@@ -34,18 +34,18 @@ abstract class Entity implements Stringable, JsonSerializable
 			if ($reader->offsetExists($property->index)) {
 				$value = $reader[$property->index];
 
-				if ($className = $property->className) {
-					if (is_array($value) && is_subclass_of($className, self::class)) {
-						/** @var class-string<Entity> $className */
-						$entity = $className::fromReader($reader->withKey($property->index));
+				if ($type = $property->type) {
+					if (is_array($value) && is_subclass_of($type, self::class)) {
+						/** @var class-string<Entity> $type */
+						$entity = $type::fromReader($reader->withKey($property->index));
 						$object->{$property->name} = $entity;
-					} elseif (is_array($value) && is_subclass_of($className, Collection::class)) {
-						/** @var class-string<Collection<Entity>> $className */
-						$collection = $className::create($reader->withKey($property->index));
+					} elseif (is_array($value) && is_subclass_of($type, Collection::class)) {
+						/** @var class-string<Collection<Entity>> $type */
+						$collection = $type::create($reader->withKey($property->index));
 						$object->{$property->name} = $collection;
-					} elseif ((is_string($value) || is_int($value)) && is_subclass_of($className, BackedEnum::class)) {
-						/** @var class-string<BackedEnum> $className */
-						if ($enum = $className::tryFrom($value)) {
+					} elseif ((is_string($value) || is_int($value)) && is_subclass_of($type, BackedEnum::class)) {
+						/** @var class-string<BackedEnum> $type */
+						if ($enum = $type::tryFrom($value)) {
 							$object->{$property->name} = $enum;
 						}
 					}
