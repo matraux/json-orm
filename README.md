@@ -12,7 +12,7 @@
 <br>
 
 ## Introduction
-A PHP 8.4+ library for converting JSON data to typed entities and back, with support for lazy-loading collections, immutable data structures, and structured entity design.
+A PHP 8.4+ library for converting JSON data to typed entities and back, with support for lazy-loading collections, mutable data structures, and structured entity design.
 Useful for structured JSON APIs, configuration parsing, and object-based manipulation of hierarchical JSON data.
 
 
