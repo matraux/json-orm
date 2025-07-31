@@ -2,24 +2,15 @@
 
 namespace Matraux\JsonORM\Json;
 
-use ArrayAccess;
-use Countable;
-use IteratorAggregate;
-use Matraux\JsonORM\Exception\ReadonlyAccessException;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
 use OutOfRangeException;
 use RuntimeException;
-use Stringable;
 use Traversable;
 use UnexpectedValueException;
 
-/**
- * @implements ArrayAccess<int|string,mixed>
- * @implements IteratorAggregate<int|string,mixed>
- */
-final class JsonReader implements ArrayAccess, IteratorAggregate, Countable, Stringable
+final class SimpleJsonExplorer extends JsonExplorer
 {
 
 	/** @var int<0,max> */
@@ -59,6 +50,9 @@ final class JsonReader implements ArrayAccess, IteratorAggregate, Countable, Str
 		return $this->countCache ??= count($this->data);
 	}
 
+	/**
+	 * @return Traversable<mixed>
+	 */
 	public function getIterator(): Traversable
 	{
 		foreach ($this->data as $key => $value) {
@@ -91,33 +85,17 @@ final class JsonReader implements ArrayAccess, IteratorAggregate, Countable, Str
 	}
 
 	/**
-	 * @throws ReadonlyAccessException
-	 */
-	public function offsetSet(mixed $offset, mixed $value): void
-	{
-		throw new ReadonlyAccessException('Reader is readonly');
-	}
-
-	/**
-	 * @throws ReadonlyAccessException
-	 */
-	public function offsetUnset(mixed $offset): void
-	{
-		throw new ReadonlyAccessException('Reader is readonly');
-	}
-
-	/**
 	 * @throws UnexpectedValueException
 	 */
-	public function withKey(string|int $key): static
+	public function withIndex(string|int $index): static
 	{
-		if (!array_key_exists($key, $this->data)) {
-			throw new UnexpectedValueException(sprintf('Missing required key "%s".', $key));
-		} elseif (!is_array($this->data[$key])) {
-			throw new UnexpectedValueException(sprintf('Missing nested data at key "%s".', $key));
+		if (!array_key_exists($index, $this->data)) {
+			throw new UnexpectedValueException(sprintf('Missing required key "%s".', $index));
+		} elseif (!is_array($this->data[$index])) {
+			throw new UnexpectedValueException(sprintf('Missing nested data at key "%s".', $index));
 		}
 
-		return new static($this->data[$key]);
+		return new static($this->data[$index]);
 	}
 
 	/**
