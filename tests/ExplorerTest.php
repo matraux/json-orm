@@ -3,7 +3,7 @@
 namespace Matraux\JsonORMTest\Collection;
 
 use Matraux\JsonORM\Exception\ReadonlyAccessException;
-use Matraux\JsonORM\Json\JsonReader;
+use Matraux\JsonORM\Json\SimpleJsonExplorer;
 use Matraux\JsonORMTest\Bootstrap;
 use Nette\Utils\FileSystem;
 use Tester\Assert;
@@ -16,36 +16,36 @@ Bootstrap::tester();
 /**
  * @testCase
  */
-final class ReaderTest extends TestCase
+final class ExplorerTest extends TestCase
 {
 
-	public function testReaderFromFile(): void
+	public function testExplorerFromFile(): void
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$reader = JsonReader::fromFile(Bootstrap::Assets . 'general.json');
+		$reader = SimpleJsonExplorer::fromFile(Bootstrap::Assets . 'general.json');
 
 		Assert::matchFile(Bootstrap::Assets . 'general.json', (string) $reader);
 	}
 
-	public function testReaderFromString(): void
+	public function testExplorerFromString(): void
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$reader = JsonReader::fromString(FileSystem::read(Bootstrap::Assets . 'general.json'));
+		$reader = SimpleJsonExplorer::fromString(FileSystem::read(Bootstrap::Assets . 'general.json'));
 
 		Assert::matchFile(Bootstrap::Assets . 'general.json', (string) $reader);
 	}
 
-	public function testReaderArrayAccess(): void
+	public function testExplorerArrayAccess(): void
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$reader = JsonReader::fromFile(Bootstrap::Assets . 'general.json');
+		$reader = SimpleJsonExplorer::fromFile(Bootstrap::Assets . 'general.json');
 
-		Assert::equal('First', $reader->withKey(0)['NAME']);
-		Assert::equal('Second', $reader->withKey(1)['NAME']);
-		Assert::equal('Third', $reader->withKey(2)['NAME']);
+		Assert::equal('First', $reader->withIndex(0)['NAME']);
+		Assert::equal('Second', $reader->withIndex(1)['NAME']);
+		Assert::equal('Third', $reader->withIndex(2)['NAME']);
 
 		Assert::exception(function () use ($reader): void {
 			$reader['test'] = 'test';
@@ -56,26 +56,26 @@ final class ReaderTest extends TestCase
 		}, ReadonlyAccessException::class);
 	}
 
-	public function testReaderIterator(): void
+	public function testExplorerIterator(): void
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$reader = JsonReader::fromFile(Bootstrap::Assets . 'general.json');
+		$reader = SimpleJsonExplorer::fromFile(Bootstrap::Assets . 'general.json');
 
 		foreach ($reader as $data) {
 			Assert::type('array', $data);
 		}
 	}
 
-	public function testReaderCount(): void
+	public function testExplorerCount(): void
 	{
 		Bootstrap::purgeTemp(__FUNCTION__);
 
-		$reader = JsonReader::fromFile(Bootstrap::Assets . 'general.json');
+		$reader = SimpleJsonExplorer::fromFile(Bootstrap::Assets . 'general.json');
 
 		Assert::equal(count($reader), 3);
 	}
 
 }
 
-(new ReaderTest())->run();
+(new ExplorerTest())->run();
