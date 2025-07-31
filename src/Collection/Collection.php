@@ -8,7 +8,7 @@ use IteratorAggregate;
 use JsonSerializable;
 use Matraux\JsonORM\Entity\Entity;
 use Matraux\JsonORM\Exception\ReadonlyAccessException;
-use Matraux\JsonORM\Json\JsonReader;
+use Matraux\JsonORM\Json\JsonExplorer;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
 use OutOfRangeException;
@@ -27,19 +27,19 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	/** @var array<int,TEntity> */
 	final protected array $entities = [];
 
-	final protected function __construct(protected ?JsonReader $reader = null)
+	final protected function __construct(protected ?JsonExplorer $explorer = null)
 	{
 	}
 
-	final public static function create(?JsonReader $reader = null): static
+	final public static function create(?JsonExplorer $explorer = null): static
 	{
 		/** @var static<TEntity> */
-		return new static($reader);
+		return new static($explorer);
 	}
 
 	final public function count(): int
 	{
-		return $this->reader ? count($this->reader) : count($this->entities);
+		return $this->explorer ? count($this->explorer) : count($this->entities);
 	}
 
 	final public function offsetExists(mixed $offset): bool
@@ -48,7 +48,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 			throw new UnexpectedValueException(sprintf('Expected offset type "%s", "%s" type given.', 'int', gettype($offset)));
 		}
 
-		return $this->reader ? isset($this->reader[$offset]) : isset($this->entities[$offset]);
+		return $this->explorer ? isset($this->explorer[$offset]) : isset($this->entities[$offset]);
 	}
 
 	/**
@@ -60,7 +60,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 			throw new OutOfRangeException(sprintf('Offset "%s" is out of range.', $offset));
 		}
 
-		return $this->reader ? static::getEntityClass()::fromReader($this->reader->withKey($offset)) : $this->entities[$offset];
+		return $this->explorer ? static::getEntityClass()::fromExplorer($this->explorer->withIndex($offset)) : $this->entities[$offset];
 	}
 
 	final public function offsetSet(mixed $offset, mixed $value): void
@@ -107,9 +107,9 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 
 	public function getIterator(): Traversable
 	{
-		if ($this->reader) {
-			foreach ($this->reader as $key => $data) {
-				yield (int) $key => static::getEntityClass()::fromReader($this->reader->withKey($key));
+		if ($this->explorer) {
+			foreach ($this->explorer as $key => $data) {
+				yield (int) $key => static::getEntityClass()::fromExplorer($this->explorer->withIndex($key));
 			}
 		} else {
 			foreach ($this->entities as $key => $entity) {
@@ -125,7 +125,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 
 	final protected function assertWritable(): void
 	{
-		if ($this->reader) {
+		if ($this->explorer) {
 			throw new ReadonlyAccessException('Collection is readonly.');
 		}
 	}

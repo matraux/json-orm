@@ -5,7 +5,7 @@ namespace Matraux\JsonORM\Entity;
 use BackedEnum;
 use JsonSerializable;
 use Matraux\JsonORM\Collection\Collection;
-use Matraux\JsonORM\Json\JsonReader;
+use Matraux\JsonORM\Json\JsonExplorer;
 use Matraux\JsonORM\Metadata\PropertyMetadataFactory;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
@@ -25,24 +25,24 @@ abstract class Entity implements Stringable, JsonSerializable
 		return new static();
 	}
 
-	final public static function fromReader(JsonReader $reader): static
+	final public static function fromExplorer(JsonExplorer $explorer): static
 	{
 		$entity = static::create();
 
 		$properties = PropertyMetadataFactory::create(static::class);
 		foreach ($properties as $property) {
-			if (isset($reader[$property->index])) {
-				$value = $reader[$property->index];
+			if (isset($explorer[$property->index])) {
+				$value = $explorer[$property->index];
 
 				if ($type = $property->type) {
 					if (is_array($value) && is_subclass_of($type, self::class)) {
 						/** @var class-string<Entity> $type */
-						$entity->{$property->name} = $type::fromReader($reader->withKey($property->index));
+						$entity->{$property->name} = $type::fromExplorer($explorer->withIndex($property->index));
 
 						continue;
 					} elseif (is_array($value) && is_subclass_of($type, Collection::class)) {
 						/** @var class-string<Collection<Entity>> $type */
-						$entity->{$property->name} = $type::create($reader->withKey($property->index));
+						$entity->{$property->name} = $type::create($explorer->withIndex($property->index));
 
 						continue;
 					} elseif ((is_string($value) || is_int($value)) && is_subclass_of($type, BackedEnum::class)) {
