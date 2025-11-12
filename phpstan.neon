@@ -1,5 +1,0 @@
-includes:
-	- %currentWorkingDirectory%/phpstan.core.neon
-
-parameters:
-	editorUrl: 'vscode-insiders://vscode-remote/attached-container+7b22636f6e7461696e65724e616d65223a222f77656238342d66706d222c22637764223a225c5c5c5c77736c2e6c6f63616c686f73745c5c5562756e74755c5c686f6d655c5c6d617472617578227d/%%file%%:%%line%%'
