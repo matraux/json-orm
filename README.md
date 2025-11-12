@@ -52,7 +52,7 @@ See [Definitions](./docs/Definitions.md)  for how to define your own entities an
 
 See [Read](./docs/Read.md) for full reading examples.
 ```php
-use Matraux\JsonORM\Json\SimpleJsonExplorer;
+use Matraux\JsonOrm\Json\SimpleJsonExplorer;
 
 // Load data from JSON string or file
 $explorer = SimpleJsonExplorer::fromString('[{"CUSTOM_ID":1,"name":"First"}]');

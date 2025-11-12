@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORMTest\Dto\Entity;
+namespace Matraux\JsonOrmTest\Dto\Entity;
 
-use Matraux\JsonORM\Entity\Entity;
-use Matraux\JsonORM\Json\JsonProperty;
+use Matraux\JsonOrm\Entity\Entity;
+use Matraux\JsonOrm\Json\JsonProperty;
 
 final class ImageEntity extends Entity
 {

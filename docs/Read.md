@@ -21,7 +21,7 @@
 
 ## Reading by collection
 ```php
-	use Matraux\JsonORM\Json\SimpleJsonExplorer;
+	use Matraux\JsonOrm\Json\SimpleJsonExplorer;
 
 	$explorer = SimpleJsonExplorer::fromFile('path to JSON file'); // Access data from file
 	$explorer = SimpleJsonExplorer::fromJson('JSON string'); // Access data from string
@@ -56,7 +56,7 @@
 
 ## Reading by entity
 ```php
-	use Matraux\JsonORM\Json\SimpleJsonExplorer;
+	use Matraux\JsonOrm\Json\SimpleJsonExplorer;
 
 	$explorer = SimpleJsonExplorer::fromFile('path to JSON file'); // Access data from file
 	$explorer = SimpleJsonExplorer::fromJson('JSON string'); // Access data from string

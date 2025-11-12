@@ -1,14 +1,14 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORMTest\Collection;
+namespace Matraux\JsonOrmTest\Collection;
 
 use Matraux\FileSystem\File\File;
 use Nette\Utils\FileSystem;
-use Matraux\JsonORMTest\Bootstrap;
-use Matraux\JsonORMTest\Support\UnitTester;
-use Matraux\JsonORM\Json\SimpleJsonExplorer;
-use Matraux\JsonORM\Exception\ReadonlyAccessException;
-use Matraux\JsonORMTest\FileSystem\Folder;
+use Matraux\JsonOrmTest\Bootstrap;
+use Matraux\JsonOrmTest\Support\UnitTester;
+use Matraux\JsonOrm\Json\SimpleJsonExplorer;
+use Matraux\JsonOrm\Exception\ReadonlyAccessException;
+use Matraux\JsonOrmTest\FileSystem\Folder;
 
 final class ExplorerCest
 {

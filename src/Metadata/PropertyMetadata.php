@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORM\Metadata;
+namespace Matraux\JsonOrm\Metadata;
 
-use Matraux\JsonORM\Json\JsonProperty;
+use Matraux\JsonOrm\Json\JsonProperty;
 use Nette\Utils\Type;
 use ReflectionAttribute;
 use ReflectionProperty;

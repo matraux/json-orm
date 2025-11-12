@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORM\Exception;
+namespace Matraux\JsonOrm\Exception;
 
 use LogicException;
 

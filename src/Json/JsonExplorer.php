@@ -1,11 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORM\Json;
+namespace Matraux\JsonOrm\Json;
 
 use ArrayAccess;
 use Countable;
 use IteratorAggregate;
-use Matraux\JsonORM\Exception\ReadonlyAccessException;
+use Matraux\JsonOrm\Exception\ReadonlyAccessException;
 use Stringable;
 
 /**

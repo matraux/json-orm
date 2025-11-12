@@ -1,14 +1,14 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORM\Collection;
+namespace Matraux\JsonOrm\Collection;
 
 use ArrayAccess;
 use Countable;
 use IteratorAggregate;
 use JsonSerializable;
-use Matraux\JsonORM\Entity\Entity;
-use Matraux\JsonORM\Exception\ReadonlyAccessException;
-use Matraux\JsonORM\Json\JsonExplorer;
+use Matraux\JsonOrm\Entity\Entity;
+use Matraux\JsonOrm\Exception\ReadonlyAccessException;
+use Matraux\JsonOrm\Json\JsonExplorer;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
 use OutOfRangeException;

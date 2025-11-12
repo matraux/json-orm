@@ -1,11 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORMTest\Dto\Entity;
+namespace Matraux\JsonOrmTest\Dto\Entity;
 
-use Matraux\JsonORM\Entity\Entity;
-use Matraux\JsonORM\Json\JsonProperty;
-use Matraux\JsonORMTest\Dto\Collection\ItemCollection;
-use Matraux\JsonORMTest\Dto\Entity\Enum\CommonResult;
+use Matraux\JsonOrm\Entity\Entity;
+use Matraux\JsonOrm\Json\JsonProperty;
+use Matraux\JsonOrmTest\Dto\Collection\ItemCollection;
+use Matraux\JsonOrmTest\Dto\Entity\Enum\CommonResult;
 
 final class CommonEntity extends Entity
 {

@@ -1,13 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORMTest\Unit;
+namespace Matraux\JsonOrmTest\Unit;
 
-use Matraux\JsonORMTest\Support\UnitTester;
-use Matraux\JsonORM\Json\SimpleJsonExplorer;
-use Matraux\JsonORMTest\Dto\Entity\CommonEntity;
-use Matraux\JsonORMTest\Dto\Entity\StatusEntity;
-use Matraux\JsonORMTest\Dto\Collection\CommonCollection;
-use Matraux\JsonORMTest\FileSystem\Folder;
+use Matraux\JsonOrmTest\Support\UnitTester;
+use Matraux\JsonOrm\Json\SimpleJsonExplorer;
+use Matraux\JsonOrmTest\Dto\Entity\CommonEntity;
+use Matraux\JsonOrmTest\Dto\Entity\StatusEntity;
+use Matraux\JsonOrmTest\Dto\Collection\CommonCollection;
+use Matraux\JsonOrmTest\FileSystem\Folder;
 
 final class CollectionCest
 {

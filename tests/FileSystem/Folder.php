@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORMTest\FileSystem;
+namespace Matraux\JsonOrmTest\FileSystem;
 
 use Matraux\FileSystem\Folder\Folder as FileSystemFolder;
 

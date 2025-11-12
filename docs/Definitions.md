@@ -4,8 +4,8 @@
 
 ## Entity
 ```php
-use Matraux\JsonORM\Entity\Entity;
-use Matraux\JsonORM\Json\JsonProperty;
+use Matraux\JsonOrm\Entity\Entity;
+use Matraux\JsonOrm\Json\JsonProperty;
 
 final class CommonEntity extends Entity
 {
@@ -28,8 +28,8 @@ final class CommonEntity extends Entity
 
 ## Collection
 ```php
-use Matraux\JsonORM\Collection\Collection;
-use Matraux\JsonORMTest\Entity\CommonEntity;
+use Matraux\JsonOrm\Collection\Collection;
+use Matraux\JsonOrmTest\Entity\CommonEntity;
 
 /**
  * @extends Collection<CommonEntity>

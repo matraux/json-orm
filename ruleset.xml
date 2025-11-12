@@ -19,8 +19,8 @@
 	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
 		<properties>
 			<property name="rootNamespaces" type="array">
-				<element key="src" value="Matraux\JsonORM"/>
-				<element key="tests" value="Matraux\JsonORMTest"/>
+				<element key="src" value="Matraux\JsonOrm"/>
+				<element key="tests" value="Matraux\JsonOrmTest"/>
 			</property>
 		</properties>
 	</rule>

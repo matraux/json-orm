@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORMTest\Dto\Entity;
+namespace Matraux\JsonOrmTest\Dto\Entity;
 
-use Matraux\JsonORM\Entity\Entity;
-use Matraux\JsonORM\Json\JsonProperty;
-use Matraux\JsonORMTest\Dto\Collection\ImageCollection;
+use Matraux\JsonOrm\Entity\Entity;
+use Matraux\JsonOrm\Json\JsonProperty;
+use Matraux\JsonOrmTest\Dto\Collection\ImageCollection;
 
 final class ItemEntity extends Entity
 {

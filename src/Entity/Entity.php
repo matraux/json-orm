@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORM\Entity;
+namespace Matraux\JsonOrm\Entity;
 
 use BackedEnum;
 use JsonSerializable;
-use Matraux\JsonORM\Collection\Collection;
-use Matraux\JsonORM\Json\JsonExplorer;
-use Matraux\JsonORM\Metadata\PropertyMetadataFactory;
+use Matraux\JsonOrm\Collection\Collection;
+use Matraux\JsonOrm\Json\JsonExplorer;
+use Matraux\JsonOrm\Metadata\PropertyMetadataFactory;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
 use ReflectionException;

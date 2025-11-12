@@ -26,12 +26,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Matraux\\JsonORM\\": "src"
+			"Matraux\\JsonOrm\\": "src"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Matraux\\JsonORMTest\\": "tests"
+			"Matraux\\JsonOrmTest\\": "tests"
 		}
 	},
 	"support": {

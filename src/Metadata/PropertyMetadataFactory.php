@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORM\Metadata;
+namespace Matraux\JsonOrm\Metadata;
 
-use Matraux\JsonORM\Entity\Entity;
+use Matraux\JsonOrm\Entity\Entity;
 use ReflectionClass;
 
 final class PropertyMetadataFactory
