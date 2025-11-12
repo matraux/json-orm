@@ -3,19 +3,17 @@
 namespace Matraux\JsonOrmTest\Collection;
 
 use Matraux\FileSystem\File\File;
-use Nette\Utils\FileSystem;
-use Matraux\JsonOrmTest\Bootstrap;
-use Matraux\JsonOrmTest\Support\UnitTester;
-use Matraux\JsonOrm\Json\SimpleJsonExplorer;
 use Matraux\JsonOrm\Exception\ReadonlyAccessException;
+use Matraux\JsonOrm\Json\SimpleJsonExplorer;
 use Matraux\JsonOrmTest\FileSystem\Folder;
+use Matraux\JsonOrmTest\Support\UnitTester;
 
 final class ExplorerCest
 {
 
 	public function testExplorerFromFile(UnitTester $tester): void
 	{
-		$explorer = static::createSimpleJsonExplorer();
+		$explorer = self::createSimpleJsonExplorer();
 		$content = File::fromPath(Folder::create()->data->absolute . 'general.json')->content;
 
 		$tester->assertEquals($content, (string) $explorer);
@@ -31,7 +29,7 @@ final class ExplorerCest
 
 	public function testExplorerArrayAccess(UnitTester $tester): void
 	{
-		$explorer = static::createSimpleJsonExplorer();
+		$explorer = self::createSimpleJsonExplorer();
 		$tester->assertEquals('First', $explorer->withIndex(0)['NAME']);
 		$tester->assertEquals('Second', $explorer->withIndex(1)['NAME']);
 		$tester->assertEquals('Third', $explorer->withIndex(2)['NAME']);
@@ -47,7 +45,7 @@ final class ExplorerCest
 
 	public function testExplorerIterator(UnitTester $tester): void
 	{
-		$explorer = static::createSimpleJsonExplorer();
+		$explorer = self::createSimpleJsonExplorer();
 
 		foreach ($explorer as $data) {
 			$tester->assertIsArray($data);
@@ -56,7 +54,7 @@ final class ExplorerCest
 
 	public function testExplorerCount(UnitTester $tester): void
 	{
-		$explorer = static::createSimpleJsonExplorer();
+		$explorer = self::createSimpleJsonExplorer();
 		$tester->assertCount(3, $explorer);
 	}
 

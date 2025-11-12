@@ -2,16 +2,13 @@
 
 namespace Matraux\JsonOrmTest\Entity;
 
-use Tester\Assert;
-use Tester\TestCase;
-use Matraux\JsonOrmTest\Bootstrap;
+use Matraux\JsonOrm\Json\SimpleJsonExplorer;
+use Matraux\JsonOrmTest\Dto\Collection\CommonCollection;
+use Matraux\JsonOrmTest\Dto\Entity\CommonEntity;
+use Matraux\JsonOrmTest\Dto\Entity\Enum\CommonResult;
+use Matraux\JsonOrmTest\Dto\Entity\StatusEntity;
 use Matraux\JsonOrmTest\FileSystem\Folder;
 use Matraux\JsonOrmTest\Support\UnitTester;
-use Matraux\JsonOrm\Json\SimpleJsonExplorer;
-use Matraux\JsonOrmTest\Dto\Entity\CommonEntity;
-use Matraux\JsonOrmTest\Dto\Entity\StatusEntity;
-use Matraux\JsonOrmTest\Dto\Entity\Enum\CommonResult;
-use Matraux\JsonOrmTest\Dto\Collection\CommonCollection;
 
 final class EntityCest
 {

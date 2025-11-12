@@ -2,19 +2,18 @@
 
 namespace Matraux\JsonOrmTest\Unit;
 
-use Matraux\JsonOrmTest\Support\UnitTester;
 use Matraux\JsonOrm\Json\SimpleJsonExplorer;
+use Matraux\JsonOrmTest\Dto\Collection\CommonCollection;
 use Matraux\JsonOrmTest\Dto\Entity\CommonEntity;
 use Matraux\JsonOrmTest\Dto\Entity\StatusEntity;
-use Matraux\JsonOrmTest\Dto\Collection\CommonCollection;
 use Matraux\JsonOrmTest\FileSystem\Folder;
+use Matraux\JsonOrmTest\Support\UnitTester;
 
 final class CollectionCest
 {
 
 	public function testCollectionIterable(UnitTester $tester): void
 	{
-
 		$commonCollection = self::createCommonCollection($tester);
 		foreach ($commonCollection as $generalEntity) {
 			$tester->assertInstanceOf(CommonEntity::class, $generalEntity);
@@ -86,7 +85,7 @@ final class CollectionCest
 
 	protected static function createCommonCollection(UnitTester $tester): CommonCollection
 	{
-		$explorer = SimpleJsonExplorer::fromFile( Folder::create()->data->absolute . 'general.json');
+		$explorer = SimpleJsonExplorer::fromFile(Folder::create()->data->absolute . 'general.json');
 
 		return CommonCollection::create($explorer);
 	}
