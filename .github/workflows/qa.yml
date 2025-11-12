@@ -20,13 +20,13 @@ jobs:
           tools: composer
 
       - name: Run Composer
-        run: composer install --no-progress --prefer-dist
+        run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
 
-      - name: Prepare PHPStan config
-        run: touch phpstan.editor.neon
+      - name: Build tests Actors
+        run: composer tests:build
 
       - name: Run PHPStan
-        run: composer stan
+        run: composer phpstan
 
   tests:
     name: Tests
@@ -42,7 +42,10 @@ jobs:
           tools: composer
 
       - name: Run Composer
-        run: composer install --no-progress --prefer-dist
+        run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
 
-      - name: Run Tests
-        run: composer test
+      - name: Build tests Actors
+        run: composer tests:build
+
+      - name: Run tests
+        run: composer tests:run
