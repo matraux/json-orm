@@ -2,10 +2,13 @@
 
 namespace Matraux\JsonORMTest;
 
-require_once __DIR__ . '/Bootstrap.php';
+use Matraux\JsonORMTest\Utils\Tracy;
+use Tracy\Debugger;
 
-Bootstrap::dumper();
-dump('Test dumper');
+require_once __DIR__ . '/../vendor/autoload.php';
 
-dump('Exit dumper');
+Tracy::setup();
+Debugger::dump('Start dump');
+
+Debugger::dump('Finish dump');
 exit;

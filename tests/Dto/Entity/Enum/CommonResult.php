@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonORMTest\Entity\Enum;
+namespace Matraux\JsonORMTest\Dto\Entity\Enum;
 
 enum CommonResult: string
 {
