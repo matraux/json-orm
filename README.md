@@ -52,13 +52,13 @@ See [Definitions](./docs/Definitions.md)  for how to define your own entities an
 
 See [Read](./docs/Read.md) for full reading examples.
 ```php
-use Matraux\JsonORM\Json\SimpleJsonReader;
+use Matraux\JsonORM\Json\SimpleJsonExplorer;
 
 // Load data from JSON string or file
-$reader = SimpleJsonReader::fromString('[{"CUSTOM_ID":1,"name":"First"}]');
+$explorer = SimpleJsonExplorer::fromString('[{"CUSTOM_ID":1,"name":"First"}]');
 
 // Create typed collection from JSON
-$collection = CommonCollection::create($reader);
+$collection = CommonCollection::create($explorer);
 
 $entity = $collection[0];
 echo $entity->name; // "First"
