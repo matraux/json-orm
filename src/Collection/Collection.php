@@ -8,7 +8,7 @@ use IteratorAggregate;
 use JsonSerializable;
 use Matraux\JsonOrm\Entity\Entity;
 use Matraux\JsonOrm\Exception\ReadonlyAccessException;
-use Matraux\JsonOrm\Json\JsonExplorer;
+use Matraux\JsonOrm\Json\Explorer;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
 use OutOfRangeException;
@@ -27,11 +27,11 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	/** @var array<int,TEntity> */
 	final protected array $entities = [];
 
-	final protected function __construct(protected ?JsonExplorer $explorer = null)
+	final protected function __construct(protected ?Explorer $explorer = null)
 	{
 	}
 
-	final public static function create(?JsonExplorer $explorer = null): static
+	final public static function create(?Explorer $explorer = null): static
 	{
 		/** @var static<TEntity> */
 		return new static($explorer);
@@ -45,7 +45,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	final public function offsetExists(mixed $offset): bool
 	{
 		if (!is_int($offset)) {
-			throw new UnexpectedValueException(sprintf('Expected offset type "%s", "%s" type given.', 'int', gettype($offset)));
+			throw new UnexpectedValueException(sprintf('Expects offset type "%s", "%s" type given.', 'int', gettype($offset)));
 		}
 
 		return $this->explorer ? isset($this->explorer[$offset]) : isset($this->entities[$offset]);
@@ -68,9 +68,9 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 		$this->assertWritable();
 
 		if (!is_int($offset)) {
-			throw new UnexpectedValueException(sprintf('Expected offset type "%s", "%s" type given.', 'int', gettype($offset)));
+			throw new UnexpectedValueException(sprintf('Expects offset type "%s", "%s" type given.', 'int', gettype($offset)));
 		} elseif (!$value instanceof Entity || $value::class !== static::getEntityClass()) {
-			throw new UnexpectedValueException(sprintf('Expected value type "%s", "%s" type given.', static::getEntityClass(), gettype($value)));
+			throw new UnexpectedValueException(sprintf('Expects value type "%s", "%s" type given.', static::getEntityClass(), gettype($value)));
 		}
 
 		$this->entities[$offset] = $value;

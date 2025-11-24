@@ -3,6 +3,7 @@
 $data = [
 	[
 		'NAME' => 'First',
+		'TIME' => '21.11.2025 15:30:45.987654',
 		'STATUS' => [
 			'VALUE' => 'online',
 		],
@@ -38,6 +39,7 @@ $data = [
 	],
 	[
 		'NAME' => 'Third',
+		'TIME' => '21.11.2025 20:00:00.000000',
 		'STATUS' => [
 			'VALUE' => 'suspend',
 		],

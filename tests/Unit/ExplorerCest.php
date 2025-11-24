@@ -4,7 +4,7 @@ namespace Matraux\JsonOrmTest\Collection;
 
 use Matraux\FileSystem\File\File;
 use Matraux\JsonOrm\Exception\ReadonlyAccessException;
-use Matraux\JsonOrm\Json\SimpleJsonExplorer;
+use Matraux\JsonOrm\Json\SimpleExplorer;
 use Matraux\JsonOrmTest\FileSystem\Folder;
 use Matraux\JsonOrmTest\Support\UnitTester;
 
@@ -22,7 +22,7 @@ final class ExplorerCest
 	public function testExplorerFromString(UnitTester $tester): void
 	{
 		$content = File::fromPath(Folder::create()->data->absolute . 'general.json')->content;
-		$explorer = SimpleJsonExplorer::fromString($content);
+		$explorer = SimpleExplorer::fromString($content);
 
 		$tester->assertEquals($content, (string) $explorer);
 	}
@@ -58,9 +58,9 @@ final class ExplorerCest
 		$tester->assertCount(3, $explorer);
 	}
 
-	protected static function createSimpleJsonExplorer(): SimpleJsonExplorer
+	protected static function createSimpleJsonExplorer(): SimpleExplorer
 	{
-		return SimpleJsonExplorer::fromFile(Folder::create()->data->absolute . 'general.json');
+		return SimpleExplorer::fromFile(Folder::create()->data->absolute . 'general.json');
 	}
 
 }

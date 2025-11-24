@@ -3,16 +3,16 @@
 namespace Matraux\JsonOrmTest\Dto\Entity;
 
 use Matraux\JsonOrm\Entity\Entity;
-use Matraux\JsonOrm\Json\JsonProperty;
+use Matraux\JsonOrm\Json\Property;
 use Matraux\JsonOrmTest\Dto\Collection\ImageCollection;
 
 final class ItemEntity extends Entity
 {
 
-	#[JsonProperty('NAME')]
+	#[Property('NAME')]
 	public ?string $name = null;
 
-	#[JsonProperty('IMAGES')]
+	#[Property('IMAGES')]
 	public ImageCollection $images;
 
 }

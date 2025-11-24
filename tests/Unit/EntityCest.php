@@ -2,7 +2,7 @@
 
 namespace Matraux\JsonOrmTest\Entity;
 
-use Matraux\JsonOrm\Json\SimpleJsonExplorer;
+use Matraux\JsonOrm\Json\SimpleExplorer;
 use Matraux\JsonOrmTest\Dto\Collection\CommonCollection;
 use Matraux\JsonOrmTest\Dto\Entity\CommonEntity;
 use Matraux\JsonOrmTest\Dto\Entity\Enum\CommonResult;
@@ -48,7 +48,7 @@ final class EntityCest
 
 	private static function createCommonCollection(): CommonCollection
 	{
-		$explorer = SimpleJsonExplorer::fromFile(Folder::create()->data->absolute . 'general.json');
+		$explorer = SimpleExplorer::fromFile(Folder::create()->data->absolute . 'general.json');
 
 		return CommonCollection::create($explorer);
 	}

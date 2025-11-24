@@ -2,24 +2,30 @@
 
 namespace Matraux\JsonOrmTest\Dto\Entity;
 
+use DateTime;
 use Matraux\JsonOrm\Entity\Entity;
-use Matraux\JsonOrm\Json\JsonProperty;
+use Matraux\JsonOrm\Json\Property;
+use Matraux\JsonOrmTest\Dto\Codec\Time;
 use Matraux\JsonOrmTest\Dto\Collection\ItemCollection;
 use Matraux\JsonOrmTest\Dto\Entity\Enum\CommonResult;
 
 final class CommonEntity extends Entity
 {
 
-	#[JsonProperty('NAME')]
+	#[Property('NAME')]
 	public ?string $name = null;
 
-	#[JsonProperty('STATUS')]
+	#[Property('TIME')]
+	#[Time]
+	public ?DateTime $timestamp;
+
+	#[Property('STATUS')]
 	public ?StatusEntity $status = null;
 
-	#[JsonProperty('ITEMS')]
+	#[Property('ITEMS')]
 	public ItemCollection $items;
 
-	#[JsonProperty('RESULT')]
+	#[Property('RESULT')]
 	public CommonResult $result;
 
 }

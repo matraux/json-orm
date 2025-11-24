@@ -9,7 +9,7 @@ final class Folder extends FileSystemFolder
 
 	public self $data
 	{
-		get => self::create()->addPath('tests')->addPath('Data');
+		get => self::create()->addPath('tests')->addPath('data');
 	}
 
 }

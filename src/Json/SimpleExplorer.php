@@ -10,7 +10,7 @@ use RuntimeException;
 use Traversable;
 use UnexpectedValueException;
 
-final class SimpleJsonExplorer extends JsonExplorer
+final class SimpleExplorer extends Explorer
 {
 
 	/** @var int<0,max> */
@@ -66,7 +66,7 @@ final class SimpleJsonExplorer extends JsonExplorer
 	public function offsetExists(mixed $offset): bool
 	{
 		if (!is_int($offset) && !is_string($offset)) {
-			throw new UnexpectedValueException(sprintf('Expected offset type "int|string", "%s" given.', gettype($offset)));
+			throw new UnexpectedValueException(sprintf('Expects offset type "int|string", "%s" given.', gettype($offset)));
 		}
 
 		return array_key_exists($offset, $this->data);

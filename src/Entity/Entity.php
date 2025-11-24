@@ -5,7 +5,7 @@ namespace Matraux\JsonOrm\Entity;
 use BackedEnum;
 use JsonSerializable;
 use Matraux\JsonOrm\Collection\Collection;
-use Matraux\JsonOrm\Json\JsonExplorer;
+use Matraux\JsonOrm\Json\Explorer;
 use Matraux\JsonOrm\Metadata\PropertyMetadataFactory;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
@@ -25,7 +25,7 @@ abstract class Entity implements Stringable, JsonSerializable
 		return new static();
 	}
 
-	final public static function fromExplorer(JsonExplorer $explorer): static
+	final public static function fromExplorer(Explorer $explorer): static
 	{
 		$entity = static::create();
 
@@ -53,8 +53,12 @@ abstract class Entity implements Stringable, JsonSerializable
 
 						continue;
 					}
+				}
 
-					settype($value, $type);
+				if ($codec = $property->codec) {
+					$entity->{$property->name} = $codec->decode($value);
+
+					continue;
 				}
 
 				$entity->{$property->name} = $value;
@@ -74,6 +78,12 @@ abstract class Entity implements Stringable, JsonSerializable
 		$properties = PropertyMetadataFactory::create(static::class);
 		foreach ($properties as $property) {
 			if (!new ReflectionProperty(static::class, $property->name)->isInitialized($this)) {
+				continue;
+			}
+
+			if ($codec = $property->codec) {
+				$data[$property->index] = $codec->encode($this->{$property->name});
+
 				continue;
 			}
 

@@ -12,7 +12,7 @@ use Stringable;
  * @implements ArrayAccess<int|string,mixed>
  * @implements IteratorAggregate<int|string,mixed>
  */
-abstract class JsonExplorer implements ArrayAccess, IteratorAggregate, Countable, Stringable
+abstract class Explorer implements ArrayAccess, IteratorAggregate, Countable, Stringable
 {
 
 	abstract public function withIndex(string|int $index): static;
