@@ -9,6 +9,7 @@ use Matraux\JsonOrm\Json\Explorer;
 use Matraux\JsonOrm\Metadata\PropertyMetadataFactory;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
+use PropertyHookType;
 use ReflectionException;
 use ReflectionProperty;
 use Stringable;
@@ -77,17 +78,13 @@ abstract class Entity implements Stringable, JsonSerializable
 		$data = [];
 		$properties = PropertyMetadataFactory::create(static::class);
 		foreach ($properties as $property) {
-			if (!new ReflectionProperty(static::class, $property->name)->isInitialized($this)) {
+			$reflection = new ReflectionProperty(static::class, $property->name);
+
+			if(!$reflection->isInitialized($this) && !$reflection->getHook(PropertyHookType::Get)) {
 				continue;
 			}
 
-			if ($codec = $property->codec) {
-				$data[$property->index] = $codec->encode($this->{$property->name});
-
-				continue;
-			}
-
-			$data[$property->index] = $this->{$property->name};
+			$data[$property->index] = $property->codec ? $property->codec->encode($this->{$property->name}) : $this->{$property->name};
 		}
 
 		return $data;

@@ -45,7 +45,7 @@ composer require matraux/json-orm
 | 1.4.1 | 8.4+ | 50%+ performance boost via metadata caching
 | 1.4.2 | 8.4+ | Entity & Metadata fix and optimization
 | 2.0.0 | 8.4+ | Namespace rename and switch to Codeception
-| 2.1.0 | 8.4+ | Added support for custom property codecs (encode/decode)
+| 2.1.0 | 8.4+ | Added support for property hooks and codecs (encode/decode)
 
 <br>
 
