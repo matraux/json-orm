@@ -40,6 +40,7 @@ final class CollectionCest
 		$commonCollection[1] = CommonEntity::create();
 		$commonCollection[2] = CommonEntity::create();
 		$commonCollection[3] = CommonEntity::create();
+		$commonCollection[] = CommonEntity::create();
 	}
 
 	public function testCollectionArrayUnset(UnitTester $tester): void

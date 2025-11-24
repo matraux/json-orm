@@ -80,7 +80,7 @@ abstract class Entity implements Stringable, JsonSerializable
 		foreach ($properties as $property) {
 			$reflection = new ReflectionProperty(static::class, $property->name);
 
-			if(!$reflection->isInitialized($this) && !$reflection->getHook(PropertyHookType::Get)) {
+			if (!$reflection->isInitialized($this) && !$reflection->getHook(PropertyHookType::Get)) {
 				continue;
 			}
 

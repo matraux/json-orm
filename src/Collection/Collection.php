@@ -67,13 +67,13 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	{
 		$this->assertWritable();
 
-		if (!is_int($offset)) {
+		if (!is_int($offset) && $offset !== null) {
 			throw new UnexpectedValueException(sprintf('Expects offset type "%s", "%s" type given.', 'int', gettype($offset)));
 		} elseif (!$value instanceof Entity || $value::class !== static::getEntityClass()) {
 			throw new UnexpectedValueException(sprintf('Expects value type "%s", "%s" type given.', static::getEntityClass(), gettype($value)));
 		}
 
-		$this->entities[$offset] = $value;
+		$offset !== null ? $this->entities[$offset] = $value : $this->entities[] = $value;
 	}
 
 	final public function offsetUnset(mixed $offset): void
