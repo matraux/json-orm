@@ -31,7 +31,13 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	{
 	}
 
-	final public static function create(?Explorer $explorer = null): static
+	final public static function create(): static
+	{
+		/** @var static<TEntity> */
+		return new static();
+	}
+
+	final public static function fromExplorer(Explorer $explorer): static
 	{
 		/** @var static<TEntity> */
 		return new static($explorer);

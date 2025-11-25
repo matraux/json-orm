@@ -43,7 +43,7 @@ abstract class Entity implements Stringable, JsonSerializable
 						continue;
 					} elseif (is_array($value) && is_subclass_of($type, Collection::class)) {
 						/** @var class-string<Collection<Entity>> $type */
-						$entity->{$property->name} = $type::create($explorer->withIndex($property->index));
+						$entity->{$property->name} = $type::fromExplorer($explorer->withIndex($property->index));
 
 						continue;
 					} elseif ((is_string($value) || is_int($value)) && is_subclass_of($type, BackedEnum::class)) {

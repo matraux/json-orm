@@ -50,7 +50,7 @@ final class EntityCest
 	{
 		$explorer = SimpleExplorer::fromFile(Folder::create()->data->absolute . 'general.json');
 
-		return CommonCollection::create($explorer);
+		return CommonCollection::fromExplorer($explorer);
 	}
 
 }
