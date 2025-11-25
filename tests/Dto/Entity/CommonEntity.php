@@ -5,7 +5,7 @@ namespace Matraux\JsonOrmTest\Dto\Entity;
 use DateTime;
 use Matraux\JsonOrm\Entity\Entity;
 use Matraux\JsonOrm\Json\Property;
-use Matraux\JsonOrmTest\Dto\Codec\Time;
+use Matraux\JsonOrmTest\Dto\Codec\DateTimeCodec;
 use Matraux\JsonOrmTest\Dto\Collection\ItemCollection;
 use Matraux\JsonOrmTest\Dto\Entity\Enum\CommonResult;
 
@@ -16,7 +16,7 @@ final class CommonEntity extends Entity
 	public ?string $name = null;
 
 	#[Property('TIME')]
-	#[Time]
+	#[DateTimeCodec]
 	public ?DateTime $timestamp;
 
 	#[Property('STATUS')]

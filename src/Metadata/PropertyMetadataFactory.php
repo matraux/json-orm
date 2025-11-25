@@ -4,16 +4,18 @@ namespace Matraux\JsonOrm\Metadata;
 
 use Matraux\JsonOrm\Entity\Entity;
 use ReflectionClass;
+use ReflectionException;
 
 final class PropertyMetadataFactory
 {
 
 	/** @var array<class-string<Entity>,array<PropertyMetadata>> */
-	protected static array $cache;
+	protected static array $cache = [];
 
 	/**
 	 * @param class-string<Entity> $entityClass
 	 * @return array<PropertyMetadata>
+	 * @throws ReflectionException
 	 */
 	public static function create(string $entityClass): array
 	{
