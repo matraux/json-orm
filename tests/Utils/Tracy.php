@@ -3,7 +3,7 @@
 namespace Matraux\JsonOrmTest\Utils;
 
 use Matraux\FileSystem\File\File;
-use Matraux\FileSystem\Folder\Folder;
+use Matraux\JsonOrmTest\FileSystem\Folder;
 use Nette\Neon\Neon;
 use Throwable;
 use Tracy\Debugger;

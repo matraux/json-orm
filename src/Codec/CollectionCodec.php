@@ -10,7 +10,10 @@ use Matraux\JsonOrm\Metadata\PropertyMetadata;
 final class CollectionCodec implements Codec
 {
 
-	public function encode(mixed $value, PropertyMetadata $property): mixed
+	/**
+	 * @return Collection<Entity>|null
+	 */
+	public function encode(mixed $value, PropertyMetadata $property): ?Collection
 	{
 		return $value instanceof Collection ? $value : null;
 	}

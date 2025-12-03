@@ -9,7 +9,7 @@ use Matraux\JsonOrm\Metadata\PropertyMetadata;
 final class EntityCodec implements Codec
 {
 
-	public function encode(mixed $value, PropertyMetadata $property): mixed
+	public function encode(mixed $value, PropertyMetadata $property): ?Entity
 	{
 		return $value instanceof Entity ? $value : null;
 	}
