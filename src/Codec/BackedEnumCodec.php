@@ -2,10 +2,12 @@
 
 namespace Matraux\JsonOrm\Codec;
 
+use Attribute;
 use BackedEnum;
 use Matraux\JsonOrm\Json\Explorer;
 use Matraux\JsonOrm\Metadata\PropertyMetadata;
 
+#[Attribute(Attribute::TARGET_PROPERTY)]
 final class BackedEnumCodec implements Codec
 {
 

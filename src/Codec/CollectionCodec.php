@@ -2,11 +2,13 @@
 
 namespace Matraux\JsonOrm\Codec;
 
+use Attribute;
 use Matraux\JsonOrm\Collection\Collection;
 use Matraux\JsonOrm\Entity\Entity;
 use Matraux\JsonOrm\Json\Explorer;
 use Matraux\JsonOrm\Metadata\PropertyMetadata;
 
+#[Attribute(Attribute::TARGET_PROPERTY)]
 final class CollectionCodec implements Codec
 {
 
