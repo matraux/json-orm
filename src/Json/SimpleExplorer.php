@@ -42,7 +42,7 @@ final class SimpleExplorer extends Explorer
 	{
 		if (!is_file($file)) {
 			throw new RuntimeException(sprintf('No such file "%s".', $file));
-		} elseif(!$json = @file_get_contents($file)) {
+		} elseif (!$json = @file_get_contents($file)) {
 			throw new RuntimeException(sprintf('Can not open file "%s".', $file));
 		}
 
