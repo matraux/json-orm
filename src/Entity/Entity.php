@@ -2,11 +2,10 @@
 
 namespace Matraux\JsonOrm\Entity;
 
+use JsonException;
 use JsonSerializable;
 use Matraux\JsonOrm\Json\Explorer;
 use Matraux\JsonOrm\Metadata\PropertyMetadataFactory;
-use Nette\Utils\Json;
-use Nette\Utils\JsonException;
 use Stringable;
 
 abstract class Entity implements Stringable, JsonSerializable
@@ -58,7 +57,10 @@ abstract class Entity implements Stringable, JsonSerializable
 	 */
 	final public function __toString(): string
 	{
-		return Json::encode($this);
+		return json_encode(
+			value: $this,
+			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR
+		);
 	}
 
 }

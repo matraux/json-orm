@@ -2,9 +2,7 @@
 
 namespace Matraux\JsonOrm\Json;
 
-use Nette\Utils\FileSystem;
-use Nette\Utils\Json;
-use Nette\Utils\JsonException;
+use JsonException;
 use OutOfRangeException;
 use RuntimeException;
 use Traversable;
@@ -28,7 +26,11 @@ final class SimpleExplorer extends Explorer
 	 */
 	public static function fromString(?string $json = null): static
 	{
-		$data = (array) Json::decode($json ?? '[]', true);
+		/** @var array<mixed> $data */
+		$data = json_decode(
+			json: $json ?? '[]',
+			flags: JSON_OBJECT_AS_ARRAY | JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR
+		);
 
 		return new static($data);
 	}
@@ -40,9 +42,11 @@ final class SimpleExplorer extends Explorer
 	{
 		if (!is_file($file)) {
 			throw new RuntimeException(sprintf('No such file "%s".', $file));
+		} elseif(!$json = @file_get_contents($file)) {
+			throw new RuntimeException(sprintf('Can not open file "%s".', $file));
 		}
 
-		return self::fromString(FileSystem::read($file));
+		return self::fromString($json);
 	}
 
 	public function count(): int
@@ -66,7 +70,7 @@ final class SimpleExplorer extends Explorer
 	public function offsetExists(mixed $offset): bool
 	{
 		if (!is_int($offset) && !is_string($offset)) {
-			throw new UnexpectedValueException(sprintf('Expects offset type "int|string", "%s" given.', gettype($offset)));
+			throw new UnexpectedValueException(sprintf('Expects offset type "int|string", "%s" given.', get_debug_type($offset)));
 		}
 
 		return array_key_exists($offset, $this->data);
@@ -90,9 +94,9 @@ final class SimpleExplorer extends Explorer
 	public function withIndex(string|int $index): static
 	{
 		if (!array_key_exists($index, $this->data)) {
-			throw new UnexpectedValueException(sprintf('Missing required key "%s".', $index));
+			throw new UnexpectedValueException(sprintf('No such index "%s".', $index));
 		} elseif (!is_array($this->data[$index])) {
-			throw new UnexpectedValueException(sprintf('Missing nested data at key "%s".', $index));
+			throw new UnexpectedValueException(sprintf('No such nested data at index "%s".', $index));
 		}
 
 		return new static($this->data[$index]);
@@ -103,7 +107,10 @@ final class SimpleExplorer extends Explorer
 	 */
 	public function __toString(): string
 	{
-		return Json::encode($this->data);
+		return json_encode(
+			value: $this->data,
+			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR
+		);
 	}
 
 }

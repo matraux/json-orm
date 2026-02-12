@@ -5,12 +5,11 @@ namespace Matraux\JsonOrm\Collection;
 use ArrayAccess;
 use Countable;
 use IteratorAggregate;
+use JsonException;
 use JsonSerializable;
 use Matraux\JsonOrm\Entity\Entity;
 use Matraux\JsonOrm\Exception\ReadonlyAccessException;
 use Matraux\JsonOrm\Json\Explorer;
-use Nette\Utils\Json;
-use Nette\Utils\JsonException;
 use OutOfRangeException;
 use Stringable;
 use Traversable;
@@ -31,12 +30,18 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	{
 	}
 
+	/**
+	 * @return static<TEntity>
+	 */
 	final public static function create(): static
 	{
 		/** @var static<TEntity> */
 		return new static();
 	}
 
+	/**
+	 * @return static<TEntity>
+	 */
 	final public static function fromExplorer(Explorer $explorer): static
 	{
 		/** @var static<TEntity> */
@@ -51,7 +56,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	final public function offsetExists(mixed $offset): bool
 	{
 		if (!is_int($offset)) {
-			throw new UnexpectedValueException(sprintf('Expects offset type "%s", "%s" type given.', 'int', gettype($offset)));
+			throw new UnexpectedValueException(sprintf('Expects offset type "int", "%s" type given.', get_debug_type($offset)));
 		}
 
 		return $this->explorer ? isset($this->explorer[$offset]) : isset($this->entities[$offset]);
@@ -74,9 +79,9 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 		$this->assertWritable();
 
 		if (!is_int($offset) && $offset !== null) {
-			throw new UnexpectedValueException(sprintf('Expects offset type "%s", "%s" type given.', 'int', gettype($offset)));
+			throw new UnexpectedValueException(sprintf('Expects offset type "int", "%s" type given.', get_debug_type($offset)));
 		} elseif (!$value instanceof Entity || $value::class !== static::getEntityClass()) {
-			throw new UnexpectedValueException(sprintf('Expects value type "%s", "%s" type given.', static::getEntityClass(), gettype($value)));
+			throw new UnexpectedValueException(sprintf('Expects value type "%s", "%s" type given.', static::getEntityClass(), get_debug_type($value)));
 		}
 
 		$offset !== null ? $this->entities[$offset] = $value : $this->entities[] = $value;
@@ -141,7 +146,10 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	 */
 	final public function __toString(): string
 	{
-		return Json::encode($this);
+		return json_encode(
+			value: $this,
+			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR
+		);
 	}
 
 }
