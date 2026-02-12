@@ -12,6 +12,10 @@ final class PropertyMetadataFactory
 	/** @var array<class-string<Entity>,array<PropertyMetadata>> */
 	protected static array $cache = [];
 
+	protected function __construct()
+	{
+	}
+
 	/**
 	 * @param class-string<Entity> $entityClass
 	 * @return array<PropertyMetadata>
@@ -26,7 +30,7 @@ final class PropertyMetadataFactory
 		$properties = new ReflectionClass($entityClass)->getProperties();
 		$items = [];
 		foreach ($properties as $property) {
-			$items[] = PropertyMetadata::create($property);
+			$items[] = new PropertyMetadata($property);
 		}
 
 		return self::$cache[$entityClass] = $items;

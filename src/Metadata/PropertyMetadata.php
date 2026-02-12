@@ -27,7 +27,10 @@ final readonly class PropertyMetadata
 
 	public ?Codec $codec;
 
-	protected function __construct(protected readonly ReflectionProperty $reflection)
+	/**
+	 * @throws CodecException
+	 */
+	public function __construct(protected readonly ReflectionProperty $reflection)
 	{
 		$this->name = $this->reflection->name;
 
@@ -53,14 +56,6 @@ final readonly class PropertyMetadata
 		} else {
 			$this->codec = null;
 		}
-	}
-
-	/**
-	 * @throws CodecException
-	 */
-	public static function create(ReflectionProperty $reflection): static
-	{
-		return new static($reflection);
 	}
 
 	public function isInitialized(Entity $entity): bool
