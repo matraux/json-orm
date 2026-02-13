@@ -23,8 +23,8 @@ final class PropertyMetadataFactory
 	 */
 	public static function create(string $entityClass): array
 	{
-		if ($items = self::$cache[$entityClass] ?? null) {
-			return $items;
+		if (array_key_exists($entityClass, self::$cache)) {
+			return self::$cache[$entityClass];
 		}
 
 		$properties = new ReflectionClass($entityClass)->getProperties();
