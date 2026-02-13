@@ -18,12 +18,12 @@ final class EntityCodec implements Codec
 
 	public function decode(Explorer $explorer, PropertyMetadata $property): ?Entity
 	{
+		/** @var ?class-string<Entity> $type */
 		$type = $property->type;
 		if (!$type || !is_subclass_of($type, Entity::class)) {
 			return null;
 		}
 
-		/** @var class-string<Entity> $type */
 		return $type::fromExplorer($explorer->withIndex($property->index));
 	}
 

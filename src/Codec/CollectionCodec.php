@@ -13,7 +13,7 @@ final class CollectionCodec implements Codec
 {
 
 	/**
-	 * @return Collection<Entity>|null
+	 * @return Collection<Entity>
 	 */
 	public function encode(mixed $value, PropertyMetadata $property): ?Collection
 	{
@@ -21,16 +21,16 @@ final class CollectionCodec implements Codec
 	}
 
 	/**
-	 * @return Collection<Entity>|null
+	 * @return Collection<Entity>
 	 */
 	public function decode(Explorer $explorer, PropertyMetadata $property): ?Collection
 	{
+		/** @var ?class-string<Collection<Entity>> $type */
 		$type = $property->type;
 		if (!$type || !is_subclass_of($type, Collection::class)) {
 			return null;
 		}
 
-		/** @var class-string<Collection<Entity>> $type */
 		return $type::fromExplorer($explorer->withIndex($property->index));
 	}
 

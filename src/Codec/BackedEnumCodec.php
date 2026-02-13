@@ -11,13 +11,14 @@ use Matraux\JsonOrm\Metadata\PropertyMetadata;
 final class BackedEnumCodec implements Codec
 {
 
-	public function encode(mixed $value, PropertyMetadata $property): mixed
+	public function encode(mixed $value, PropertyMetadata $property): null|int|string
 	{
 		return $value instanceof BackedEnum ? $value->value : null;
 	}
 
 	public function decode(Explorer $explorer, PropertyMetadata $property): ?BackedEnum
 	{
+		/** @var ?class-string<BackedEnum> $type */
 		$type = $property->type;
 		if (!$type || !is_subclass_of($type, BackedEnum::class)) {
 			return null;
@@ -28,8 +29,7 @@ final class BackedEnumCodec implements Codec
 			return null;
 		}
 
-		/** @var class-string<BackedEnum> $type */
-		return $type::tryFrom($value);
+		return $type::from($value);
 	}
 
 }
