@@ -33,7 +33,7 @@
 	$entity = $collection[0];
 	echo $entity->id; // Print 1
 	echo $entity->name; // Print "First"
-	$time = $entity->time; // null|Datetime object
+	$time = $entity->time; // null|DateTime object
 
 	/**
 	 * Iterator
@@ -66,6 +66,6 @@
 
 	echo $entity->name; // Print "First"
 
-	$time = $entity->time; // null|Datetime object
+	$time = $entity->time; // null|DateTime object
 ```
 
