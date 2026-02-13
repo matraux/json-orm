@@ -18,6 +18,7 @@ use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionType;
 use ReflectionUnionType;
+use RuntimeException;
 
 final readonly class PropertyMetadata
 {
@@ -43,33 +44,41 @@ final readonly class PropertyMetadata
 		$this->name = $this->reflection->name;
 		$this->class = $this->reflection->class;
 		$this->index = $this->resolveIndex();
-		$this->types = $this->resolveTypes();
 		$this->type = $this->resolveType();
+		$this->types = $this->resolveTypes();
 		$this->codec = $this->resolveCodec();
+	}
+
+	public function isInitialized(Entity $entity): bool
+	{
+		return $this->reflection->isInitialized($entity) || $this->reflection->getHook(PropertyHookType::Get);
 	}
 
 	protected function resolveType(): ?string
 	{
-		$singleType = $this->types;
-		unset($singleType['null']);
-		return count($singleType) === 1 ? current($singleType) : null;
+		$type = $this->reflection->getType();
+
+		return $type instanceof ReflectionNamedType ? $type->getName() : null;
 	}
 
 	protected function resolveCodec(): ?Codec
 	{
 		$attributes = $this->reflection->getAttributes(Codec::class, ReflectionAttribute::IS_INSTANCEOF);
 		if (count($attributes) > 1) {
-			throw new CodecException(sprintf('Property %s::$%s expects single %s attribute, multiple given.', $this->class, $this->name, Codec::class));
+			throw new CodecException(sprintf('%s::$%s expects single %s attribute, multiple given.', $this->class, $this->name, Codec::class));
 		}
 
 		if ($codec = array_shift($attributes)?->newInstance()) {
 			return $codec;
-		} elseif ($this->type && is_subclass_of($this->type, Entity::class)) {
-			return new EntityCodec();
-		} elseif ($this->type && is_subclass_of($this->type, Collection::class)) {
-			return new CollectionCodec();
-		} elseif ($this->type && is_subclass_of($this->type, BackedEnum::class)) {
-			return new BackedEnumCodec();
+		}
+
+		if ($this->type) {
+			return match (true) {
+				is_subclass_of($this->type, Entity::class) => new EntityCodec(),
+				is_subclass_of($this->type, Collection::class) => new CollectionCodec(),
+				is_subclass_of($this->type, BackedEnum::class) => new BackedEnumCodec(),
+				default => null,
+			};
 		}
 
 		return null;
@@ -78,13 +87,11 @@ final readonly class PropertyMetadata
 	protected function resolveIndex(): string
 	{
 		$attributes = $this->reflection->getAttributes(Property::class, ReflectionAttribute::IS_INSTANCEOF);
+		if (count($attributes) > 1) {
+			throw new RuntimeException(sprintf('%s::$%s expects single %s attribute, multiple given.', $this->class, $this->name, Property::class));
+		}
 
 		return array_shift($attributes)?->newInstance()->name ?? $this->name;
-	}
-
-	public function isInitialized(Entity $entity): bool
-	{
-		return $this->reflection->isInitialized($entity) || $this->reflection->getHook(PropertyHookType::Get);
 	}
 
 	/**
