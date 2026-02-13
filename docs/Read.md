@@ -21,12 +21,11 @@
 
 ## Reading by collection
 ```php
-	use Matraux\JsonOrm\Json\SimpleJsonExplorer;
+	use Matraux\JsonOrm\Json\SimpleExplorer;
 
-	$explorer = SimpleJsonExplorer::fromFile('path to JSON file'); // Access data from file
-	$explorer = SimpleJsonExplorer::fromJson('JSON string'); // Access data from string
-
-	$collection = GeneralCollection::create($explorer); // Create collection
+	$explorer = SimpleExplorer::fromFile('path to JSON file'); // Access data from file
+	$explorer = SimpleExplorer::fromJson('JSON string'); // Access data from string
+	$collection = CommonCollection::create($explorer); // Create collection
 
 	/**
 	 * ArrayAccess
@@ -57,12 +56,11 @@
 
 ## Reading by entity
 ```php
-	use Matraux\JsonOrm\Json\SimpleJsonExplorer;
+	use Matraux\JsonOrm\Json\SimpleExplorer;
 
-	$explorer = SimpleJsonExplorer::fromFile('path to JSON file'); // Access data from file
-	$explorer = SimpleJsonExplorer::fromJson('JSON string'); // Access data from string
-
-	$entity = GeneralEntity::fromExplorer($explorer);
+	$explorer = SimpleExplorer::fromFile('path to JSON file'); // Access data from file
+	$explorer = SimpleExplorer::fromJson('JSON string'); // Access data from string
+	$entity = CommonEntity::fromExplorer($explorer);
 
 	echo $entity->id; // Print "1"
 

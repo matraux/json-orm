@@ -2,17 +2,17 @@
 
 # Write
 ```php
-	$collection = GeneralCollection::create();
+	$collection = CommonCollection::create();
 	$entity = $collection->createEntity(); // Insert entity to index +1
 	$entity->id = 1;
 	$entity->name = 'First';
 	$entity->time = new Datetime('now');
 
-	$entity = $collection[1] = GeneralEntity::create(); // Insert entity to index 1
+	$entity = $collection[1] = CommonEntity::create(); // Insert entity to index 1
 	$entity->id = 2;
 	$entity->name = 'Second';
 
-	$collection[3] = GeneralEntity::create();  // Insert entity to index 2
+	$collection[3] = CommonEntity::create();  // Insert entity to index 2
 	unset($collection[3]); // Remove entity with index 2
 
 	echo json_encode($collection[1]); // Print '{"CUSTOM_ID":1,"name":"First","TIME":"24.11.2025 14:35:00.000000"}'
