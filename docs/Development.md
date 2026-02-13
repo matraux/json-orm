@@ -12,7 +12,7 @@ composer codefixer   # Run PHP Code Style Fixer (phpcbf)
 composer codesniffer # Run PHP CodeSniffer (phpcs)
 composer phpstan     # Run static analysis (PHPStan)
 composer tests:build # Build unit tests
-composer tests:build # Run unit tests
+composer tests:run   # Run unit tests
 ```
 
 <br>

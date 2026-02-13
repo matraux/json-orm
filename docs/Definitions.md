@@ -33,7 +33,6 @@ final class CommonEntity extends Entity
 ## Collection
 ```php
 use Matraux\JsonOrm\Collection\Collection;
-use Matraux\JsonOrmTest\Entity\CommonEntity;
 
 /**
  * @extends Collection<CommonEntity>

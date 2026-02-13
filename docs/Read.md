@@ -24,8 +24,8 @@
 	use Matraux\JsonOrm\Json\SimpleExplorer;
 
 	$explorer = SimpleExplorer::fromFile('path to JSON file'); // Access data from file
-	$explorer = SimpleExplorer::fromJson('JSON string'); // Access data from string
-	$collection = CommonCollection::create($explorer); // Create collection
+	$explorer = SimpleExplorer::fromString('JSON string'); // Access data from string
+	$collection = CommonCollection::fromExplorer($explorer); // Create collection
 
 	/**
 	 * ArrayAccess
@@ -51,7 +51,7 @@
 {
 	"CUSTOM_ID": 1,
 	"name": "First"
-},
+}
 ```
 
 ## Reading by entity
@@ -59,7 +59,7 @@
 	use Matraux\JsonOrm\Json\SimpleExplorer;
 
 	$explorer = SimpleExplorer::fromFile('path to JSON file'); // Access data from file
-	$explorer = SimpleExplorer::fromJson('JSON string'); // Access data from string
+	$explorer = SimpleExplorer::fromString('JSON string'); // Access data from string
 	$entity = CommonEntity::fromExplorer($explorer);
 
 	echo $entity->id; // Print "1"

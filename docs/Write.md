@@ -17,9 +17,9 @@
 
 	echo json_encode($collection[1]); // Print '{"CUSTOM_ID":1,"name":"First","TIME":"24.11.2025 14:35:00.000000"}'
 
-	echo $collection[1]; // Print '{"CUSTOM_ID":1,"name":"First"}'
+	echo $collection[1]; // Print '{"CUSTOM_ID":1,"name":"First","TIME":"24.11.2025 14:35:00.000000"}'
 
-	echo json_encode($collection); // Print '[{"CUSTOM_ID":1,"name":"First"},{"CUSTOM_ID":2,"name":"Second"}]'
+	echo json_encode($collection); // Print '[{"CUSTOM_ID":1,"name":"First","TIME":"24.11.2025 14:35:00.000000"},{"CUSTOM_ID":2,"name":"Second"}]'
 
-	echo $collection; // Print '[{"CUSTOM_ID":1,"name":"First"},{"CUSTOM_ID":2,"name":"Second"}]'
+	echo $collection; // Print '[{"CUSTOM_ID":1,"name":"First","TIME":"24.11.2025 14:35:00.000000"},{"CUSTOM_ID":2,"name":"Second"}]'
 ```
