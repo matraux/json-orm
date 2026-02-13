@@ -113,19 +113,25 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	 */
 	final public function jsonSerialize(): array
 	{
-		return array_values(iterator_to_array($this));
+		$entities = [];
+		foreach ($this as $entity) {
+			$entities[] = $entity;
+		}
+
+		return $entities;
 	}
 
+	/**
+	 * @return Traversable<int,TEntity>
+	 */
 	public function getIterator(): Traversable
 	{
 		if ($this->explorer) {
-			foreach ($this->explorer as $key => $data) {
-				yield (int) $key => static::getEntityClass()::fromExplorer($this->explorer->withIndex($key));
+			foreach ($this->explorer as $index => $data) {
+				yield (int) $index => static::getEntityClass()::fromExplorer($this->explorer->withIndex($index));
 			}
 		} else {
-			foreach ($this->entities as $key => $entity) {
-				yield $key => $entity;
-			}
+			yield from $this->entities;
 		}
 	}
 
