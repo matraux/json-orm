@@ -127,7 +127,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	public function getIterator(): Traversable
 	{
 		if ($this->explorer) {
-			foreach ($this->explorer as $index => $data) {
+			foreach ($this->explorer as $index => $_) {
 				yield (int) $index => static::getEntityClass()::fromExplorer($this->explorer->withIndex($index));
 			}
 		} else {
