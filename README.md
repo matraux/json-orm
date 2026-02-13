@@ -23,7 +23,7 @@ Useful for structured JSON APIs, configuration parsing, and object-based manipul
 - Conversion from JSON to typed entities and back
 - Lazy-loading collections for efficient memory usage
 - Entity objects are mutable and can be freely modified after creation
-- Strict type support with automatic casting
+- Strict type support with automatic casting and codec transformations
 - Native support for nested structures and arrays
 - Easy integration with configuration or API responses
 
@@ -46,6 +46,7 @@ composer require matraux/json-orm
 | 1.4.2 | 8.4+ | Entity & Metadata fix and optimization
 | 2.0.0 | 8.4+ | Namespace rename and switch to Codeception
 | 2.1.0 | 8.4+ | Added support for property hooks and codecs (encode/decode)
+| 2.2.0 | 8.4+ | Performance optimization and removed composer dependencies
 
 <br>
 
@@ -54,13 +55,13 @@ See [Definitions](./docs/Definitions.md)  for how to define your own entities an
 
 See [Read](./docs/Read.md) for full reading examples.
 ```php
-use Matraux\JsonOrm\Json\SimpleJsonExplorer;
+use Matraux\JsonOrm\Json\SimpleExplorer;
 
 // Load data from JSON string or file
-$explorer = SimpleJsonExplorer::fromString('[{"CUSTOM_ID":1,"name":"First"}]');
+$explorer = SimpleExplorer::fromString('[{"CUSTOM_ID":1,"name":"First"}]');
 
 // Create typed collection from JSON
-$collection = CommonCollection::create($explorer);
+$collection = CommonCollection::fromExplorer($explorer);
 
 $entity = $collection[0];
 echo $entity->name; // "First"
