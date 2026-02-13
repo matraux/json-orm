@@ -24,25 +24,29 @@ final class SimpleExplorer extends Explorer
 	/**
 	 * @throws JsonException
 	 */
-	public static function fromString(?string $json = null): static
+	public static function fromString(string $json): static
 	{
-		/** @var array<mixed> $data */
 		$data = json_decode(
-			json: $json ?? '[]',
+			json: $json,
 			flags: JSON_OBJECT_AS_ARRAY | JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR
 		);
+
+		if (!is_array($data)) {
+			throw new UnexpectedValueException('Json data must be array.');
+		}
 
 		return new static($data);
 	}
 
 	/**
 	 * @throws RuntimeException
+	 * @throws JsonException
 	 */
 	public static function fromFile(string $file): static
 	{
 		if (!is_file($file)) {
 			throw new RuntimeException(sprintf('No such file "%s".', $file));
-		} elseif (!$json = @file_get_contents($file)) {
+		} elseif (($json = @file_get_contents($file)) === false) {
 			throw new RuntimeException(sprintf('Can not open file "%s".', $file));
 		}
 
@@ -59,9 +63,7 @@ final class SimpleExplorer extends Explorer
 	 */
 	public function getIterator(): Traversable
 	{
-		foreach ($this->data as $key => $value) {
-			yield $key => $value;
-		}
+		yield from $this->data;
 	}
 
 	/**
