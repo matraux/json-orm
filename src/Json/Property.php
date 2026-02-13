@@ -5,10 +5,10 @@ namespace Matraux\JsonOrm\Json;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
-final class Property
+final readonly class Property
 {
 
-	public function __construct(public readonly string $name)
+	public function __construct(public string $name)
 	{
 	}
 
