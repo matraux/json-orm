@@ -6,9 +6,7 @@ use JsonException;
 use JsonSerializable;
 use Matraux\JsonOrm\Json\Explorer;
 use Matraux\JsonOrm\Metadata\PropertyMetadataFactory;
-use RuntimeException;
 use Stringable;
-use Throwable;
 
 abstract class Entity implements Stringable, JsonSerializable
 {
@@ -24,21 +22,12 @@ abstract class Entity implements Stringable, JsonSerializable
 
 	final public static function fromExplorer(Explorer $explorer): static
 	{
-		$entity = static::create();
+		$entity = new static();
 
 		$properties = PropertyMetadataFactory::create(static::class);
 		foreach ($properties as $property) {
 			if (isset($explorer[$property->index])) {
-				$value = $property->codec ? $property->codec->decode($explorer, $property) : $explorer[$property->index];
-				try {
-					$entity->{$property->name} = $value;
-				} catch (Throwable $th) {
-					throw new RuntimeException(
-						message: sprintf('Property %s::$%s does not accept value type "%s".', $property->class, $property->name, get_debug_type($value)),
-						code: 500,
-						previous: $th
-					);
-				}
+				$entity->{$property->name} = $property->codec ? $property->codec->decode($explorer, $property) : $explorer[$property->index];
 			}
 		}
 
