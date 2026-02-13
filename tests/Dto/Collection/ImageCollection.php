@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonOrmTest\Dto\Collection;
+namespace Matraux\JsonOrm\Test\Dto\Collection;
 
 use Matraux\JsonOrm\Collection\Collection;
-use Matraux\JsonOrmTest\Dto\Entity\ImageEntity;
+use Matraux\JsonOrm\Test\Dto\Entity\ImageEntity;
 
 /**
  * @extends Collection<ImageEntity>

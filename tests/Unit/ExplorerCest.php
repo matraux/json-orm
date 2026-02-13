@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonOrmTest\Collection;
+namespace Matraux\JsonOrm\Test\Collection;
 
+use Codeception\Configuration;
 use Matraux\FileSystem\File\File;
 use Matraux\JsonOrm\Exception\ReadonlyAccessException;
 use Matraux\JsonOrm\Json\SimpleExplorer;
-use Matraux\JsonOrmTest\FileSystem\Folder;
-use Matraux\JsonOrmTest\Support\UnitTester;
+use Matraux\JsonOrm\Test\Support\UnitTester;
 
 final class ExplorerCest
 {
@@ -14,14 +14,14 @@ final class ExplorerCest
 	public function testExplorerFromFile(UnitTester $tester): void
 	{
 		$explorer = self::createSimpleJsonExplorer();
-		$content = File::fromPath(Folder::create()->data->absolute . 'general.json')->content;
+		$content = File::fromPath(Configuration::dataDir() . 'general.json')->content;
 
 		$tester->assertEquals($content, (string) $explorer);
 	}
 
 	public function testExplorerFromString(UnitTester $tester): void
 	{
-		$content = File::fromPath(Folder::create()->data->absolute . 'general.json')->content;
+		$content = File::fromPath(Configuration::dataDir() . 'general.json')->content;
 		$explorer = SimpleExplorer::fromString($content);
 
 		$tester->assertEquals($content, (string) $explorer);
@@ -60,7 +60,7 @@ final class ExplorerCest
 
 	protected static function createSimpleJsonExplorer(): SimpleExplorer
 	{
-		return SimpleExplorer::fromFile(Folder::create()->data->absolute . 'general.json');
+		return SimpleExplorer::fromFile(Configuration::dataDir() . 'general.json');
 	}
 
 }

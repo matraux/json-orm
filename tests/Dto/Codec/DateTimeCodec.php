@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonOrmTest\Dto\Codec;
+namespace Matraux\JsonOrm\Test\Dto\Codec;
 
 use Attribute;
 use DateTime;

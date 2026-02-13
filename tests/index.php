@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonOrmTest;
+namespace Matraux\JsonOrm\Test;
 
-use Matraux\JsonOrmTest\Utils\Tracy;
+use Matraux\JsonOrm\Test\Utils\Tracy;
 use Tracy\Debugger;
 
 require_once __DIR__ . '/../vendor/autoload.php';

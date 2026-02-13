@@ -1,4 +1,4 @@
-namespace: Matraux\JsonOrmTest
+namespace: Matraux\JsonOrm\Test
 support_namespace: Support
 
 paths:

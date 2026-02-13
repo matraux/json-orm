@@ -30,7 +30,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Matraux\\JsonOrmTest\\": "tests"
+			"Matraux\\JsonOrm\\Test\\": "tests"
 		}
 	},
 	"support": {

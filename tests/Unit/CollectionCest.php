@@ -1,13 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace Matraux\JsonOrmTest\Unit;
+namespace Matraux\JsonOrm\Test\Unit;
 
+use Codeception\Configuration;
 use Matraux\JsonOrm\Json\SimpleExplorer;
-use Matraux\JsonOrmTest\Dto\Collection\CommonCollection;
-use Matraux\JsonOrmTest\Dto\Entity\CommonEntity;
-use Matraux\JsonOrmTest\Dto\Entity\StatusEntity;
-use Matraux\JsonOrmTest\FileSystem\Folder;
-use Matraux\JsonOrmTest\Support\UnitTester;
+use Matraux\JsonOrm\Test\Dto\Collection\CommonCollection;
+use Matraux\JsonOrm\Test\Dto\Entity\CommonEntity;
+use Matraux\JsonOrm\Test\Dto\Entity\StatusEntity;
+use Matraux\JsonOrm\Test\Support\UnitTester;
 
 final class CollectionCest
 {
@@ -86,7 +86,7 @@ final class CollectionCest
 
 	protected static function createCommonCollection(UnitTester $tester): CommonCollection
 	{
-		$explorer = SimpleExplorer::fromFile(Folder::create()->data->absolute . 'general.json');
+		$explorer = SimpleExplorer::fromFile(Configuration::dataDir() . 'general.json');
 
 		return CommonCollection::fromExplorer($explorer);
 	}
