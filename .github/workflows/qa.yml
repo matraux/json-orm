@@ -7,7 +7,7 @@ on:
 
 jobs:
   codefixer:
-    name: PHPStan
+    name: Codefixer
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
