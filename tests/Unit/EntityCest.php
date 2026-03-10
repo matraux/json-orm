@@ -6,8 +6,8 @@ use Codeception\Configuration;
 use Matraux\JsonOrm\Json\SimpleExplorer;
 use Matraux\JsonOrm\Test\Dto\Collection\CommonCollection;
 use Matraux\JsonOrm\Test\Dto\Entity\CommonEntity;
-use Matraux\JsonOrm\Test\Dto\Entity\Enum\CommonResult;
 use Matraux\JsonOrm\Test\Dto\Entity\StatusEntity;
+use Matraux\JsonOrm\Test\Dto\Enum\CommonResult;
 use Matraux\JsonOrm\Test\Support\UnitTester;
 
 final class EntityCest

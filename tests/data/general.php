@@ -46,6 +46,10 @@ $data = [
 	],
 ];
 
+// for ($i = 0; $i < 12; $i++) {
+// 	$data = array_merge($data, $data);
+// }
+
 $data = json_encode($data);
 file_put_contents(__DIR__ . DIRECTORY_SEPARATOR . 'general.json', $data);
 
