@@ -6,10 +6,10 @@ use Matraux\JsonOrm\Entity\Entity;
 use ReflectionClass;
 use ReflectionException;
 
-final class PropertyMetadataFactory
+final class MetadataFactory
 {
 
-	/** @var array<class-string<Entity>,array<PropertyMetadata>> */
+	/** @var array<class-string<Entity>,array<Metadata>> */
 	protected static array $cache = [];
 
 	protected function __construct()
@@ -18,7 +18,7 @@ final class PropertyMetadataFactory
 
 	/**
 	 * @param class-string<Entity> $entityClass
-	 * @return array<PropertyMetadata>
+	 * @return array<Metadata>
 	 * @throws ReflectionException
 	 */
 	public static function create(string $entityClass): array
@@ -30,7 +30,9 @@ final class PropertyMetadataFactory
 		$properties = new ReflectionClass($entityClass)->getProperties();
 		$items = [];
 		foreach ($properties as $property) {
-			$items[] = new PropertyMetadata($property);
+			$items[] = new ReflectionClass(Metadata::class)->newLazyGhost(function (Metadata $propertyMetadata) use ($property): void {
+				$propertyMetadata->__construct($property);
+			});
 		}
 
 		return self::$cache[$entityClass] = $items;
