@@ -1,6 +1,5 @@
 composer.lock
 vendor
 phpstan.neon
-tracy.neon
 tests/Support
 .sandbox/*
