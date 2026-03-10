@@ -5,7 +5,8 @@ namespace Matraux\JsonOrm\Entity;
 use JsonException;
 use JsonSerializable;
 use Matraux\JsonOrm\Json\Explorer;
-use Matraux\JsonOrm\Metadata\PropertyMetadataFactory;
+use Matraux\JsonOrm\Metadata\MetadataFactory;
+use ReflectionClass;
 use Stringable;
 
 abstract class Entity implements Stringable, JsonSerializable
@@ -22,16 +23,17 @@ abstract class Entity implements Stringable, JsonSerializable
 
 	final public static function fromExplorer(Explorer $explorer): static
 	{
-		$entity = new static();
+		return new ReflectionClass(static::class)->newLazyGhost(function (self $entity) use ($explorer): void {
+			$properties = MetadataFactory::create(static::class);
+			foreach ($properties as $property) {
+				$name = $property->name;
+				$index = $property->index;
 
-		$properties = PropertyMetadataFactory::create(static::class);
-		foreach ($properties as $property) {
-			if (isset($explorer[$property->index])) {
-				$entity->{$property->name} = $property->codec ? $property->codec->decode($explorer, $property) : $explorer[$property->index];
+				if ($explorer->offsetExists($index)) {
+					$entity->{$name} = $property->codec ? $property->codec->decode($explorer, $property) : $explorer[$index];
+				}
 			}
-		}
-
-		return $entity;
+		});
 	}
 
 	/**
@@ -40,13 +42,16 @@ abstract class Entity implements Stringable, JsonSerializable
 	final public function jsonSerialize(): array
 	{
 		$data = [];
-		$properties = PropertyMetadataFactory::create(static::class);
+		$properties = MetadataFactory::create(static::class);
 		foreach ($properties as $property) {
 			if (!$property->isInitialized($this)) {
 				continue;
 			}
 
-			$data[$property->index] = $property->codec ? $property->codec->encode($this->{$property->name}, $property) : $this->{$property->name};
+			$name = $property->name;
+			$index = $property->index;
+
+			$data[$index] = $property->codec ? $property->codec->encode($this->{$name}, $property) : $this->{$name};
 		}
 
 		return $data;
