@@ -26,7 +26,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	/** @var array<int,TEntity> */
 	final protected array $entities = [];
 
-	final protected function __construct(protected ?Explorer $explorer = null)
+	final protected function __construct(protected readonly ?Explorer $explorer = null)
 	{
 	}
 
@@ -53,10 +53,13 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 		return $this->explorer ? count($this->explorer) : count($this->entities);
 	}
 
+	/**
+	 * @throws UnexpectedValueException
+	 */
 	final public function offsetExists(mixed $offset): bool
 	{
 		if (!is_int($offset)) {
-			throw new UnexpectedValueException(sprintf('Expects offset type "int", "%s" type given.', get_debug_type($offset)));
+			throw new UnexpectedValueException(sprintf('Offset expects int, %s given.', get_debug_type($offset)));
 		}
 
 		return $this->explorer ? isset($this->explorer[$offset]) : isset($this->entities[$offset]);
@@ -64,35 +67,46 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 
 	/**
 	 * @return TEntity
+	 * @throws OutOfRangeException
+	 * @throws UnexpectedValueException
 	 */
 	final public function offsetGet(mixed $offset): Entity
 	{
 		if (!$this->offsetExists($offset)) {
-			throw new OutOfRangeException(sprintf('Offset "%s" is out of range.', $offset));
+			throw new OutOfRangeException(sprintf('Offset %s is out of range.', $offset));
 		}
 
 		return $this->explorer ? static::getEntityClass()::fromExplorer($this->explorer->withIndex($offset)) : $this->entities[$offset];
 	}
 
+	/**
+	 * @throws UnexpectedValueException
+	 * @throws ReadonlyAccessException
+	 */
 	final public function offsetSet(mixed $offset, mixed $value): void
 	{
 		$this->assertWritable();
 
 		if (!is_int($offset) && $offset !== null) {
-			throw new UnexpectedValueException(sprintf('Expects offset type "int", "%s" type given.', get_debug_type($offset)));
+			throw new UnexpectedValueException(sprintf('Offset expects int, %s given.', get_debug_type($offset)));
 		} elseif (!$value instanceof Entity || $value::class !== static::getEntityClass()) {
-			throw new UnexpectedValueException(sprintf('Expects value type "%s", "%s" type given.', static::getEntityClass(), get_debug_type($value)));
+			throw new UnexpectedValueException(sprintf('Offset expects %s, %s given.', static::getEntityClass(), get_debug_type($value)));
 		}
 
 		$offset !== null ? $this->entities[$offset] = $value : $this->entities[] = $value;
 	}
 
+	/**
+	 * @throws OutOfRangeException
+	 * @throws UnexpectedValueException
+	 * @throws ReadonlyAccessException
+	 */
 	final public function offsetUnset(mixed $offset): void
 	{
 		$this->assertWritable();
 
 		if (!$this->offsetExists($offset)) {
-			throw new OutOfRangeException(sprintf('Offset "%s" is out of range.', $offset));
+			throw new OutOfRangeException(sprintf('Offset %s is out of range.', $offset));
 		}
 
 		unset($this->entities[$offset]);
@@ -100,6 +114,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 
 	/**
 	 * @return TEntity
+	 * @throws ReadonlyAccessException
 	 */
 	final public function createEntity(): Entity
 	{
