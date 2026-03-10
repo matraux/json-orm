@@ -47,6 +47,7 @@ composer require matraux/json-orm
 | 2.0.0 | 8.4+ | Namespace rename and switch to Codeception
 | 2.1.0 | 8.4+ | Added support for property hooks and codecs (encode/decode)
 | 2.2.0 | 8.4+ | Performance optimization and removed composer dependencies
+| 2.3.0 | 8.4+ | Lazy hydration and codec/metadata refactor
 
 <br>
 
