@@ -54,7 +54,7 @@ use Attribute;
 use DateTime;
 use Matraux\JsonOrm\Codec\Codec;
 use Matraux\JsonOrm\Json\Explorer;
-use Matraux\JsonOrm\Metadata\PropertyMetadata;
+use Matraux\JsonOrm\Metadata\Metadata;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class DateTimeCodec implements Codec
@@ -62,12 +62,12 @@ final class DateTimeCodec implements Codec
 
 	protected const string Format = 'd.m.Y H:i:s.u';
 
-	public function encode(mixed $value, PropertyMetadata $property): ?string
+	public function encode(mixed $value, Metadata $metadata): ?string
 	{
 		return $value instanceof DateTime ? $value->format(self::Format) : null;
 	}
 
-	public function decode(Explorer $explorer, PropertyMetadata $property): ?DateTime
+	public function decode(Explorer $explorer, Metadata $metadata): ?DateTime
 	{
 		$value = $explorer[$property->index];
 		if (!is_string($value)) {
