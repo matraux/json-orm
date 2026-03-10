@@ -2,36 +2,44 @@
 
 namespace Matraux\JsonOrm\Codec;
 
-use Attribute;
 use Matraux\JsonOrm\Collection\Collection;
 use Matraux\JsonOrm\Entity\Entity;
+use Matraux\JsonOrm\Exception\CodecException;
 use Matraux\JsonOrm\Json\Explorer;
-use Matraux\JsonOrm\Metadata\PropertyMetadata;
+use Matraux\JsonOrm\Metadata\Metadata;
 
-#[Attribute(Attribute::TARGET_PROPERTY)]
-final class CollectionCodec implements Codec
+final readonly class CollectionCodec implements Codec
 {
 
 	/**
-	 * @return Collection<Entity>
+	 * @param class-string<Collection<Entity>> $class
 	 */
-	public function encode(mixed $value, PropertyMetadata $property): ?Collection
+	public function __construct(protected string $class)
 	{
-		return $value instanceof Collection ? $value : null;
 	}
 
 	/**
-	 * @return Collection<Entity>
+	 * @return ?Collection<Entity>
+	 * @throws CodecException
 	 */
-	public function decode(Explorer $explorer, PropertyMetadata $property): ?Collection
+	public function encode(mixed $value, Metadata $metadata): ?Collection
 	{
-		/** @var ?class-string<Collection<Entity>> $type */
-		$type = $property->type;
-		if (!$type || !is_subclass_of($type, Collection::class)) {
-			return null;
+		if ($value !== null && !$value instanceof $this->class) {
+			throw new CodecException(sprintf('%s::$%s expects %s, %s given.', $metadata->class, $metadata->name, $this->class, get_debug_type($value)));
 		}
 
-		return $type::fromExplorer($explorer->withIndex($property->index));
+		/** @var ?Collection<Entity> $value */
+		return $value;
+	}
+
+	/**
+	 * @return ?Collection<Entity>
+	 */
+	public function decode(Explorer $explorer, Metadata $metadata): ?Collection
+	{
+		$value = $explorer[$metadata->index];
+
+		return $value !== null ? $this->class::fromExplorer($explorer->withIndex($metadata->index)) : null;
 	}
 
 }
