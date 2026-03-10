@@ -20,7 +20,7 @@
 		<properties>
 			<property name="rootNamespaces" type="array">
 				<element key="src" value="Matraux\JsonOrm"/>
-				<element key="tests" value="Matraux\JsonOrmTest"/>
+				<element key="tests" value="Matraux\JsonOrm\Test"/>
 			</property>
 		</properties>
 	</rule>
