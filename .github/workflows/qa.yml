@@ -19,7 +19,7 @@ jobs:
           php-version: '8.4'
           tools: composer
 
-      - name: Run Composer
+      - name: Run Codefixer
         run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
 
       - name: Run PHPStan
