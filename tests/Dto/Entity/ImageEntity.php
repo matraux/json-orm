@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Test\Dto\Entity;
 
@@ -7,11 +7,9 @@ use Matraux\JsonOrm\Json\Property;
 
 final class ImageEntity extends Entity
 {
-
 	#[Property('ICON')]
 	public ?string $icon = null;
 
 	#[Property('IMAGE')]
 	public ?string $image = null;
-
 }

@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Test\Dto\Entity;
 
@@ -11,7 +11,6 @@ use Matraux\JsonOrm\Test\Dto\Enum\CommonResult;
 
 final class CommonEntity extends Entity
 {
-
 	#[Property('NAME')]
 	public ?string $name = null;
 
@@ -27,5 +26,4 @@ final class CommonEntity extends Entity
 
 	#[Property('RESULT')]
 	public CommonResult $result;
-
 }

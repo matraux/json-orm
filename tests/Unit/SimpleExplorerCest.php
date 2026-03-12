@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Test\Collection;
 
@@ -10,7 +10,6 @@ use RuntimeException;
 
 final class SimpleExplorerCest
 {
-
 	public function testExplorerFromFile(UnitTester $tester): void
 	{
 		$explorer = self::createSimpleJsonExplorer();
@@ -62,5 +61,4 @@ final class SimpleExplorerCest
 	{
 		return SimpleExplorer::fromFile(Configuration::dataDir() . 'general.json');
 	}
-
 }

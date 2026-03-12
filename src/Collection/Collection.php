@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Collection;
 
@@ -22,13 +22,10 @@ use UnexpectedValueException;
  */
 abstract class Collection implements Countable, ArrayAccess, JsonSerializable, Stringable, IteratorAggregate
 {
-
 	/** @var array<int,TEntity> */
 	final protected array $entities = [];
 
-	final protected function __construct(protected readonly ?Explorer $explorer = null)
-	{
-	}
+	final protected function __construct(protected readonly ?Explorer $explorer = null) {}
 
 	/**
 	 * @return static<TEntity>
@@ -169,8 +166,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	{
 		return json_encode(
 			value: $this,
-			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR
+			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR,
 		);
 	}
-
 }

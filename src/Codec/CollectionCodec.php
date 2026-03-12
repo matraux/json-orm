@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Codec;
 
@@ -10,13 +10,10 @@ use Matraux\JsonOrm\Metadata\Metadata;
 
 final readonly class CollectionCodec implements Codec
 {
-
 	/**
 	 * @param class-string<Collection<Entity>> $class
 	 */
-	public function __construct(protected string $class)
-	{
-	}
+	public function __construct(protected string $class) {}
 
 	/**
 	 * @return ?Collection<Entity>
@@ -41,5 +38,4 @@ final readonly class CollectionCodec implements Codec
 
 		return $value !== null ? $this->class::fromExplorer($explorer->withIndex($metadata->index)) : null;
 	}
-
 }

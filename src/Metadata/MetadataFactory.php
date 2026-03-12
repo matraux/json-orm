@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Metadata;
 
@@ -8,13 +8,10 @@ use ReflectionException;
 
 final class MetadataFactory
 {
-
 	/** @var array<class-string<Entity>,array<Metadata>> */
 	protected static array $cache = [];
 
-	protected function __construct()
-	{
-	}
+	protected function __construct() {}
 
 	/**
 	 * @param class-string<Entity> $entityClass
@@ -37,5 +34,4 @@ final class MetadataFactory
 
 		return self::$cache[$entityClass] = $items;
 	}
-
 }

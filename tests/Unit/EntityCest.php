@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Test\Entity;
 
@@ -12,7 +12,6 @@ use Matraux\JsonOrm\Test\Support\UnitTester;
 
 final class EntityCest
 {
-
 	public function testReadEntity(UnitTester $tester): void
 	{
 		$commonCollection = self::createCommonCollection();
@@ -52,5 +51,4 @@ final class EntityCest
 
 		return CommonCollection::fromExplorer($explorer);
 	}
-
 }

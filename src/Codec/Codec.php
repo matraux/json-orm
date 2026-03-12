@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Codec;
 
@@ -12,9 +12,7 @@ use Matraux\JsonOrm\Metadata\Metadata;
  */
 interface Codec
 {
-
 	public function encode(mixed $value, Metadata $metadata): mixed;
 
 	public function decode(Explorer $explorer, Metadata $metadata): mixed;
-
 }

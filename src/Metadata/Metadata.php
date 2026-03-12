@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Metadata;
 
@@ -19,7 +19,6 @@ use RuntimeException;
 
 final readonly class Metadata
 {
-
 	public string $name;
 
 	public string $index;
@@ -85,5 +84,4 @@ final readonly class Metadata
 			default => null,
 		};
 	}
-
 }

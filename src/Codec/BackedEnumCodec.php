@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Codec;
 
@@ -11,18 +11,15 @@ use ValueError;
 
 final class BackedEnumCodec implements Codec
 {
-
 	/**
 	 * @param class-string<BackedEnum> $class
 	 */
-	public function __construct(protected string $class)
-	{
-	}
+	public function __construct(protected string $class) {}
 
 	/**
 	 * @throws CodecException
 	 */
-	public function encode(mixed $value, Metadata $metadata): null|int|string
+	public function encode(mixed $value, Metadata $metadata): int|string|null
 	{
 		if ($value !== null && !$value instanceof $this->class) {
 			throw new CodecException(sprintf('%s::$%s expects %s, %s given.', $metadata->class, $metadata->name, $this->class, get_debug_type($value)));
@@ -46,5 +43,4 @@ final class BackedEnumCodec implements Codec
 
 		return $value !== null ? $this->class::from($value) : null;
 	}
-
 }

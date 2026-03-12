@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Test\Unit;
 
@@ -11,7 +11,6 @@ use Matraux\JsonOrm\Test\Support\UnitTester;
 
 final class CollectionCest
 {
-
 	public function testCollectionIterable(UnitTester $tester): void
 	{
 		$commonCollection = self::createCommonCollection($tester);
@@ -90,5 +89,4 @@ final class CollectionCest
 
 		return CommonCollection::fromExplorer($explorer);
 	}
-
 }

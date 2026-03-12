@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Json;
 
@@ -11,23 +11,20 @@ use UnexpectedValueException;
 
 final class SimpleExplorer extends Explorer
 {
-
 	/** @var int<0,max> */
 	protected int $countCache;
 
 	/**
 	 * @param array<mixed> $data
 	 */
-	protected function __construct(protected readonly array $data)
-	{
-	}
+	protected function __construct(protected readonly array $data) {}
 
 	public static function fromString(string $json): static
 	{
 		return new ReflectionClass(self::class)->newLazyGhost(function (self $explorer) use ($json): void {
 			$data = json_decode(
 				json: $json,
-				flags: JSON_OBJECT_AS_ARRAY | JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR
+				flags: JSON_OBJECT_AS_ARRAY | JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR,
 			);
 
 			if (!is_array($data)) {
@@ -108,8 +105,7 @@ final class SimpleExplorer extends Explorer
 	{
 		return json_encode(
 			value: $this->data,
-			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR
+			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR,
 		);
 	}
-
 }

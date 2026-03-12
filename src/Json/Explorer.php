@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Json;
 
@@ -14,7 +14,6 @@ use Stringable;
  */
 abstract class Explorer implements ArrayAccess, IteratorAggregate, Countable, Stringable
 {
-
 	abstract public function withIndex(string|int $index): static;
 
 	/**
@@ -32,5 +31,4 @@ abstract class Explorer implements ArrayAccess, IteratorAggregate, Countable, St
 	{
 		throw new ReadonlyAccessException('Explorer is readonly');
 	}
-
 }

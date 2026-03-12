@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Test\Dto\Codec;
 
@@ -11,7 +11,6 @@ use Matraux\JsonOrm\Metadata\Metadata;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class DateTimeCodec implements Codec
 {
-
 	protected const string Format = 'd.m.Y H:i:s.u';
 
 	public function encode(mixed $value, Metadata $metadata): ?string
@@ -28,5 +27,4 @@ final class DateTimeCodec implements Codec
 
 		return DateTime::createFromFormat(self::Format, $value) ?: null;
 	}
-
 }

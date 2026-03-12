@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Entity;
 
@@ -11,10 +11,7 @@ use Stringable;
 
 abstract class Entity implements Stringable, JsonSerializable
 {
-
-	final protected function __construct()
-	{
-	}
+	final protected function __construct() {}
 
 	final public static function create(): static
 	{
@@ -64,8 +61,7 @@ abstract class Entity implements Stringable, JsonSerializable
 	{
 		return json_encode(
 			value: $this,
-			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR
+			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR,
 		);
 	}
-
 }

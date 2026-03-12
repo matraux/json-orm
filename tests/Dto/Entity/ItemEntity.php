@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Matraux\JsonOrm\Test\Dto\Entity;
 
@@ -8,11 +8,9 @@ use Matraux\JsonOrm\Test\Dto\Collection\ImageCollection;
 
 final class ItemEntity extends Entity
 {
-
 	#[Property('NAME')]
 	public ?string $name = null;
 
 	#[Property('IMAGES')]
 	public ImageCollection $images;
-
 }
