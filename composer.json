@@ -16,9 +16,9 @@
 	},
 	"require-dev": {
 		"phpstan/phpstan": "^2.1",
-		"contributte/qa": "^0.4.0",
 		"codeception/codeception": "^5.3",
-		"codeception/module-asserts": "^3.3"
+		"codeception/module-asserts": "^3.3",
+		"friendsofphp/php-cs-fixer": "^3.94"
 	},
 	"autoload": {
 		"psr-4": {
@@ -40,15 +40,15 @@
 		}
 	},
 	"scripts": {
-		"codesniffer": "vendor/bin/phpcs --standard=ruleset.xml",
-		"codefixer": "vendor/bin/phpcbf --standard=ruleset.xml",
+		"cs:check": "vendor/bin/php-cs-fixer check",
+		"cs:fix": "vendor/bin/php-cs-fixer fix",
 		"phpstan": "vendor/bin/phpstan analyse --ansi",
 		"tests:build": "vendor/bin/codecept build",
 		"tests:run": "vendor/bin/codecept run"
 	},
 	"scripts-descriptions": {
-		"codesniffer": "Check code style",
-		"codefixer": "Fix code style",
+		"cs:check": "Check code style",
+		"cs:fix": "Fix code style",
 		"phpstan": "Static code analysis",
 		"tests:build": "Build Codeception actors",
 		"tests:run": "Run Codeception tests"

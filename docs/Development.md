@@ -8,8 +8,8 @@ This package includes several development tools configured via Composer scripts.
 
 ## Composer scripts
 ```bash
-composer codefixer   # Run PHP Code Style Fixer (phpcbf)
-composer codesniffer # Run PHP CodeSniffer (phpcs)
+composer cs:check    # Run code style check
+composer cs:fix      # Run code style fix
 composer phpstan     # Run static analysis (PHPStan)
 composer tests:build # Build unit tests
 composer tests:run   # Run unit tests
