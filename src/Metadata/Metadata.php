@@ -2,9 +2,6 @@
 
 namespace Matraux\JsonOrm\Metadata;
 
-use BackedEnum;
-use Exception;
-use Matraux\JsonOrm\Codec\BackedEnumCodec;
 use Matraux\JsonOrm\Codec\Codec;
 use Matraux\JsonOrm\Codec\CollectionCodec;
 use Matraux\JsonOrm\Codec\EntityCodec;
@@ -12,7 +9,6 @@ use Matraux\JsonOrm\Collection\Collection;
 use Matraux\JsonOrm\Entity\Entity;
 use Matraux\JsonOrm\Exception\CodecException;
 use Matraux\JsonOrm\Json\Property;
-use ReflectionAttribute;
 use ReflectionNamedType;
 use ReflectionProperty;
 use RuntimeException;

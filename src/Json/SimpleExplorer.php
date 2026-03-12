@@ -4,7 +4,6 @@ namespace Matraux\JsonOrm\Json;
 
 use JsonException;
 use OutOfRangeException;
-use ReflectionClass;
 use RuntimeException;
 use Traversable;
 use UnexpectedValueException;

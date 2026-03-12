@@ -2,13 +2,11 @@
 
 namespace Matraux\JsonOrm\Codec;
 
-use Exception;
 use Matraux\JsonOrm\Collection\Collection;
 use Matraux\JsonOrm\Entity\Entity;
 use Matraux\JsonOrm\Exception\CodecException;
 use Matraux\JsonOrm\Json\Explorer;
 use Matraux\JsonOrm\Metadata\Metadata;
-use RuntimeException;
 
 final class CollectionCodec implements Codec
 {

@@ -4,10 +4,7 @@ namespace Matraux\JsonOrm\Test\Dto\Entity;
 
 use DateTime;
 use Matraux\JsonOrm\Entity\Entity;
-use Matraux\JsonOrm\Json\Property;
-use Matraux\JsonOrm\Test\Dto\Codec\DateTimeCodec;
 use Matraux\JsonOrm\Test\Dto\Collection\ItemCollection;
-use Matraux\JsonOrm\Test\Dto\Enum\CommonResult;
 
 final class CommonEntity extends Entity
 {

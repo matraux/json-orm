@@ -6,7 +6,6 @@ use ArrayAccess;
 use Countable;
 use IteratorAggregate;
 use Matraux\JsonOrm\Exception\ReadonlyAccessException;
-use Stringable;
 
 /**
  * @implements ArrayAccess<int|string,mixed>

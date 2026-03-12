@@ -11,7 +11,6 @@ use Matraux\JsonOrm\Entity\Entity;
 use Matraux\JsonOrm\Exception\ReadonlyAccessException;
 use Matraux\JsonOrm\Json\Explorer;
 use OutOfRangeException;
-use Stringable;
 use Traversable;
 use UnexpectedValueException;
 

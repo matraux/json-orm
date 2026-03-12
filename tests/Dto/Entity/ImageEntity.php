@@ -3,7 +3,6 @@
 namespace Matraux\JsonOrm\Test\Dto\Entity;
 
 use Matraux\JsonOrm\Entity\Entity;
-use Matraux\JsonOrm\Json\Property;
 
 final class ImageEntity extends Entity
 {
