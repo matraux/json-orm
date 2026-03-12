@@ -5,28 +5,35 @@
 ## Entity
 ```php
 use Matraux\JsonOrm\Entity\Entity;
-use Matraux\JsonOrm\Json\Property;
 
 final class CommonEntity extends Entity
 {
-
-	// Entity will try assign value from Data with key "NAME" to property $name
-	#[Property('NAME')]
+	/**
+	 * Entity will try assign value from Data with key "NAME" to property $name
+	 * @index NAME
+	 */
 	public ?string $name = null;
 
-	#[Property('TIME')]
-	#[DateTimeCodec]
-	public ?DateTime $time;
+	/**
+	 * @index TIME
+	 * @codec Matraux\JsonOrm\Test\Dto\Codec\DateTimeCodec
+	 */
+	public ?DateTime $timestamp;
 
-	#[Property('STATUS')]
+	/**
+	 * @index STATUS
+	 */
 	public ?StatusEntity $status = null;
 
-	#[Property('ITEMS')]
+	/**
+	 * @index ITEMS
+	 */
 	public ItemCollection $items;
 
-	#[Property('RESULT')]
-	public CommonResult $result; // BackedEnum
-
+	/**
+	 * @index RESULT
+	 */
+	public string $result;
 }
 ```
 
@@ -50,32 +57,28 @@ final class CommonCollection extends Collection
 
 ## Codec
 ```php
-use Attribute;
 use DateTime;
 use Matraux\JsonOrm\Codec\Codec;
 use Matraux\JsonOrm\Json\Explorer;
 use Matraux\JsonOrm\Metadata\Metadata;
 
-#[Attribute(Attribute::TARGET_PROPERTY)]
 final class DateTimeCodec implements Codec
 {
+	protected const Format = 'd.m.Y H:i:s.u';
 
-	protected const string Format = 'd.m.Y H:i:s.u';
-
-	public function encode(mixed $value, Metadata $metadata): ?string
+	public function encode($value, Metadata $metadata): ?string
 	{
 		return $value instanceof DateTime ? $value->format(self::Format) : null;
 	}
 
 	public function decode(Explorer $explorer, Metadata $metadata): ?DateTime
 	{
-		$value = $explorer[$property->index];
+		$value = $explorer[$metadata->index];
 		if (!is_string($value)) {
 			return null;
 		}
 
 		return DateTime::createFromFormat(self::Format, $value) ?: null;
 	}
-
 }
 ```
