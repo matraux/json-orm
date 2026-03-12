@@ -39,15 +39,9 @@ composer require matraux/json-orm
 ## Requirements
 | version | PHP | Note
 |----|---|---
-| 1.1.0 | 8.3+ | Initial commit
-| 1.2.0 | 8.4+ | Performance optimization
-| 1.3.0 | 8.4+ | Performance optimization
-| 1.4.1 | 8.4+ | 50%+ performance boost via metadata caching
-| 1.4.2 | 8.4+ | Entity & Metadata fix and optimization
-| 2.0.0 | 8.4+ | Namespace rename and switch to Codeception
-| 2.1.0 | 8.4+ | Added support for property hooks and codecs (encode/decode)
-| 2.2.0 | 8.4+ | Performance optimization and removed composer dependencies
-| 2.3.0 | 8.4+ | Lazy hydration and codec/metadata refactor
+| 1.0.0 | 7.4+ | Support PHP 7.4
+| 2.0.0 | 8.3+ | Support PHP 8.3
+| 3.0.0 | 8.4+ | Support PHP 8.4
 
 <br>
 
