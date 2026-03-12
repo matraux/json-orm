@@ -19,8 +19,6 @@ abstract class Explorer implements ArrayAccess, IteratorAggregate, Countable
 	 */
 	abstract public function withIndex($index): self;
 
-	abstract public function __toString(): string;
-
 	/**
 	 *
 	 * @param int|string $offset
@@ -41,4 +39,6 @@ abstract class Explorer implements ArrayAccess, IteratorAggregate, Countable
 	{
 		throw new ReadonlyAccessException('Explorer is readonly');
 	}
+
+	abstract public function __toString(): string;
 }

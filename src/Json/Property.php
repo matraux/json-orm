@@ -8,10 +8,12 @@ use RuntimeException;
 
 final class Property
 {
-
 	protected string $name;
 
-	public function __construct(string $name) {$this->name = $name;}
+	public function __construct(string $name)
+	{
+		$this->name = $name;
+	}
 
 	/**
 	 * @return mixed

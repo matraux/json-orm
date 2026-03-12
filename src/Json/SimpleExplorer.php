@@ -20,7 +20,10 @@ final class SimpleExplorer extends Explorer
 	/**
 	 * @param array<mixed> $data
 	 */
-	protected function __construct(array $data) {$this->data = $data;}
+	protected function __construct(array $data)
+	{
+		$this->data = $data;
+	}
 
 	public static function fromString(string $json): self
 	{
@@ -96,7 +99,7 @@ final class SimpleExplorer extends Explorer
 	 */
 	public function withIndex($index): self
 	{
-		if(!is_int($index) && !is_string($index)) {
+		if (!is_int($index) && !is_string($index)) {
 			throw new UnexpectedValueException(sprintf('Expects value string|int, %s given.', get_debug_type($index)));
 		} elseif (!array_key_exists($index, $this->data)) {
 			throw new UnexpectedValueException(sprintf('No such index %s.', $index));

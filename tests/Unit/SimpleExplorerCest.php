@@ -20,7 +20,7 @@ final class SimpleExplorerCest
 
 	public function testExplorerFromString(UnitTester $tester): void
 	{
-		if(!$content = @file_get_contents(Configuration::dataDir() . 'general.json')) {
+		if (!$content = @file_get_contents(Configuration::dataDir() . 'general.json')) {
 			throw new RuntimeException('Can not read file.');
 		}
 		$explorer = SimpleExplorer::fromString($content);

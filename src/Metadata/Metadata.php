@@ -50,27 +50,6 @@ final class Metadata
 		$this->codec = $this->resolveCodec();
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function __get(string $name)
-	{
-		switch ($name) {
-			case 'name':
-				return $this->name;
-			case 'index':
-				return $this->index;
-			case 'class':
-				return $this->class;
-			case 'codec':
-				return $this->codec;
-			case 'reflection':
-				return $this->reflection;
-			default:
-				throw new RuntimeException(sprintf('Undefined property %s::$%s.', static::class, $name));
-		}
-	}
-
 	public function isInitialized(Entity $entity): bool
 	{
 		return $this->reflection->isInitialized($entity);
@@ -86,10 +65,10 @@ final class Metadata
 	protected function resolveCodec(): ?Codec
 	{
 		$doc = $this->reflection->getDocComment();
-		if($doc && preg_match('/@codec\s+([^\r\n]+)/', $doc, $matches)) {
+		if ($doc && preg_match('/@codec\s+([^\r\n]+)/', $doc, $matches)) {
 			/** @var class-string<Codec> $codec */
 			$codec = $matches[1];
-			return new $codec;
+			return new $codec();
 		}
 
 		$type = $this->reflection->getType();
@@ -99,7 +78,7 @@ final class Metadata
 
 		switch (strtolower($type->getName())) {
 			case 'parent':
-				if(!$parent = $this->reflection->getDeclaringClass()->getParentClass()) {
+				if (!$parent = $this->reflection->getDeclaringClass()->getParentClass()) {
 					throw new RuntimeException(sprintf('Unresolvable type parent for %s::$%s.', $this->reflection->class, $this->reflection->name));
 				}
 				$type = $parent->name;
@@ -119,6 +98,27 @@ final class Metadata
 				return new CollectionCodec($type);
 			default:
 				return null;
+		}
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function __get(string $name)
+	{
+		switch ($name) {
+			case 'name':
+				return $this->name;
+			case 'index':
+				return $this->index;
+			case 'class':
+				return $this->class;
+			case 'codec':
+				return $this->codec;
+			case 'reflection':
+				return $this->reflection;
+			default:
+				throw new RuntimeException(sprintf('Undefined property %s::$%s.', static::class, $name));
 		}
 	}
 }

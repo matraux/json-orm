@@ -12,14 +12,16 @@ use RuntimeException;
 
 final class CollectionCodec implements Codec
 {
-
 	/** @var class-string<Collection<Entity>> */
 	protected string $class;
 
 	/**
 	 * @param class-string<Collection<Entity>> $class
 	 */
-	public function __construct(string $class) {$this->class = $class;}
+	public function __construct(string $class)
+	{
+		$this->class = $class;
+	}
 
 	/**
 	 * @param mixed $value

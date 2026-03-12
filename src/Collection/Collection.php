@@ -27,7 +27,10 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, I
 
 	protected ?Explorer $explorer;
 
-	final protected function __construct(?Explorer $explorer = null) {$this->explorer = $explorer;}
+	final protected function __construct(?Explorer $explorer = null)
+	{
+		$this->explorer = $explorer;
+	}
 
 	/**
 	 * @return static<TEntity>

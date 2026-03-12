@@ -12,7 +12,6 @@ use Matraux\JsonOrm\Metadata\Metadata;
  */
 interface Codec
 {
-
 	/**
 	 * @param mixed $value
 	 * @return mixed

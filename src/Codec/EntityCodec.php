@@ -9,14 +9,16 @@ use Matraux\JsonOrm\Metadata\Metadata;
 
 final class EntityCodec implements Codec
 {
-
 	/** @var class-string<Entity> */
 	protected string $class;
 
 	/**
 	 * @param class-string<Entity> $class
 	 */
-	public function __construct(string $class) {$this->class = $class;}
+	public function __construct(string $class)
+	{
+		$this->class = $class;
+	}
 
 	/**
 	 * @param mixed $value
