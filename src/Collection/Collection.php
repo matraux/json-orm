@@ -23,7 +23,7 @@ use UnexpectedValueException;
 abstract class Collection implements Countable, ArrayAccess, JsonSerializable, Stringable, IteratorAggregate
 {
 	/** @var array<int,TEntity> */
-	final protected array $entities = [];
+	protected array $entities = [];
 
 	final protected function __construct(protected readonly ?Explorer $explorer = null) {}
 

@@ -20,17 +20,19 @@ abstract class Entity implements Stringable, JsonSerializable
 
 	final public static function fromExplorer(Explorer $explorer): static
 	{
-		return new ReflectionClass(static::class)->newLazyGhost(function (self $entity) use ($explorer): void {
-			$properties = MetadataFactory::create(static::class);
-			foreach ($properties as $property) {
-				$name = $property->name;
-				$index = $property->index;
 
-				if ($explorer->offsetExists($index)) {
-					$entity->{$name} = $property->codec ? $property->codec->decode($explorer, $property) : $explorer[$index];
-				}
+		$entity = new static();
+		$properties = MetadataFactory::create(static::class);
+		foreach ($properties as $property) {
+			$name = $property->name;
+			$index = $property->index;
+
+			if ($explorer->offsetExists($index)) {
+				$entity->{$name} = $property->codec ? $property->codec->decode($explorer, $property) : $explorer[$index];
 			}
-		});
+		}
+
+		return $entity;
 	}
 
 	/**

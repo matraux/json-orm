@@ -42,7 +42,7 @@ final readonly class Metadata
 
 	public function isInitialized(Entity $entity): bool
 	{
-		return $this->reflection->isInitialized($entity) || $this->reflection->getHook(PropertyHookType::Get);
+		return $this->reflection->isInitialized($entity);
 	}
 
 	protected function resolveIndex(): string

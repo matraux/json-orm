@@ -24,12 +24,10 @@ final class MetadataFactory
 			return self::$cache[$entityClass];
 		}
 
-		$properties = new ReflectionClass($entityClass)->getProperties();
+		$properties = (new ReflectionClass($entityClass))->getProperties();
 		$items = [];
 		foreach ($properties as $property) {
-			$items[] = new ReflectionClass(Metadata::class)->newLazyGhost(function (Metadata $propertyMetadata) use ($property): void {
-				$propertyMetadata->__construct($property);
-			});
+			$items[] = new Metadata($property);
 		}
 
 		return self::$cache[$entityClass] = $items;

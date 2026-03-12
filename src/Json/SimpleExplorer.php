@@ -21,18 +21,16 @@ final class SimpleExplorer extends Explorer
 
 	public static function fromString(string $json): static
 	{
-		return new ReflectionClass(self::class)->newLazyGhost(function (self $explorer) use ($json): void {
-			$data = json_decode(
-				json: $json,
-				flags: JSON_OBJECT_AS_ARRAY | JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR,
-			);
+		$data = json_decode(
+			json: $json,
+			flags: JSON_OBJECT_AS_ARRAY | JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR,
+		);
 
-			if (!is_array($data)) {
-				throw new UnexpectedValueException(sprintf('Json data expects array, %s given.', get_debug_type($data)));
-			}
+		if (!is_array($data)) {
+			throw new UnexpectedValueException(sprintf('Json data expects array, %s given.', get_debug_type($data)));
+		}
 
-			$explorer->__construct($data);
-		});
+		return new static($data);
 	}
 
 	public static function fromFile(string $file): static
