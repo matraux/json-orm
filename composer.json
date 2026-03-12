@@ -1,6 +1,6 @@
 {
 	"name": "matraux/json-orm",
-	"description": "A PHP 8.3+ library for converting JSON data to typed entities and back, with support for lazy-loading collections.",
+	"description": "A PHP 7.4+ library for converting JSON data to typed entities and back, with support for lazy-loading collections.",
 	"keywords": ["JSON ORM", "json-orm", "MATRAUX"],
 	"type": "library",
 	"license": "MIT",
@@ -12,12 +12,12 @@
 		}
 	],
 	"require": {
-		"php": "^8.3"
+		"php": "^7.4"
 	},
 	"require-dev": {
 		"phpstan/phpstan": "^2.1",
-		"codeception/codeception": "^5.3",
-		"codeception/module-asserts": "^3.3",
+		"codeception/codeception": "^4.2",
+		"codeception/module-asserts": "^2.0",
 		"friendsofphp/php-cs-fixer": "^3.94"
 	},
 	"autoload": {

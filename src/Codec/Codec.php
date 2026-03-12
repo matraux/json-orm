@@ -12,7 +12,15 @@ use Matraux\JsonOrm\Metadata\Metadata;
  */
 interface Codec
 {
-	public function encode(mixed $value, Metadata $metadata): mixed;
 
-	public function decode(Explorer $explorer, Metadata $metadata): mixed;
+	/**
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	public function encode($value, Metadata $metadata);
+
+	/**
+	 * @return mixed
+	 */
+	public function decode(Explorer $explorer, Metadata $metadata);
 }

@@ -20,17 +20,19 @@ use UnexpectedValueException;
  * @implements ArrayAccess<int,TEntity>
  * @implements IteratorAggregate<int,TEntity>
  */
-abstract class Collection implements Countable, ArrayAccess, JsonSerializable, Stringable, IteratorAggregate
+abstract class Collection implements Countable, ArrayAccess, JsonSerializable, IteratorAggregate
 {
 	/** @var array<int,TEntity> */
 	protected array $entities = [];
 
-	final protected function __construct(protected readonly ?Explorer $explorer = null) {}
+	protected ?Explorer $explorer;
+
+	final protected function __construct(?Explorer $explorer = null) {$this->explorer = $explorer;}
 
 	/**
 	 * @return static<TEntity>
 	 */
-	final public static function create(): static
+	final public static function create(): self
 	{
 		/** @var static<TEntity> */
 		return new static();
@@ -39,7 +41,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	/**
 	 * @return static<TEntity>
 	 */
-	final public static function fromExplorer(Explorer $explorer): static
+	final public static function fromExplorer(Explorer $explorer): self
 	{
 		/** @var static<TEntity> */
 		return new static($explorer);
@@ -51,9 +53,10 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	}
 
 	/**
+	 * @param mixed $offset
 	 * @throws UnexpectedValueException
 	 */
-	final public function offsetExists(mixed $offset): bool
+	final public function offsetExists($offset): bool
 	{
 		if (!is_int($offset)) {
 			throw new UnexpectedValueException(sprintf('Offset expects int, %s given.', get_debug_type($offset)));
@@ -63,11 +66,12 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	}
 
 	/**
+	 * @param int $offset
 	 * @return TEntity
 	 * @throws OutOfRangeException
 	 * @throws UnexpectedValueException
 	 */
-	final public function offsetGet(mixed $offset): Entity
+	final public function offsetGet($offset): Entity
 	{
 		if (!$this->offsetExists($offset)) {
 			throw new OutOfRangeException(sprintf('Offset %s is out of range.', $offset));
@@ -77,16 +81,18 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	}
 
 	/**
+	 * @param mixed $offset
+	 * @param mixed $value
 	 * @throws UnexpectedValueException
 	 * @throws ReadonlyAccessException
 	 */
-	final public function offsetSet(mixed $offset, mixed $value): void
+	final public function offsetSet($offset, $value): void
 	{
 		$this->assertWritable();
 
 		if (!is_int($offset) && $offset !== null) {
 			throw new UnexpectedValueException(sprintf('Offset expects int, %s given.', get_debug_type($offset)));
-		} elseif (!$value instanceof Entity || $value::class !== static::getEntityClass()) {
+		} elseif (!$value instanceof Entity || get_class($value) !== static::getEntityClass()) {
 			throw new UnexpectedValueException(sprintf('Offset expects %s, %s given.', static::getEntityClass(), get_debug_type($value)));
 		}
 
@@ -94,11 +100,12 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	}
 
 	/**
+	 * @param int $offset
 	 * @throws OutOfRangeException
 	 * @throws UnexpectedValueException
 	 * @throws ReadonlyAccessException
 	 */
-	final public function offsetUnset(mixed $offset): void
+	final public function offsetUnset($offset): void
 	{
 		$this->assertWritable();
 
@@ -165,8 +172,8 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	final public function __toString(): string
 	{
 		return json_encode(
-			value: $this,
-			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR,
+			$this,
+			JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR,
 		);
 	}
 }

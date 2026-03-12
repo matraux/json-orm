@@ -7,6 +7,8 @@ use Matraux\JsonOrm\Json\Property;
 
 final class StatusEntity extends Entity
 {
-	#[Property('VALUE')]
+	/**
+	 * @index VALUE
+	 */
 	public ?string $value = null;
 }

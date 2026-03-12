@@ -8,9 +8,13 @@ use Matraux\JsonOrm\Test\Dto\Collection\ImageCollection;
 
 final class ItemEntity extends Entity
 {
-	#[Property('NAME')]
+	/**
+	 * @index NAME
+	 */
 	public ?string $name = null;
 
-	#[Property('IMAGES')]
+	/**
+	 * @index IMAGES
+	 */
 	public ImageCollection $images;
 }

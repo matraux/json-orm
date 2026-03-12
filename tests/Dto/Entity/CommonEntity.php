@@ -11,19 +11,29 @@ use Matraux\JsonOrm\Test\Dto\Enum\CommonResult;
 
 final class CommonEntity extends Entity
 {
-	#[Property('NAME')]
+	/**
+	 * @index NAME
+	 */
 	public ?string $name = null;
 
-	#[Property('TIME')]
-	#[DateTimeCodec]
+	/**
+	 * @index TIME
+	 * @codec Matraux\JsonOrm\Test\Dto\Codec\DateTimeCodec
+	 */
 	public ?DateTime $timestamp;
 
-	#[Property('STATUS')]
+	/**
+	 * @index STATUS
+	 */
 	public ?StatusEntity $status = null;
 
-	#[Property('ITEMS')]
+	/**
+	 * @index ITEMS
+	 */
 	public ItemCollection $items;
 
-	#[Property('RESULT')]
-	public CommonResult $result;
+	/**
+	 * @index RESULT
+	 */
+	public string $result;
 }

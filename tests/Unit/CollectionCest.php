@@ -7,7 +7,7 @@ use Matraux\JsonOrm\Json\SimpleExplorer;
 use Matraux\JsonOrm\Test\Dto\Collection\CommonCollection;
 use Matraux\JsonOrm\Test\Dto\Entity\CommonEntity;
 use Matraux\JsonOrm\Test\Dto\Entity\StatusEntity;
-use Matraux\JsonOrm\Test\Support\UnitTester;
+use Matraux\JsonOrm\Test\UnitTester;
 
 final class CollectionCest
 {

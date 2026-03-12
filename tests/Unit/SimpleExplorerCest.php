@@ -5,7 +5,7 @@ namespace Matraux\JsonOrm\Test\Collection;
 use Codeception\Configuration;
 use Matraux\JsonOrm\Exception\ReadonlyAccessException;
 use Matraux\JsonOrm\Json\SimpleExplorer;
-use Matraux\JsonOrm\Test\Support\UnitTester;
+use Matraux\JsonOrm\Test\UnitTester;
 use RuntimeException;
 
 final class SimpleExplorerCest
@@ -20,7 +20,9 @@ final class SimpleExplorerCest
 
 	public function testExplorerFromString(UnitTester $tester): void
 	{
-		$content = @file_get_contents(Configuration::dataDir() . 'general.json') ?: throw new RuntimeException('Can not read file.');
+		if(!$content = @file_get_contents(Configuration::dataDir() . 'general.json')) {
+			throw new RuntimeException('Can not read file.');
+		}
 		$explorer = SimpleExplorer::fromString($content);
 
 		$tester->assertEquals($content, (string) $explorer);

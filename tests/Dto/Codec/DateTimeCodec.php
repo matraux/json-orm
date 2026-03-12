@@ -2,18 +2,16 @@
 
 namespace Matraux\JsonOrm\Test\Dto\Codec;
 
-use Attribute;
 use DateTime;
 use Matraux\JsonOrm\Codec\Codec;
 use Matraux\JsonOrm\Json\Explorer;
 use Matraux\JsonOrm\Metadata\Metadata;
 
-#[Attribute(Attribute::TARGET_PROPERTY)]
 final class DateTimeCodec implements Codec
 {
-	protected const string Format = 'd.m.Y H:i:s.u';
+	protected const Format = 'd.m.Y H:i:s.u';
 
-	public function encode(mixed $value, Metadata $metadata): ?string
+	public function encode($value, Metadata $metadata): ?string
 	{
 		return $value instanceof DateTime ? $value->format(self::Format) : null;
 	}

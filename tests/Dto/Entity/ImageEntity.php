@@ -7,9 +7,13 @@ use Matraux\JsonOrm\Json\Property;
 
 final class ImageEntity extends Entity
 {
-	#[Property('ICON')]
+	/**
+	 * @index ICON
+	 */
 	public ?string $icon = null;
 
-	#[Property('IMAGE')]
+	/**
+	 * @index IMAGE
+	 */
 	public ?string $image = null;
 }

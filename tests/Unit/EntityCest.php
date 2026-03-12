@@ -7,8 +7,7 @@ use Matraux\JsonOrm\Json\SimpleExplorer;
 use Matraux\JsonOrm\Test\Dto\Collection\CommonCollection;
 use Matraux\JsonOrm\Test\Dto\Entity\CommonEntity;
 use Matraux\JsonOrm\Test\Dto\Entity\StatusEntity;
-use Matraux\JsonOrm\Test\Dto\Enum\CommonResult;
-use Matraux\JsonOrm\Test\Support\UnitTester;
+use Matraux\JsonOrm\Test\UnitTester;
 
 final class EntityCest
 {
@@ -17,8 +16,8 @@ final class EntityCest
 		$commonCollection = self::createCommonCollection();
 		$commonEntity = $commonCollection[1];
 		$tester->assertEquals('Second', $commonEntity->name);
-		$tester->assertEquals('offline', $commonEntity->status?->value);
-		$tester->assertEquals(CommonResult::Fail, $commonEntity->result);
+		$tester->assertEquals('offline', $commonEntity->status ? $commonEntity->status->value : null);
+		$tester->assertEquals('failed', $commonEntity->result);
 		$tester->assertEquals('First of items', $commonEntity->items[0]->name);
 		$tester->assertEquals('Second of items', $commonEntity->items[1]->name);
 		$tester->assertEquals('First icon', $commonEntity->items[1]->images[0]->icon);

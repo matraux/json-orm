@@ -2,7 +2,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/matraux/json-orm.svg?logo=packagist&logoColor=white)](https://packagist.org/packages/matraux/json-orm)
 [![Last release](https://img.shields.io/github/v/release/matraux/json-orm?display_name=tag&logo=github&logoColor=white)](https://github.com/matraux/json-orm/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?logo=open-source-initiative&logoColor=white)](LICENSE)
-[![PHP](https://img.shields.io/badge/PHP-8.3+-blue.svg?logo=php&logoColor=white)](https://php.net)
+[![PHP](https://img.shields.io/badge/PHP-7.4+-blue.svg?logo=php&logoColor=white)](https://php.net)
 [![Security Policy](https://img.shields.io/badge/Security-Policy-blue?logo=bitwarden&logoColor=white)](./.github/SECURITY.md)
 [![Contributing](https://img.shields.io/badge/Contributing-Disabled-lightgrey?logo=github&logoColor=white)](CONTRIBUTING.md)
 [![QA Status](https://img.shields.io/github/actions/workflow/status/matraux/json-orm/qa.yml?label=Quality+Assurance&logo=checkmarx&logoColor=white)](https://github.com/matraux/json-orm/actions/workflows/qa.yml)
@@ -12,7 +12,7 @@
 <br>
 
 ## Introduction
-A PHP 8.3+ library for converting JSON data to typed entities and back, with support for lazy-loading collections, mutable data structures, and structured entity design.
+A PHP 7.4+ library for converting JSON data to typed entities and back, with support for lazy-loading collections, mutable data structures, and structured entity design.
 Useful for structured JSON APIs, configuration parsing, and object-based manipulation of hierarchical JSON data.
 
 
@@ -40,7 +40,6 @@ composer require matraux/json-orm
 | version | PHP | Note |
 | ---- | --- | --- |
 | 1.0.0 | 7.4+ | Support PHP 7.4 |
-| 2.0.0 | 8.3+ | Support PHP 8.3 |
 
 <br>
 

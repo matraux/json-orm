@@ -12,22 +12,32 @@ use Stringable;
  * @implements ArrayAccess<int|string,mixed>
  * @implements IteratorAggregate<int|string,mixed>
  */
-abstract class Explorer implements ArrayAccess, IteratorAggregate, Countable, Stringable
+abstract class Explorer implements ArrayAccess, IteratorAggregate, Countable
 {
-	abstract public function withIndex(string|int $index): static;
+	/**
+	 * @param string|int $index
+	 */
+	abstract public function withIndex($index): self;
+
+	abstract public function __toString(): string;
 
 	/**
+	 *
+	 * @param int|string $offset
+	 * @param mixed $value
 	 * @throws ReadonlyAccessException
 	 */
-	final public function offsetSet(mixed $offset, mixed $value): void
+	final public function offsetSet($offset, $value): void
 	{
 		throw new ReadonlyAccessException('Explorer is readonly');
 	}
 
 	/**
+	 *
+	 * @param int|string $offset
 	 * @throws ReadonlyAccessException
 	 */
-	final public function offsetUnset(mixed $offset): void
+	final public function offsetUnset($offset): void
 	{
 		throw new ReadonlyAccessException('Explorer is readonly');
 	}

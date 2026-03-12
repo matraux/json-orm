@@ -14,16 +14,21 @@ final class SimpleExplorer extends Explorer
 	/** @var int<0,max> */
 	protected int $countCache;
 
+	/** @var array<mixed> */
+	protected array $data;
+
 	/**
 	 * @param array<mixed> $data
 	 */
-	protected function __construct(protected readonly array $data) {}
+	protected function __construct(array $data) {$this->data = $data;}
 
-	public static function fromString(string $json): static
+	public static function fromString(string $json): self
 	{
 		$data = json_decode(
-			json: $json,
-			flags: JSON_OBJECT_AS_ARRAY | JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR,
+			$json,
+			null,
+			512,
+			JSON_OBJECT_AS_ARRAY | JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR,
 		);
 
 		if (!is_array($data)) {
@@ -33,7 +38,7 @@ final class SimpleExplorer extends Explorer
 		return new static($data);
 	}
 
-	public static function fromFile(string $file): static
+	public static function fromFile(string $file): self
 	{
 		if (!is_file($file)) {
 			throw new RuntimeException(sprintf('No such file %s.', $file));
@@ -58,9 +63,10 @@ final class SimpleExplorer extends Explorer
 	}
 
 	/**
+	 * @param mixed $offset
 	 * @throws UnexpectedValueException
 	 */
-	public function offsetExists(mixed $offset): bool
+	public function offsetExists($offset): bool
 	{
 		if (!is_int($offset) && !is_string($offset)) {
 			throw new UnexpectedValueException(sprintf('Offset expects int|string, %s given.', get_debug_type($offset)));
@@ -70,10 +76,12 @@ final class SimpleExplorer extends Explorer
 	}
 
 	/**
+	 * @param int|string $offset
+	 * @return mixed
 	 * @throws OutOfRangeException
 	 * @throws UnexpectedValueException
 	 */
-	public function offsetGet(mixed $offset): mixed
+	public function offsetGet($offset)
 	{
 		if (!$this->offsetExists($offset)) {
 			throw new OutOfRangeException(sprintf('Offset %s is out of range.', $offset));
@@ -83,11 +91,14 @@ final class SimpleExplorer extends Explorer
 	}
 
 	/**
+	 * @param string|int $index
 	 * @throws UnexpectedValueException
 	 */
-	public function withIndex(string|int $index): static
+	public function withIndex($index): self
 	{
-		if (!array_key_exists($index, $this->data)) {
+		if(!is_int($index) && !is_string($index)) {
+			throw new UnexpectedValueException(sprintf('Expects value string|int, %s given.', get_debug_type($index)));
+		} elseif (!array_key_exists($index, $this->data)) {
 			throw new UnexpectedValueException(sprintf('No such index %s.', $index));
 		} elseif (!is_array($this->data[$index])) {
 			throw new UnexpectedValueException(sprintf('No such nested data at index %s.', $index));
@@ -102,8 +113,8 @@ final class SimpleExplorer extends Explorer
 	public function __toString(): string
 	{
 		return json_encode(
-			value: $this->data,
-			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR,
+			$this->data,
+			JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR,
 		);
 	}
 }

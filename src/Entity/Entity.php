@@ -7,18 +7,25 @@ use JsonSerializable;
 use Matraux\JsonOrm\Json\Explorer;
 use Matraux\JsonOrm\Metadata\MetadataFactory;
 use ReflectionClass;
+use ReflectionException;
 use Stringable;
 
-abstract class Entity implements Stringable, JsonSerializable
+abstract class Entity implements JsonSerializable
 {
 	final protected function __construct() {}
 
-	final public static function create(): static
+	/**
+	 * @return static
+	 */
+	final public static function create(): self
 	{
 		return new static();
 	}
 
-	final public static function fromExplorer(Explorer $explorer): static
+	/**
+	 * @return static
+	 */
+	final public static function fromExplorer(Explorer $explorer): self
 	{
 
 		$entity = new static();
@@ -62,8 +69,8 @@ abstract class Entity implements Stringable, JsonSerializable
 	final public function __toString(): string
 	{
 		return json_encode(
-			value: $this,
-			flags: JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR,
+			$this,
+			JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR,
 		);
 	}
 }

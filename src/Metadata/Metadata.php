@@ -3,6 +3,7 @@
 namespace Matraux\JsonOrm\Metadata;
 
 use BackedEnum;
+use Exception;
 use Matraux\JsonOrm\Codec\BackedEnumCodec;
 use Matraux\JsonOrm\Codec\Codec;
 use Matraux\JsonOrm\Codec\CollectionCodec;
@@ -11,33 +12,63 @@ use Matraux\JsonOrm\Collection\Collection;
 use Matraux\JsonOrm\Entity\Entity;
 use Matraux\JsonOrm\Exception\CodecException;
 use Matraux\JsonOrm\Json\Property;
-use PropertyHookType;
 use ReflectionAttribute;
 use ReflectionNamedType;
 use ReflectionProperty;
 use RuntimeException;
 
-final readonly class Metadata
+/**
+ * @property-read string $name
+ * @property-read string $index
+ * @property-read class-string $class
+ * @property-read ?Codec $codec
+ * @property-read ReflectionProperty $reflection
+ */
+final class Metadata
 {
-	public string $name;
+	protected string $name;
 
-	public string $index;
+	protected string $index;
 
 	/** @var class-string */
-	public string $class;
+	protected string $class;
 
-	public ?Codec $codec;
+	protected ?Codec $codec;
+
+	protected ReflectionProperty $reflection;
 
 	/**
 	 * @throws CodecException
 	 * @throws RuntimeException
 	 */
-	public function __construct(public ReflectionProperty $reflection)
+	public function __construct(ReflectionProperty $reflection)
 	{
+		$this->reflection = $reflection;
 		$this->name = $reflection->name;
 		$this->class = $reflection->class;
 		$this->index = $this->resolveIndex();
 		$this->codec = $this->resolveCodec();
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function __get(string $name)
+	{
+		switch ($name) {
+			case 'name':
+				return $this->name;
+			case 'index':
+				return $this->index;
+			case 'class':
+				return $this->class;
+			case 'codec':
+				return $this->codec;
+			case 'reflection':
+				return $this->reflection;
+			default:
+				throw new RuntimeException(sprintf('Undefined property %s::$%s.', static::class, $name));
+		}
 	}
 
 	public function isInitialized(Entity $entity): bool
@@ -47,23 +78,18 @@ final readonly class Metadata
 
 	protected function resolveIndex(): string
 	{
-		$attributes = $this->reflection->getAttributes(Property::class, ReflectionAttribute::IS_INSTANCEOF);
-		if (count($attributes) > 1) {
-			throw new RuntimeException(sprintf('%s::$%s expects single %s attribute, multiple given.', $this->reflection->class, $this->reflection->name, Property::class));
-		}
+		$doc = $this->reflection->getDocComment();
 
-		return array_shift($attributes)?->newInstance()->name ?? $this->reflection->name;
+		return $doc && preg_match('/@index\s+(\S+)/', $doc, $matches) ? $matches[1] : $this->reflection->name;
 	}
 
 	protected function resolveCodec(): ?Codec
 	{
-		$attributes = $this->reflection->getAttributes(Codec::class, ReflectionAttribute::IS_INSTANCEOF);
-		if (count($attributes) > 1) {
-			throw new CodecException(sprintf('%s::$%s expects single %s attribute, multiple given.', $this->reflection->class, $this->reflection->name, Codec::class));
-		}
-
-		if ($codec = array_shift($attributes)?->newInstance()) {
-			return $codec;
+		$doc = $this->reflection->getDocComment();
+		if($doc && preg_match('/@codec\s+([^\r\n]+)/', $doc, $matches)) {
+			/** @var class-string<Codec> $codec */
+			$codec = $matches[1];
+			return new $codec;
 		}
 
 		$type = $this->reflection->getType();
@@ -71,17 +97,28 @@ final readonly class Metadata
 			return null;
 		}
 
-		$type = match (strtolower($type->getName())) {
-			'parent' => ($parent = $this->reflection->getDeclaringClass()->getParentClass()) ? $parent->name : throw new RuntimeException(sprintf('Unresolvable type parent for %s::$%s.', $this->reflection->class, $this->reflection->name)),
-			'self' => $this->reflection->class,
-			default => $type->getName(),
-		};
+		switch (strtolower($type->getName())) {
+			case 'parent':
+				if(!$parent = $this->reflection->getDeclaringClass()->getParentClass()) {
+					throw new RuntimeException(sprintf('Unresolvable type parent for %s::$%s.', $this->reflection->class, $this->reflection->name));
+				}
+				$type = $parent->name;
+				break;
+			case 'self':
+				$type = $this->reflection->class;
+				break;
+			default:
+				$type = $type->getName();
+				break;
+		}
 
-		return match (true) {
-			is_subclass_of($type, Entity::class) => new EntityCodec($type),
-			is_subclass_of($type, Collection::class) => new CollectionCodec($type),
-			is_subclass_of($type, BackedEnum::class) => new BackedEnumCodec($type),
-			default => null,
-		};
+		switch (true) {
+			case is_subclass_of($type, Entity::class):
+				return new EntityCodec($type);
+			case is_subclass_of($type, Collection::class):
+				return new CollectionCodec($type);
+			default:
+				return null;
+		}
 	}
 }
