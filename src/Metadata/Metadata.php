@@ -11,7 +11,6 @@ use Matraux\JsonOrm\Collection\Collection;
 use Matraux\JsonOrm\Entity\Entity;
 use Matraux\JsonOrm\Exception\CodecException;
 use Matraux\JsonOrm\Json\Property;
-use PropertyHookType;
 use ReflectionAttribute;
 use ReflectionNamedType;
 use ReflectionProperty;
