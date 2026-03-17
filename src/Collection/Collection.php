@@ -140,7 +140,11 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	{
 		if ($this->explorer) {
 			foreach ($this->explorer as $index => $_) {
-				yield (int) $index => static::getEntityClass()::fromExplorer($this->explorer->withIndex($index));
+				if (!is_int($index)) {
+					throw new UnexpectedValueException(sprintf('Collection expects int index, %s given.', get_debug_type($index)));
+				}
+
+				yield $index => static::getEntityClass()::fromExplorer($this->explorer->withIndex($index));
 			}
 		} else {
 			yield from $this->entities;
