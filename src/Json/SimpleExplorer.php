@@ -21,7 +21,7 @@ final class SimpleExplorer extends Explorer
 
 	public static function fromString(string $json): static
 	{
-		return new ReflectionClass(self::class)->newLazyGhost(function (self $explorer) use ($json): void {
+		return new ReflectionClass(self::class)->newLazyGhost(static function (self $explorer) use ($json): void {
 			$data = json_decode(
 				json: $json,
 				flags: JSON_OBJECT_AS_ARRAY | JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR,
