@@ -69,7 +69,7 @@ final class DateTimeCodec implements Codec
 
 	public function decode(Explorer $explorer, Metadata $metadata): ?DateTime
 	{
-		$value = $explorer[$property->index];
+		$value = $explorer[$metadata->index];
 		if (!is_string($value)) {
 			return null;
 		}
