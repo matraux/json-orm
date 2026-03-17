@@ -5,6 +5,7 @@ namespace Matraux\JsonOrm\Metadata;
 use Matraux\JsonOrm\Entity\Entity;
 use ReflectionClass;
 use ReflectionException;
+use ReflectionProperty;
 
 final class MetadataFactory
 {
@@ -20,13 +21,17 @@ final class MetadataFactory
 	 */
 	public static function create(string $entityClass): array
 	{
-		if (array_key_exists($entityClass, self::$cache)) {
+		if (isset(self::$cache[$entityClass])) {
 			return self::$cache[$entityClass];
 		}
 
-		$properties = (new ReflectionClass($entityClass))->getProperties();
+		$properties = (new ReflectionClass($entityClass))->getProperties(ReflectionProperty::IS_PUBLIC);
 		$items = [];
 		foreach ($properties as $property) {
+			if ($property->isStatic()) {
+				continue;
+			}
+
 			$items[] = new Metadata($property);
 		}
 
