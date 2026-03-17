@@ -8,7 +8,7 @@
 	$entity->name = 'First';
 	$entity->time = new DateTime('now');
 
-	$entity = $collection[0] = CommonEntity::create(); // Insert entity to index 0
+	$entity = $collection[1] = CommonEntity::create(); // Insert entity to index 0
 	$entity->id = 2;
 	$entity->name = 'Second';
 
