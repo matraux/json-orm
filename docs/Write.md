@@ -8,12 +8,12 @@
 	$entity->name = 'First';
 	$entity->time = new DateTime('now');
 
-	$entity = $collection[0] = CommonEntity::create(); // Insert entity to index 1
+	$entity = $collection[0] = CommonEntity::create(); // Insert entity to index 0
 	$entity->id = 2;
 	$entity->name = 'Second';
 
-	$collection[1] = CommonEntity::create();  // Insert entity to index 2
-	unset($collection[1]); // Remove entity with index 2
+	$collection[1] = CommonEntity::create();  // Insert entity to index 1
+	unset($collection[1]); // Remove entity with index 1
 
 	echo json_encode($collection[0]); // Print '{"CUSTOM_ID":1,"name":"First","TIME":"24.11.2025 14:35:00.000000"}'
 
