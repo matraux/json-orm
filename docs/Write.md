@@ -6,7 +6,7 @@
 	$entity = $collection->createEntity(); // Insert entity to index 0
 	$entity->id = 1;
 	$entity->name = 'First';
-	$entity->time = new DateTime('now');
+	$entity->timestamp = new DateTime('now');
 
 	$entity = $collection[1] = CommonEntity::create(); // Insert entity to index 1
 	$entity->id = 2;
