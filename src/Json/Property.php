@@ -8,5 +8,4 @@ use Attribute;
 final readonly class Property
 {
 	public function __construct(public string $name) {}
-
 }

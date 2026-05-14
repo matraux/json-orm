@@ -19,7 +19,6 @@ abstract class Entity implements Stringable, JsonSerializable
 
 	final public static function fromExplorer(Explorer $explorer): static
 	{
-
 		$entity = new static();
 		$properties = MetadataFactory::create(static::class);
 		foreach ($properties as $property) {
