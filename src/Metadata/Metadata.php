@@ -8,7 +8,6 @@ use Matraux\JsonOrm\Codec\EntityCodec;
 use Matraux\JsonOrm\Collection\Collection;
 use Matraux\JsonOrm\Entity\Entity;
 use Matraux\JsonOrm\Exception\CodecException;
-use Matraux\JsonOrm\Json\Property;
 use ReflectionNamedType;
 use ReflectionProperty;
 use RuntimeException;
@@ -22,16 +21,16 @@ use RuntimeException;
  */
 final class Metadata
 {
-	protected string $name;
+	private string $name;
 
-	protected string $index;
+	private string $index;
 
 	/** @var class-string */
-	protected string $class;
+	private string $class;
 
-	protected ?Codec $codec;
+	private ?Codec $codec;
 
-	protected ReflectionProperty $reflection;
+	private ReflectionProperty $reflection;
 
 	/**
 	 * @throws CodecException
@@ -51,14 +50,14 @@ final class Metadata
 		return $this->reflection->isInitialized($entity);
 	}
 
-	protected function resolveIndex(): string
+	private function resolveIndex(): string
 	{
 		$doc = $this->reflection->getDocComment();
 
 		return $doc && preg_match('/@index\s+(\S+)/', $doc, $matches) ? $matches[1] : $this->reflection->name;
 	}
 
-	protected function resolveCodec(): ?Codec
+	private function resolveCodec(): ?Codec
 	{
 		$doc = $this->reflection->getDocComment();
 		if ($doc && preg_match('/@codec\s+([^\r\n]+)/', $doc, $matches)) {

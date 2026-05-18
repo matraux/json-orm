@@ -11,15 +11,15 @@ use UnexpectedValueException;
 final class SimpleExplorer extends Explorer
 {
 	/** @var int<0,max> */
-	protected int $countCache;
+	private int $countCache;
 
 	/** @var array<mixed> */
-	protected array $data;
+	private array $data;
 
 	/**
 	 * @param array<mixed> $data
 	 */
-	protected function __construct(array $data)
+	private function __construct(array $data)
 	{
 		$this->data = $data;
 	}

@@ -11,7 +11,7 @@ use Matraux\JsonOrm\Metadata\Metadata;
 final class CollectionCodec implements Codec
 {
 	/** @var class-string<Collection<Entity>> */
-	protected string $class;
+	private string $class;
 
 	/**
 	 * @param class-string<Collection<Entity>> $class

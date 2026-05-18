@@ -9,7 +9,7 @@ use Matraux\JsonOrm\Metadata\MetadataFactory;
 
 abstract class Entity implements JsonSerializable
 {
-	final protected function __construct() {}
+	final private function __construct() {}
 
 	/**
 	 * @return static

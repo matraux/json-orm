@@ -10,9 +10,9 @@ use ReflectionProperty;
 final class MetadataFactory
 {
 	/** @var array<class-string<Entity>,array<Metadata>> */
-	protected static array $cache = [];
+	private static array $cache = [];
 
-	protected function __construct() {}
+	private function __construct() {}
 
 	/**
 	 * @param class-string<Entity> $entityClass

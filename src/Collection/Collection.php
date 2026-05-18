@@ -22,11 +22,11 @@ use UnexpectedValueException;
 abstract class Collection implements Countable, ArrayAccess, JsonSerializable, IteratorAggregate
 {
 	/** @var array<int,TEntity> */
-	protected array $entities = [];
+	private array $entities = [];
 
-	protected ?Explorer $explorer;
+	private ?Explorer $explorer;
 
-	final protected function __construct(?Explorer $explorer = null)
+	final private function __construct(?Explorer $explorer = null)
 	{
 		$this->explorer = $explorer;
 	}
@@ -145,7 +145,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, I
 	/**
 	 * @return Traversable<int,TEntity>
 	 */
-	public function getIterator(): Traversable
+	final public function getIterator(): Traversable
 	{
 		if ($this->explorer) {
 			foreach ($this->explorer as $index => $_) {
@@ -165,7 +165,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, I
 	 */
 	abstract protected static function getEntityClass(): string;
 
-	final protected function assertWritable(): void
+	final private function assertWritable(): void
 	{
 		if ($this->explorer) {
 			throw new ReadonlyAccessException('Collection is readonly.');

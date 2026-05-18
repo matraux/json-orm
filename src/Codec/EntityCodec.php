@@ -10,7 +10,7 @@ use Matraux\JsonOrm\Metadata\Metadata;
 final class EntityCodec implements Codec
 {
 	/** @var class-string<Entity> */
-	protected string $class;
+	private string $class;
 
 	/**
 	 * @param class-string<Entity> $class
