@@ -17,6 +17,7 @@ final readonly class CollectionCodec implements Codec
 
 	/**
 	 * @return ?Collection<Entity>
+	 *
 	 * @throws CodecException
 	 */
 	public function encode(mixed $value, Metadata $metadata): ?Collection

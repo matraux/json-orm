@@ -17,6 +17,7 @@ use UnexpectedValueException;
 
 /**
  * @template TEntity of Entity
+ *
  * @implements ArrayAccess<int,TEntity>
  * @implements IteratorAggregate<int,TEntity>
  */
@@ -64,6 +65,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 
 	/**
 	 * @return TEntity
+	 *
 	 * @throws OutOfRangeException
 	 * @throws UnexpectedValueException
 	 */
@@ -111,6 +113,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 
 	/**
 	 * @return TEntity
+	 *
 	 * @throws ReadonlyAccessException
 	 */
 	final public function createEntity(): Entity
