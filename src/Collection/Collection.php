@@ -156,7 +156,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	 */
 	abstract protected static function getEntityClass(): string;
 
-	final private function assertWritable(): void
+	private function assertWritable(): void
 	{
 		if ($this->explorer) {
 			throw new ReadonlyAccessException('Collection is readonly.');
