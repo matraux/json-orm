@@ -12,7 +12,7 @@ final readonly class EntityCodec implements Codec
 	/**
 	 * @param class-string<Entity> $class
 	 */
-	public function __construct(protected string $class) {}
+	public function __construct(private string $class) {}
 
 	/**
 	 * @throws CodecException

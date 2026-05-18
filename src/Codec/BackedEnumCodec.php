@@ -14,7 +14,7 @@ final class BackedEnumCodec implements Codec
 	/**
 	 * @param class-string<BackedEnum> $class
 	 */
-	public function __construct(protected string $class) {}
+	public function __construct(private string $class) {}
 
 	/**
 	 * @throws CodecException

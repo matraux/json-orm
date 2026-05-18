@@ -13,7 +13,7 @@ final readonly class CollectionCodec implements Codec
 	/**
 	 * @param class-string<Collection<Entity>> $class
 	 */
-	public function __construct(protected string $class) {}
+	public function __construct(private string $class) {}
 
 	/**
 	 * @return ?Collection<Entity>
