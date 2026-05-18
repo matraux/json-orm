@@ -14,6 +14,7 @@ interface Codec
 {
 	/**
 	 * @param mixed $value
+	 *
 	 * @return mixed
 	 */
 	public function encode($value, Metadata $metadata);

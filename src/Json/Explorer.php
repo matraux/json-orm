@@ -19,9 +19,9 @@ abstract class Explorer implements ArrayAccess, IteratorAggregate, Countable
 	abstract public function withIndex($index): self;
 
 	/**
-	 *
 	 * @param int|string $offset
-	 * @param mixed $value
+	 * @param mixed      $value
+	 *
 	 * @throws ReadonlyAccessException
 	 */
 	final public function offsetSet($offset, $value): void
@@ -30,8 +30,8 @@ abstract class Explorer implements ArrayAccess, IteratorAggregate, Countable
 	}
 
 	/**
-	 *
 	 * @param int|string $offset
+	 *
 	 * @throws ReadonlyAccessException
 	 */
 	final public function offsetUnset($offset): void

@@ -23,7 +23,9 @@ final class CollectionCodec implements Codec
 
 	/**
 	 * @param mixed $value
+	 *
 	 * @return ?Collection<Entity>
+	 *
 	 * @throws CodecException
 	 */
 	public function encode($value, Metadata $metadata): ?Collection

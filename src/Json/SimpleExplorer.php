@@ -66,6 +66,7 @@ final class SimpleExplorer extends Explorer
 
 	/**
 	 * @param mixed $offset
+	 *
 	 * @throws UnexpectedValueException
 	 */
 	public function offsetExists($offset): bool
@@ -79,7 +80,9 @@ final class SimpleExplorer extends Explorer
 
 	/**
 	 * @param int|string $offset
+	 *
 	 * @return mixed
+	 *
 	 * @throws OutOfRangeException
 	 * @throws UnexpectedValueException
 	 */
@@ -94,6 +97,7 @@ final class SimpleExplorer extends Explorer
 
 	/**
 	 * @param string|int $index
+	 *
 	 * @throws UnexpectedValueException
 	 */
 	public function withIndex($index): self

@@ -16,6 +16,7 @@ use UnexpectedValueException;
 
 /**
  * @template TEntity of Entity
+ *
  * @implements ArrayAccess<int,TEntity>
  * @implements IteratorAggregate<int,TEntity>
  */
@@ -56,6 +57,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, I
 
 	/**
 	 * @param mixed $offset
+	 *
 	 * @throws UnexpectedValueException
 	 */
 	final public function offsetExists($offset): bool
@@ -69,7 +71,9 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, I
 
 	/**
 	 * @param int $offset
+	 *
 	 * @return TEntity
+	 *
 	 * @throws OutOfRangeException
 	 * @throws UnexpectedValueException
 	 */
@@ -85,6 +89,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, I
 	/**
 	 * @param mixed $offset
 	 * @param mixed $value
+	 *
 	 * @throws UnexpectedValueException
 	 * @throws ReadonlyAccessException
 	 */
@@ -103,6 +108,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, I
 
 	/**
 	 * @param int $offset
+	 *
 	 * @throws OutOfRangeException
 	 * @throws UnexpectedValueException
 	 * @throws ReadonlyAccessException
@@ -120,6 +126,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, I
 
 	/**
 	 * @return TEntity
+	 *
 	 * @throws ReadonlyAccessException
 	 */
 	final public function createEntity(): Entity

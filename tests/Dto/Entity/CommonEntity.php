@@ -15,6 +15,7 @@ final class CommonEntity extends Entity
 
 	/**
 	 * @index TIME
+	 *
 	 * @codec Matraux\JsonOrm\Test\Dto\Codec\DateTimeCodec
 	 */
 	public ?DateTime $timestamp;

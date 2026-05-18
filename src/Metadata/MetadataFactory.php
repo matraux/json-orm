@@ -16,7 +16,9 @@ final class MetadataFactory
 
 	/**
 	 * @param class-string<Entity> $entityClass
+	 *
 	 * @return array<Metadata>
+	 *
 	 * @throws ReflectionException
 	 */
 	public static function create(string $entityClass): array

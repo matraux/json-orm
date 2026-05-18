@@ -22,6 +22,7 @@ final class EntityCodec implements Codec
 
 	/**
 	 * @param mixed $value
+	 *
 	 * @throws CodecException
 	 */
 	public function encode($value, Metadata $metadata): ?Entity
