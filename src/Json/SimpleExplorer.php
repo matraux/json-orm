@@ -12,12 +12,14 @@ use UnexpectedValueException;
 final class SimpleExplorer extends Explorer
 {
 	/** @var int<0,max> */
-	protected int $countCache;
+	private int $count {
+		get => $this->count ??= count($this->data);
+	}
 
 	/**
 	 * @param array<mixed> $data
 	 */
-	protected function __construct(protected readonly array $data) {}
+	private function __construct(private readonly array $data) {}
 
 	public static function fromString(string $json): static
 	{
@@ -48,7 +50,7 @@ final class SimpleExplorer extends Explorer
 
 	public function count(): int
 	{
-		return $this->countCache ??= count($this->data);
+		return $this->count;
 	}
 
 	/**

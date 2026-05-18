@@ -45,7 +45,7 @@ final readonly class Metadata
 		return $this->reflection->isInitialized($entity) || $this->reflection->getHook(PropertyHookType::Get);
 	}
 
-	protected function resolveIndex(): string
+	private function resolveIndex(): string
 	{
 		$attributes = $this->reflection->getAttributes(Property::class, ReflectionAttribute::IS_INSTANCEOF);
 		if (count($attributes) > 1) {
@@ -55,7 +55,7 @@ final readonly class Metadata
 		return array_shift($attributes)?->newInstance()->name ?? $this->reflection->name;
 	}
 
-	protected function resolveCodec(): ?Codec
+	private function resolveCodec(): ?Codec
 	{
 		$attributes = $this->reflection->getAttributes(Codec::class, ReflectionAttribute::IS_INSTANCEOF);
 		if (count($attributes) > 1) {

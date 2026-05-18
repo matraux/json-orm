@@ -11,7 +11,7 @@ use Stringable;
 
 abstract class Entity implements Stringable, JsonSerializable
 {
-	final protected function __construct() {}
+	final private function __construct() {}
 
 	final public static function create(): static
 	{
