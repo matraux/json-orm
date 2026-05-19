@@ -34,7 +34,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	final public static function create(): static
 	{
 		/** @var static<TEntity> */
-		return new static();
+		return new static(); //@phpstan-ignore varTag.nativeType
 	}
 
 	/**
@@ -43,7 +43,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	final public static function fromExplorer(Explorer $explorer): static
 	{
 		/** @var static<TEntity> */
-		return new static($explorer);
+		return new static($explorer); //@phpstan-ignore varTag.nativeType
 	}
 
 	final public function count(): int
