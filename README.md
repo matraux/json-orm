@@ -1,6 +1,5 @@
 # MATRAUX JSON ORM
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/matraux/json-orm.svg?logo=packagist&logoColor=white)](https://packagist.org/packages/matraux/json-orm)
-[![Last release](https://img.shields.io/github/v/release/matraux/json-orm?display_name=tag&logo=github&logoColor=white)](https://github.com/matraux/json-orm/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?logo=open-source-initiative&logoColor=white)](LICENSE)
 [![PHP](https://img.shields.io/badge/PHP-8.4+-blue.svg?logo=php&logoColor=white)](https://php.net)
 [![Security Policy](https://img.shields.io/badge/Security-Policy-blue?logo=bitwarden&logoColor=white)](./.github/SECURITY.md)
@@ -36,12 +35,15 @@ composer require matraux/json-orm
 
 <br>
 
-## Requirements
-| version | PHP | Note |
-| ---- | --- | --- |
-| 1.0.0 | 7.4+ | Support PHP 7.4 |
-| 2.0.0 | 8.3+ | Support PHP 8.3 |
-| 3.0.0 | 8.4+ | Support PHP 8.4 |
+## PHP compatibility
+
+This package provides separate major versions for different PHP baselines.
+
+| Version | PHP |
+| ---- | ---: |
+| 1.x | 7.4+ |
+| 2.x | 8.3+ |
+| 3.x | 8.4+ |
 
 <br>
 
