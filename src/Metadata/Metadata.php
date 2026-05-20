@@ -52,7 +52,7 @@ final readonly class Metadata
 			throw new RuntimeException(sprintf('%s::$%s expects single %s attribute, multiple given.', $this->reflection->class, $this->reflection->name, Property::class));
 		}
 
-		return array_shift($attributes)?->newInstance()->name ?? $this->reflection->name;
+		return array_first($attributes)?->newInstance()->name ?? $this->reflection->name;
 	}
 
 	private function resolveCodec(): ?Codec
@@ -62,7 +62,7 @@ final readonly class Metadata
 			throw new CodecException(sprintf('%s::$%s expects single %s attribute, multiple given.', $this->reflection->class, $this->reflection->name, Codec::class));
 		}
 
-		if ($codec = array_shift($attributes)?->newInstance()) {
+		if ($codec = array_first($attributes)?->newInstance()) {
 			return $codec;
 		}
 
