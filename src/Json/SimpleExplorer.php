@@ -3,6 +3,7 @@
 namespace Matraux\JsonOrm\Json;
 
 use JsonException;
+use NoDiscard;
 use OutOfRangeException;
 use ReflectionClass;
 use RuntimeException;
@@ -21,6 +22,7 @@ final class SimpleExplorer extends Explorer
 	 */
 	private function __construct(private readonly array $data) {}
 
+	#[NoDiscard]
 	public static function fromString(string $json): static
 	{
 		return new ReflectionClass(self::class)->newLazyGhost(static function (self $explorer) use ($json): void {
@@ -37,6 +39,7 @@ final class SimpleExplorer extends Explorer
 		});
 	}
 
+	#[NoDiscard]
 	public static function fromFile(string $file): static
 	{
 		if (!is_file($file)) {
@@ -89,6 +92,7 @@ final class SimpleExplorer extends Explorer
 	/**
 	 * @throws UnexpectedValueException
 	 */
+	#[NoDiscard]
 	public function withIndex(string|int $index): static
 	{
 		if (!array_key_exists($index, $this->data)) {

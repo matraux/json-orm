@@ -6,6 +6,7 @@ use JsonException;
 use JsonSerializable;
 use Matraux\JsonOrm\Json\Explorer;
 use Matraux\JsonOrm\Metadata\MetadataFactory;
+use NoDiscard;
 use ReflectionClass;
 use Stringable;
 
@@ -13,11 +14,13 @@ abstract class Entity implements Stringable, JsonSerializable
 {
 	final private function __construct() {}
 
+	#[NoDiscard]
 	final public static function create(): static
 	{
 		return new static();
 	}
 
+	#[NoDiscard]
 	final public static function fromExplorer(Explorer $explorer): static
 	{
 		return new ReflectionClass(static::class)->newLazyGhost(static function (self $entity) use ($explorer): void {

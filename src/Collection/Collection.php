@@ -10,6 +10,7 @@ use JsonSerializable;
 use Matraux\JsonOrm\Entity\Entity;
 use Matraux\JsonOrm\Exception\ReadonlyAccessException;
 use Matraux\JsonOrm\Json\Explorer;
+use NoDiscard;
 use OutOfRangeException;
 use Stringable;
 use Traversable;
@@ -31,6 +32,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	/**
 	 * @return static<TEntity>
 	 */
+	#[NoDiscard]
 	final public static function create(): static
 	{
 		/** @var static<TEntity> */
@@ -40,6 +42,7 @@ abstract class Collection implements Countable, ArrayAccess, JsonSerializable, S
 	/**
 	 * @return static<TEntity>
 	 */
+	#[NoDiscard]
 	final public static function fromExplorer(Explorer $explorer): static
 	{
 		/** @var static<TEntity> */
