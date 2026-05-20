@@ -13,7 +13,7 @@ final class CollectionCest
 {
 	public function testCollectionIterable(UnitTester $tester): void
 	{
-		$commonCollection = self::createCommonCollection($tester);
+		$commonCollection = self::createCommonCollection();
 		foreach ($commonCollection as $generalEntity) {
 			$tester->assertInstanceOf(CommonEntity::class, $generalEntity);
 		}
@@ -21,7 +21,7 @@ final class CollectionCest
 
 	public function testCollectionArrayGet(UnitTester $tester): void
 	{
-		$commonCollection = self::createCommonCollection($tester);
+		$commonCollection = self::createCommonCollection();
 		$tester->assertInstanceOf(CommonEntity::class, $commonCollection[0]);
 		$tester->assertInstanceOf(CommonEntity::class, $commonCollection[1]);
 		$tester->assertInstanceOf(CommonEntity::class, $commonCollection[2]);
@@ -29,7 +29,7 @@ final class CollectionCest
 
 	public function testCollectionCountable(UnitTester $tester): void
 	{
-		$commonCollection = self::createCommonCollection($tester);
+		$commonCollection = self::createCommonCollection();
 		$tester->assertCount(3, $commonCollection);
 	}
 
@@ -83,7 +83,7 @@ final class CollectionCest
 		$tester->assertEquals('[{"NAME":"First","STATUS":{"VALUE":"online"}},{"NAME":"Second","STATUS":{"VALUE":"offline"}}]', (string) $commonCollection);
 	}
 
-	protected static function createCommonCollection(UnitTester $tester): CommonCollection
+	protected static function createCommonCollection(): CommonCollection
 	{
 		$explorer = SimpleExplorer::fromFile(Configuration::dataDir() . 'general.json');
 
